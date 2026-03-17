@@ -7,7 +7,11 @@
     "new_ui": {
       "enabled": false,
       "updatedAt": "2026-02-24T16:15:01.547Z"
+    },
+    "attestations_paused": {
+      "enabled": true,
+      "updatedAt": "2026-03-17T10:35:06.762Z"
     }
   },
-  "lastUpdated": "2026-02-24T16:15:01.549Z"
+  "lastUpdated": "2026-03-17T10:35:06.762Z"
 }
