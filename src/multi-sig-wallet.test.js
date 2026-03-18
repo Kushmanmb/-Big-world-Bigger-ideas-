@@ -12,7 +12,7 @@
 'use strict';
 
 const MultiSigWallet = require('./multi-sig-wallet');
-const { test, assertEqual, assertNotNull, assertThrows, printSummary } = require('./test-helpers');
+const { test, testAsync, assertEqual, assertNotNull, assertThrows, printSummary } = require('./test-helpers');
 
 console.log('Running MultiSigWallet Tests...\n');
 
@@ -184,7 +184,7 @@ test('should throw on invalid requestTimeout', () => {
 
 // ── isOwner input validation ──────────────────────────────────────────────────
 
-test('isOwner should throw on invalid address', async () => {
+testAsync('isOwner should throw on invalid address', async () => {
   const client = new MultiSigWallet('0x1234567890123456789012345678901234567890');
   let threw = false;
   try {
@@ -200,7 +200,7 @@ test('isOwner should throw on invalid address', async () => {
 
 // ── isConfirmed input validation ──────────────────────────────────────────────
 
-test('isConfirmed should throw on invalid txIndex', async () => {
+testAsync('isConfirmed should throw on invalid txIndex', async () => {
   const client = new MultiSigWallet('0x1234567890123456789012345678901234567890');
   let threw = false;
   try {
