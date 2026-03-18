@@ -78,6 +78,10 @@ seed.txt
 seed.json
 private-key.txt
 privatekey.txt
+
+# Smart contract ABI and bytecode artifacts (not sensitive, should be tracked)
+!contracts/multi_signature_wallet.json
+!contracts/multi_signature_wallet_bytecode.json
 private-key.json
 privatekey.json
 *-private-key.txt
