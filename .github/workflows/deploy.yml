@@ -74,15 +74,12 @@ jobs:
           # Copy configuration files
           cp CNAME _site/
           cp feature-flags.json _site/
-          cp mint.json _site/
 
           # Copy source code
           cp -r src _site/
           cp -r contracts _site/
 
           # Copy documentation directories
-          cp -r api-reference _site/
-          cp -r guides _site/
           cp -r docs _site/
           cp -r wiki _site/
 
@@ -103,11 +100,7 @@ jobs:
           cp SECURITY-GUIDE.md _site/ 2>/dev/null || true
           cp SECURITY-AUDIT-SUMMARY.md _site/ 2>/dev/null || true
           cp PUBLISHING.md _site/ 2>/dev/null || true
-          cp MINTLIFY.md _site/ 2>/dev/null || true
           cp FRONTEND.md _site/ 2>/dev/null || true
-
-          # Copy mdx files at root level
-          cp *.mdx _site/ 2>/dev/null || true
 
           echo "Deployment package created with all documentation"
           echo "Contents of _site:"

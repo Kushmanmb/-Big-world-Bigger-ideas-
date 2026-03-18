@@ -84,6 +84,10 @@ privatekey.json
 *-privatekey.txt
 *_private_key.txt
 *_privatekey.txt
+*-private-key.json
+*-privatekey.json
+*_private_key.json
+*_privatekey.json
 
 # AWS Credentials
 .aws/
