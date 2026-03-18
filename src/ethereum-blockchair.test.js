@@ -205,22 +205,23 @@ async function runTests() {
   console.log('\n--- Transaction Hash Validation Tests ---');
   const validHash = '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef';
   const validHashNoPrefix = '1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef';
-  
+
+  // Valid hashes should pass format validation; any thrown error must be a network error, not a format error.
+  let hashWithPrefixRejectedByFormat = false;
   try {
     await fetcher.getTransaction(validHash);
-    assert(false, 'Network call would fail but format validation should pass');
   } catch (error) {
-    // Expected to fail on network call, not validation
-    assert(!error.message.includes('Invalid transaction hash format'), 'Should accept valid hash with 0x prefix');
+    hashWithPrefixRejectedByFormat = error.message.includes('Invalid transaction hash format');
   }
+  assert(!hashWithPrefixRejectedByFormat, 'Should accept valid hash with 0x prefix');
 
+  let hashWithoutPrefixRejectedByFormat = false;
   try {
     await fetcher.getTransaction(validHashNoPrefix);
-    assert(false, 'Network call would fail but format validation should pass');
   } catch (error) {
-    // Expected to fail on network call, not validation
-    assert(!error.message.includes('Invalid transaction hash format'), 'Should accept valid hash without 0x prefix');
+    hashWithoutPrefixRejectedByFormat = error.message.includes('Invalid transaction hash format');
   }
+  assert(!hashWithoutPrefixRejectedByFormat, 'Should accept valid hash without 0x prefix');
 
   // Print summary
   console.log('\n=================================');
