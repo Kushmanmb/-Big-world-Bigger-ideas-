@@ -86,6 +86,7 @@ class TokenHistoryTracker {
     this.owner = owner;
     this.history = [];
     this.tokenOwners = new Map(); // Current token ownership state
+    this.tokenHistoryIndex = new Map(); // tokenId -> array of events (for fast lookup)
   }
 
   /**
@@ -115,6 +116,20 @@ class TokenHistoryTracker {
   }
 
   /**
+   * Appends an event to the per-token history index.
+   * Initialises the bucket for the tokenId on first use.
+   * @param {string} tokenId - The token ID
+   * @param {OwnershipEvent} event - The event to index
+   * @private
+   */
+  _indexEvent(tokenId, event) {
+    if (!this.tokenHistoryIndex.has(tokenId)) {
+      this.tokenHistoryIndex.set(tokenId, []);
+    }
+    this.tokenHistoryIndex.get(tokenId).push(event);
+  }
+
+  /**
    * Records a token transfer event
    * @param {string} tokenId - The token ID
    * @param {string} from - Previous owner address
@@ -138,6 +153,9 @@ class TokenHistoryTracker {
     
     this.history.push(event);
     this.tokenOwners.set(tokenId, validatedTo);
+
+    // Keep the per-token index up to date for O(1) history lookup
+    this._indexEvent(tokenId, event);
     
     return event;
   }
@@ -148,7 +166,7 @@ class TokenHistoryTracker {
    * @returns {Array<OwnershipEvent>} Array of ownership events
    */
   getTokenHistory(tokenId) {
-    return this.history.filter(event => event.tokenId === tokenId);
+    return this.tokenHistoryIndex.get(tokenId) || [];
   }
 
   /**
@@ -160,8 +178,10 @@ class TokenHistoryTracker {
     const validatedAddress = this.validateAddress(ownerAddress);
     const tokens = [];
     
+    // Both keys in tokenOwners and validatedAddress are already normalized to
+    // lowercase by validateAddress(), so a direct equality check is sufficient.
     for (const [tokenId, owner] of this.tokenOwners.entries()) {
-      if (owner.toLowerCase() === validatedAddress.toLowerCase()) {
+      if (owner === validatedAddress) {
         tokens.push(tokenId);
       }
     }
@@ -187,9 +207,11 @@ class TokenHistoryTracker {
     const address = ownerAddress || this.owner;
     const validatedAddress = this.validateAddress(address);
     
+    // event.from and event.to are stored as validated (lowercase) addresses,
+    // so a direct equality check avoids redundant toLowerCase() calls per event.
     return this.history.filter(event => 
-      event.from.toLowerCase() === validatedAddress.toLowerCase() ||
-      event.to.toLowerCase() === validatedAddress.toLowerCase()
+      event.from === validatedAddress ||
+      event.to === validatedAddress
     );
   }
 
@@ -218,11 +240,15 @@ class TokenHistoryTracker {
    * @returns {object} Statistics object
    */
   getStatistics() {
-    const uniqueTokens = new Set(this.history.map(e => e.tokenId));
-    const uniqueAddresses = new Set([
-      ...this.history.map(e => e.from),
-      ...this.history.map(e => e.to)
-    ]);
+    const uniqueTokens = new Set();
+    const uniqueAddresses = new Set();
+
+    // Single pass instead of three separate map() iterations
+    for (const e of this.history) {
+      uniqueTokens.add(e.tokenId);
+      uniqueAddresses.add(e.from);
+      uniqueAddresses.add(e.to);
+    }
     
     return {
       totalTransfers: this.history.length,
@@ -264,6 +290,7 @@ class TokenHistoryTracker {
     this.owner = data.owner;
     this.history = [];
     this.tokenOwners.clear();
+    this.tokenHistoryIndex.clear();
     
     if (data.history) {
       for (const eventData of data.history) {
@@ -277,6 +304,9 @@ class TokenHistoryTracker {
         );
         this.history.push(event);
         this.tokenOwners.set(eventData.tokenId, eventData.to);
+
+        // Rebuild the per-token index
+        this._indexEvent(eventData.tokenId, event);
       }
     }
   }
