@@ -8,24 +8,37 @@ const path = require('path');
 
 const FEATURE_FLAGS_FILE = path.join(__dirname, '..', 'feature-flags.json');
 
+// In-memory cache to avoid redundant disk reads on every flag operation.
+// Populated on first load and kept in sync after every write.
+// Note: this module is designed for single-threaded use. If worker threads
+// share this module they should call invalidateCache() before reading so each
+// thread reloads from disk rather than relying on a potentially stale cache.
+let _cache = null;
+
 /**
- * Loads feature flags from the JSON file
+ * Loads feature flags from the in-memory cache, falling back to the JSON file
+ * on the first call (or after the cache has been explicitly invalidated).
  * @returns {object} Feature flags object
  */
 function loadFlags() {
+  if (_cache !== null) {
+    return _cache;
+  }
   try {
     if (fs.existsSync(FEATURE_FLAGS_FILE)) {
       const data = fs.readFileSync(FEATURE_FLAGS_FILE, 'utf8');
-      return JSON.parse(data);
+      _cache = JSON.parse(data);
+      return _cache;
     }
   } catch (error) {
     console.error('Error loading feature flags:', error.message);
   }
-  return { flags: {}, lastUpdated: null };
+  _cache = { flags: {}, lastUpdated: null };
+  return _cache;
 }
 
 /**
- * Saves feature flags to the JSON file
+ * Saves feature flags to the JSON file and updates the in-memory cache.
  * @param {object} flagsData - Feature flags data object
  */
 function saveFlags(flagsData) {
@@ -35,10 +48,19 @@ function saveFlags(flagsData) {
       JSON.stringify(flagsData, null, 2),
       'utf8'
     );
+    _cache = flagsData;
   } catch (error) {
     console.error('Error saving feature flags:', error.message);
     throw error;
   }
+}
+
+/**
+ * Invalidates the in-memory cache, forcing the next read to reload from disk.
+ * Useful when the flags file has been modified externally.
+ */
+function invalidateCache() {
+  _cache = null;
 }
 
 /**
@@ -129,5 +151,6 @@ module.exports = {
   getFlag,
   listFlags,
   removeFlag,
-  hasFlag
+  hasFlag,
+  invalidateCache
 };

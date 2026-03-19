@@ -17,6 +17,8 @@ function setup() {
   }
   // Reset to clean state
   fs.writeFileSync(TEST_FLAGS_FILE, JSON.stringify({ flags: {}, lastUpdated: null }, null, 2));
+  // Invalidate the in-memory cache so the next read picks up the fresh file
+  featureFlags.invalidateCache();
 }
 
 // Teardown: Restore backup
