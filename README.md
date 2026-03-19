@@ -1695,6 +1695,108 @@ const baseFetcher = new ERC721Fetcher(
 
 ---
 
+## 🗺️ Project Roadmap
+
+This roadmap outlines the completed milestones and upcoming plans for the **-Big-world-Bigger-ideas-** platform.
+
+### ✅ Completed — v1.0.0
+
+**Core Blockchain Utilities**
+- [x] ERC-721 NFT token fetcher with caching and multi-network support
+- [x] ERC-20 token balance fetcher via Etherscan API
+- [x] Token ownership history tracker (git-style log)
+- [x] Token manager and UUID generation for NFTs
+- [x] Wallet encryption/decryption utilities
+
+**Data Fetchers & Integrations**
+- [x] Bitcoin mining data fetcher (mempool.space)
+- [x] Blockchair integration — Bitcoin, Ethereum, and Litecoin
+- [x] Etherscan stats, verification, and token balance modules
+- [x] OP_RETURN encoding/decoding across Bitcoin, Litecoin, and Ethereum
+- [x] ETH `eth_call` RPC client and Contract ABI fetcher
+
+**Governance & Compliance**
+- [x] Blockchain Council governance module for DAOs
+- [x] ISO/IEC 27001:2013 certification management module
+- [x] Feature flags system for runtime configuration
+- [x] Zero-knowledge PDF verification (ZKPDFVerifier)
+
+**Network & Monitoring**
+- [x] Consensus tracker for blockchain consensus mechanisms
+- [x] Address tracker for multi-chain address management
+- [x] Transaction validator (Etherscan + Mempool.space + Blockchair)
+- [x] Blockchain path fetcher for chain traversal
+
+**Infrastructure & DX**
+- [x] NPM package published (`big-world-bigger-ideas`)
+- [x] Python-based JSON-RPC server for HTTP blockchain access
+- [x] GitHub Actions CI/CD pipeline with automated npm publishing
+- [x] Super Linter integration
+- [x] Security audit and pre-commit hooks
+- [x] Mintlify interactive documentation portal
+- [x] GitHub Pages deployment
+
+---
+
+### 🔄 In Progress — v1.1.x
+
+**Enhancements**
+- [ ] ENS resolver improvements with full forward/reverse lookup support
+- [ ] Expanded ERC-20 token balance reporting across more chains
+- [ ] Improved caching layer with configurable TTL per module
+- [ ] Real-time gas price monitoring module
+
+**Documentation & DX**
+- [ ] Expanded wiki with step-by-step tutorials for each module
+- [ ] Interactive API playground via documentation portal
+- [ ] Automated changelog generation on each release
+
+---
+
+### 🔮 Planned — v1.2.x
+
+**Multi-Chain Expansion**
+- [ ] Native support for Polygon (MATIC), Arbitrum, and Optimism networks
+- [ ] ERC-1155 multi-token standard support
+- [ ] Layer 2 bridge monitoring and status tracker
+
+**DeFi & Token Data**
+- [ ] Token price feed integration (CoinGecko / CoinMarketCap)
+- [ ] NFT floor price tracker for major collections
+- [ ] On-chain DeFi protocol metrics (TVL, APR/APY)
+
+**Web Interface**
+- [ ] Enhanced dashboard web UI for portfolio overview
+- [ ] Real-time blockchain event feed in the web editor
+- [ ] Dark/light theme toggle for web interface
+
+---
+
+### 🚀 Future Vision — v2.0+
+
+**Platform Evolution**
+- [ ] Full REST API server wrapping all blockchain modules
+- [ ] WebSocket support for real-time on-chain event subscriptions
+- [ ] Mobile SDK for iOS and Android integration
+- [ ] Multi-wallet portfolio tracker with historical performance charts
+
+**Smart Contracts & DeFi**
+- [ ] Smart contract template library for common patterns
+- [ ] Cross-chain bridge monitoring and alerts
+- [ ] DeFi yield aggregator integration
+- [ ] On-chain governance voting integration
+
+**Security & Compliance**
+- [ ] Automated smart contract vulnerability scanning
+- [ ] Expanded ISO 27001 controls coverage
+- [ ] On-chain identity and attestation support (EAS)
+
+---
+
+> 💡 **Have a feature request or idea?** Open an issue or reach out at [kushmanmb@gmx.com](mailto:kushmanmb@gmx.com).
+
+---
+
 ## 🔐 Ownership Status & Verification
 **Name:** Matthew Brace  
 **GitHub:** [@kushmanmb](https://github.com/kushmanmb)  
