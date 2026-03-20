@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satoshi Rugrats NFT - Big World Bigger Ideas</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* NFT Gallery Styles */
+        .nft-hero {
+            text-align: center;
+            color: white;
+            padding: 50px 20px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(20,20,60,0.9) 100%);
+            border-radius: 12px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .nft-hero h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #f7931a, #627eea, #f7931a);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            to { background-position: 200% center; }
+        }
+
+        .nft-hero .collection-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 12px 24px;
+            text-align: center;
+        }
+
+        .stat-box .stat-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #f7931a;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.8em;
+            color: #ccc;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* NFT Grid */
+        .nft-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            padding: 10px 0;
+        }
+
+        .nft-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .nft-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+            border-color: #f7931a;
+        }
+
+        .nft-artwork {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 7em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Character background colors */
+        .bg-genesis    { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
+        .bg-bear-red   { background: linear-gradient(135deg, #7f0000 0%, #c0392b 50%, #e74c3c 100%); }
+        .bg-mining     { background: linear-gradient(135deg, #1a3a1a 0%, #1e8449 50%, #27ae60 100%); }
+        .bg-ethereum   { background: linear-gradient(135deg, #1a0a3a 0%, #6c3483 50%, #9b59b6 100%); }
+        .bg-bull-gold  { background: linear-gradient(135deg, #7d6608 0%, #d4ac0d 50%, #f9e79f 100%); }
+        .bg-defi-blue  { background: linear-gradient(135deg, #0a1628 0%, #1565c0 50%, #42a5f5 100%); }
+
+        .nft-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.35em;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .badge-legendary { background: #f7931a; color: white; }
+        .badge-epic      { background: #8e44ad; color: white; }
+        .badge-rare      { background: #2980b9; color: white; }
+        .badge-uncommon  { background: #27ae60; color: white; }
+
+        .nft-info {
+            padding: 18px;
+        }
+
+        .nft-info .token-id {
+            font-size: 0.75em;
+            color: #999;
+            font-family: monospace;
+            margin-bottom: 4px;
+        }
+
+        .nft-info h3 {
+            font-size: 1.1em;
+            color: #2c3e50;
+            margin: 0 0 8px 0;
+        }
+
+        .nft-info .description {
+            font-size: 0.85em;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 14px;
+        }
+
+        .nft-traits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .trait-pill {
+            background: #f0f4ff;
+            border: 1px solid #c5d0f5;
+            border-radius: 20px;
+            padding: 3px 10px;
+            font-size: 0.72em;
+            color: #34495e;
+        }
+
+        .trait-pill strong {
+            color: #2980b9;
+        }
+
+        /* Network badge */
+        .network-tag {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.72em;
+            font-weight: bold;
+        }
+
+        .network-bitcoin  { background: #fff3e0; color: #e65100; border: 1px solid #f7931a; }
+        .network-ethereum { background: #f3e5f5; color: #6a1b9a; border: 1px solid #9b59b6; }
+        .network-multichain { background: #e8f5e9; color: #1b5e20; border: 1px solid #27ae60; }
+
+        /* About Section */
+        .about-section {
+            background: rgba(255,255,255,0.97);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .about-section h2 {
+            color: #2c3e50;
+            border-bottom: 3px solid #f7931a;
+            padding-bottom: 10px;
+        }
+
+        .about-section p {
+            line-height: 1.7;
+            color: #444;
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 20px;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nft-hero h1 { font-size: 2em; }
+            .nft-grid { grid-template-columns: 1fr; }
+            .collection-stats { gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Big World Bigger Ideas</a>
+
+        <!-- Hero Banner -->
+        <div class="nft-hero">
+            <h1>₿ Satoshi Rugrats NFT ₿</h1>
+            <p style="color:#ccc; font-size:1.1em; font-style:italic; margin-top:8px;">
+                "A baby's gotta do what a baby's gotta HODL."
+            </p>
+            <p style="color:#aaa; font-size:0.9em; max-width:600px; margin:12px auto 0;">
+                A 6-piece genesis collection where the Rugrats babies discover the blockchain.
+                Each character brings their own crypto personality to the decentralized playground.
+            </p>
+            <div class="collection-stats">
+                <div class="stat-box">
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">Total Supply</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">SRUGRAT</div>
+                    <div class="stat-label">Symbol</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">ERC-721</div>
+                    <div class="stat-label">Standard</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">Genesis</div>
+                    <div class="stat-label">Edition</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <div class="about-section">
+            <h2>🍼 About the Collection</h2>
+            <p>
+                <strong>Satoshi Rugrats</strong> is an NFT collection born from the intersection of
+                crypto culture and 90s nostalgia. Each of the 6 unique characters embodies a
+                distinct archetype from the blockchain world — from the visionary founder to the
+                diamond-hand HODLer, the proof-of-work miner, the proof-of-stake validator,
+                the market whale, and the DeFi developer.
+            </p>
+            <p>
+                Built on the ERC-721 standard, every Satoshi Rugrat token carries rich on-chain
+                metadata including character traits, crypto roles, accessories, and rarity tiers.
+                Own a piece of the decentralized playground.
+            </p>
+        </div>
+
+        <!-- NFT Gallery -->
+        <main>
+            <h2 style="color:#2c3e50; border-bottom:3px solid #f7931a; padding-bottom:10px; margin-bottom:24px;">
+                🎨 NFT Gallery
+            </h2>
+            <div class="nft-grid" id="nftGrid">
+                <!-- Cards injected by JS -->
+            </div>
+        </main>
+
+        <footer>
+            <p><strong>Satoshi Rugrats NFT &mdash; Big World Bigger Ideas</strong></p>
+            <p><em>WWJD</em></p>
+            <p>© 2024-2026 Matthew Brace (Kushmanmb) | All Rights Reserved</p>
+        </footer>
+    </div>
+
+    <script>
+        // NFT collection data (mirrors src/satoshi-rugrats-nft.js)
+        const TOKENS = [
+            {
+                tokenId: 1,
+                name: 'Tommy "Satoshi" Pickles',
+                emoji: '👶',
+                bgClass: 'bg-genesis',
+                badgeClass: 'badge-legendary',
+                rarity: 'Legendary',
+                network: 'Bitcoin',
+                networkClass: 'network-bitcoin',
+                description: 'The fearless leader who invented the first decentralized baby formula. ' +
+                    'His diaper features the original Bitcoin whitepaper and he never backs down from a HODL.',
+                traits: [
+                    { type: 'Role', value: 'Founder / Satoshi' },
+                    { type: 'Accessory', value: 'Bitcoin Screwdriver' },
+                    { type: 'Background', value: 'Genesis Block' },
+                    { type: 'Block Height', value: '#0' }
+                ]
+            },
+            {
+                tokenId: 2,
+                name: 'Chuckie "HODL" Finster',
+                emoji: '😰',
+                bgClass: 'bg-bear-red',
+                badgeClass: 'badge-rare',
+                rarity: 'Rare',
+                network: 'Bitcoin',
+                networkClass: 'network-bitcoin',
+                description: "The most nervous HODLer in the cryptosphere. Chuckie's portfolio is 100% BTC " +
+                    'because he is too scared to sell. His red hair turns orange every time the price dips.',
+                traits: [
+                    { type: 'Role', value: 'Diamond Hand HODLer' },
+                    { type: 'Accessory', value: 'Paper Hands (Refuses To Use)' },
+                    { type: 'HODL Strength', value: '99%' },
+                    { type: 'Background', value: 'Bear Market Red' }
+                ]
+            },
+            {
+                tokenId: 3,
+                name: 'Phil "Hash" DeVille',
+                emoji: '⛏️',
+                bgClass: 'bg-mining',
+                badgeClass: 'badge-uncommon',
+                rarity: 'Uncommon',
+                network: 'Bitcoin',
+                networkClass: 'network-bitcoin',
+                description: 'One half of the twin mining operation. Phil handles the proof-of-work while ' +
+                    'his sister handles proof-of-stake. Together they control 51% of the sandbox hash rate.',
+                traits: [
+                    { type: 'Role', value: 'Proof-of-Work Miner' },
+                    { type: 'Accessory', value: 'ASIC Mining Rattle' },
+                    { type: 'Hash Rate', value: '51%' },
+                    { type: 'Background', value: 'Mining Pool Green' }
+                ]
+            },
+            {
+                tokenId: 4,
+                name: 'Lil "Stake" DeVille',
+                emoji: '🦆',
+                bgClass: 'bg-ethereum',
+                badgeClass: 'badge-uncommon',
+                rarity: 'Uncommon',
+                network: 'Ethereum',
+                networkClass: 'network-ethereum',
+                description: "Phil's twin sister who pivoted to proof-of-stake after the Merge. " +
+                    'Lil has her ETH staked in a validator node shaped like a rubber duck. ' +
+                    'She earns more yield than Phil ever will.',
+                traits: [
+                    { type: 'Role', value: 'Proof-of-Stake Validator' },
+                    { type: 'Accessory', value: 'Validator Node Duck' },
+                    { type: 'Staking APY', value: '4%' },
+                    { type: 'Background', value: 'Ethereum Purple' }
+                ]
+            },
+            {
+                tokenId: 5,
+                name: 'Angelica "Whale" Pickles',
+                emoji: '🐋',
+                bgClass: 'bg-bull-gold',
+                badgeClass: 'badge-epic',
+                rarity: 'Epic',
+                network: 'Multi-Chain',
+                networkClass: 'network-multichain',
+                description: "The ultimate crypto whale who controls the playground's liquidity. " +
+                    "Angelica's Cynthia doll is wrapped in gold. \"You dumb babies don't even know about DCA.\"",
+                traits: [
+                    { type: 'Role', value: 'Market Whale' },
+                    { type: 'Accessory', value: 'Golden Cynthia Doll' },
+                    { type: 'BTC Balance', value: '1,000 BTC' },
+                    { type: 'Background', value: 'Bull Market Gold' }
+                ]
+            },
+            {
+                tokenId: 6,
+                name: 'Susie "DeFi" Carmichael',
+                emoji: '📝',
+                bgClass: 'bg-defi-blue',
+                badgeClass: 'badge-rare',
+                rarity: 'Rare',
+                network: 'Ethereum',
+                networkClass: 'network-ethereum',
+                description: 'The smartest baby in the neighborhood and the only one who actually reads ' +
+                    'smart contract code before signing. Deployed her first DeFi protocol at age 2.',
+                traits: [
+                    { type: 'Role', value: 'DeFi Developer' },
+                    { type: 'Accessory', value: 'Smart Contract Crayons' },
+                    { type: 'Yield APY', value: '20%' },
+                    { type: 'Background', value: 'DeFi Blue' }
+                ]
+            }
+        ];
+
+        function renderNFTCards() {
+            const grid = document.getElementById('nftGrid');
+            grid.innerHTML = TOKENS.map(token => `
+                <div class="nft-card" role="article" aria-label="${token.name} NFT">
+                    <div class="nft-artwork ${token.bgClass}">
+                        ${token.emoji}
+                        <span class="nft-badge ${token.badgeClass}">${token.rarity}</span>
+                    </div>
+                    <div class="nft-info">
+                        <div class="token-id">Token #${token.tokenId} &bull; SRUGRAT</div>
+                        <h3>${token.name}</h3>
+                        <p class="description">${token.description}</p>
+                        <div class="nft-traits">
+                            ${token.traits.map(t =>
+                                `<span class="trait-pill"><strong>${t.type}:</strong> ${t.value}</span>`
+                            ).join('')}
+                        </div>
+                        <span class="network-tag ${token.networkClass}">⛓ ${token.network}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        renderNFTCards();
+    </script>
+</body>
+</html>
