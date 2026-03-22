@@ -153,6 +153,7 @@
     "src/blockchain-council.js",
     "src/ethereum-blockchair.js",
     "src/etherscan-token-balance.js",
+    "src/etherscan-verify.js",
     "src/http-client.js",
     "src/op-return.js",
     "src/eth-call.js",
