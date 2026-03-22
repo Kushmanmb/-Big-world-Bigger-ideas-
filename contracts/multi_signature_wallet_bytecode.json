@@ -1,0 +1,5 @@
+{
+  "_comment": "IMPORTANT: This is a placeholder. The bytecode must be regenerated from source before deploying. Run: solc --optimize --optimize-runs 999999 --evm-version paris --bin contracts/MultiSignatureWallet.sol to produce the full bytecode.",
+  "_warning": "Do not attempt to deploy using this placeholder bytecode. '0x60806040' represents only the first 4 bytes of a typical Solidity contract (free-memory-pointer initialization) and is not functional.",
+  "bytecode": "0x60806040"
+}
