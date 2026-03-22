@@ -221,3 +221,8 @@ htmlcov/
 venv/
 ENV/
 env/
+
+# Auth module user data (never commit real user records)
+users.json
+users-store.json
+auth-users.json
