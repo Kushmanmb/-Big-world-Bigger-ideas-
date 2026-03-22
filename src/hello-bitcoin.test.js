@@ -18,7 +18,7 @@ console.log('=' .repeat(60));
 // Test 1: Constructor with default name
 test('Constructor with default name should work', () => {
   const hello = new HelloBitcoin();
-  assertEqual(hello.name, 'World', 'Default name should be "World"');
+  assertEqual(hello.name, 'kushmanmb', 'Default name should be "kushmanmb"');
   assertEqual(hello.greetingCount, 0, 'Initial greeting count should be 0');
   assert(Array.isArray(hello.greetings), 'Greetings should be an array');
   assertEqual(hello.greetings.length, 0, 'Initial greetings array should be empty');

@@ -7,9 +7,9 @@
 class HelloBitcoin {
   /**
    * Creates a new Hello Bitcoin instance
-   * @param {string} name - The name to greet (default: 'World')
+   * @param {string} name - The name to greet (default: 'kushmanmb')
    */
-  constructor(name = 'World') {
+  constructor(name = 'kushmanmb') {
     this.name = name;
     this.greetingCount = 0;
     this.greetings = [];
