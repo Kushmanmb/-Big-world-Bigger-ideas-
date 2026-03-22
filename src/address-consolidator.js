@@ -1,7 +1,8 @@
 /**
  * Address Consolidation Utility
  * Manages and tracks all Ethereum addresses relevant to kushmanmb
- * Provides consolidated ERC-20 token balance reporting
+ * Provides consolidated ERC-20 token balance reporting and transfer plans
+ * to consolidate all token balances to a single destination address
  */
 
 const { AddressTracker } = require('./address-tracker.js');
@@ -17,6 +18,11 @@ const TRACKED_ADDRESSES = {
   yaketh: 'yaketh.eth'
 };
 
+/**
+ * Destination address for token consolidation transfers
+ */
+const DESTINATION_ADDRESS = 'yaketh.eth';
+
 class AddressConsolidator {
   /**
    * Creates a new Address Consolidator instance
@@ -31,6 +37,7 @@ class AddressConsolidator {
 
   /**
    * Initialize the tracker with all addresses
+   * Loads ENS names and any hex addresses found in resolvers.json
    */
   initializeAddresses() {
     console.log(`Initializing address tracker for ${this.owner}...\n`);
@@ -65,6 +72,34 @@ class AddressConsolidator {
         console.log(`✓ Added ${TRACKED_ADDRESSES.yaketh}`);
       } catch (error) {
         console.warn(`⚠ Could not add ${TRACKED_ADDRESSES.yaketh}: ${error.message}`);
+      }
+    }
+
+    // Load additional hex addresses from resolvers.json
+    const resolversPath = path.join(process.cwd(), 'resolvers.json');
+    if (fs.existsSync(resolversPath)) {
+      try {
+        const resolversData = JSON.parse(fs.readFileSync(resolversPath, 'utf8'));
+        const resolverAddresses = resolversData.resolvers || [];
+        resolverAddresses.forEach(entry => {
+          if (entry.address) {
+            const addr = entry.address.toLowerCase();
+            if (!currentAddresses.includes(addr)) {
+              try {
+                this.tracker.addAddress(
+                  entry.address,
+                  'ethereum',
+                  entry.metadata && entry.metadata.notes ? entry.metadata.notes : 'Address from resolvers.json'
+                );
+                console.log(`✓ Added ${entry.address} (from resolvers.json)`);
+              } catch (error) {
+                console.warn(`⚠ Could not add ${entry.address}: ${error.message}`);
+              }
+            }
+          }
+        });
+      } catch (error) {
+        console.warn(`⚠ Could not load resolvers.json: ${error.message}`);
       }
     }
 
@@ -361,6 +396,144 @@ class AddressConsolidator {
   }
 
   /**
+   * Encodes an ERC-20 transfer(address,uint256) function calldata
+   * @param {string} to - Recipient address (must be 0x hex address)
+   * @param {string|number} amount - Raw token amount in smallest unit
+   * @returns {string} ABI-encoded calldata hex string
+   * @private
+   */
+  _encodeTransferCalldata(to, amount) {
+    // ERC-20 transfer(address,uint256) function selector
+    const selector = '0xa9059cbb';
+
+    // Pad address to 32 bytes (remove 0x prefix, left-pad to 64 hex chars)
+    const paddedAddress = to.replace(/^0x/, '').toLowerCase().padStart(64, '0');
+
+    // Convert amount to BigInt hex, pad to 32 bytes (64 hex chars)
+    let amountHex;
+    try {
+      amountHex = BigInt(amount).toString(16).padStart(64, '0');
+    } catch (e) {
+      amountHex = '0'.padStart(64, '0');
+    }
+
+    return selector + paddedAddress + amountHex;
+  }
+
+  /**
+   * Generates a transfer plan to consolidate all token balances to a destination address
+   * For each non-destination address that holds tokens, creates ERC-20 transfer instructions
+   * @param {object} consolidatedData - Consolidated token data from fetchConsolidatedBalances
+   * @param {string} destinationAddress - Destination address (default: yaketh.eth)
+   * @returns {object} Transfer plan with instructions for each required transfer
+   */
+  generateTransferPlan(consolidatedData, destinationAddress = DESTINATION_ADDRESS) {
+    if (!consolidatedData || !consolidatedData.byAddress) {
+      throw new Error('Invalid consolidated data: byAddress property is required');
+    }
+
+    const normalizedDestination = destinationAddress.toLowerCase();
+    // Determine if destination can be ABI-encoded (requires resolved hex address)
+    const isHexDestination = /^0x[0-9a-f]{40}$/i.test(normalizedDestination);
+    const transfers = [];
+
+    for (const [address, tokens] of Object.entries(consolidatedData.byAddress)) {
+      const normalizedAddress = address.toLowerCase();
+
+      // Skip the destination address — tokens already there need no transfer
+      if (normalizedAddress === normalizedDestination) {
+        continue;
+      }
+
+      tokens.forEach(token => {
+        const rawBalance = token.balance || '0';
+        let hasBalance = false;
+        try {
+          hasBalance = BigInt(rawBalance) > 0n;
+        } catch (e) {
+          hasBalance = parseFloat(rawBalance) > 0;
+        }
+
+        if (hasBalance) {
+          const transfer = {
+            from: address,
+            to: destinationAddress,
+            tokenAddress: token.tokenAddress,
+            tokenName: token.tokenName,
+            tokenSymbol: token.tokenSymbol,
+            rawBalance,
+            approximateBalance: token.balanceApproximate || parseFloat(rawBalance),
+            usdValue: token.usdValue,
+            calldata: isHexDestination
+              ? this._encodeTransferCalldata(normalizedDestination, rawBalance)
+              : null,
+            note: isHexDestination
+              ? null
+              : `Resolve ENS '${destinationAddress}' to a hex address before encoding calldata`
+          };
+
+          transfers.push(transfer);
+        }
+      });
+    }
+
+    return {
+      destination: destinationAddress,
+      totalTransfers: transfers.length,
+      tokensToConsolidate: new Set(transfers.map(t => t.tokenAddress)).size,
+      sourceAddresses: [...new Set(transfers.map(t => t.from))],
+      transfers,
+      timestamp: Date.now()
+    };
+  }
+
+  /**
+   * Formats the transfer plan for display
+   * @param {object} plan - Transfer plan from generateTransferPlan
+   * @returns {string} Formatted output
+   */
+  formatTransferPlan(plan) {
+    if (!plan || typeof plan !== 'object') {
+      return 'No transfer plan available';
+    }
+
+    let output = `Token Transfer Consolidation Plan\n`;
+    output += `${'='.repeat(70)}\n\n`;
+    output += `Destination:           ${plan.destination}\n`;
+    output += `Total Transfers:       ${plan.totalTransfers}\n`;
+    output += `Tokens to Consolidate: ${plan.tokensToConsolidate}\n`;
+    output += `Source Addresses:      ${plan.sourceAddresses.length}\n`;
+    output += `Generated:             ${new Date(plan.timestamp).toISOString()}\n\n`;
+
+    if (plan.transfers.length > 0) {
+      output += `Transfer Instructions:\n`;
+      output += `${'-'.repeat(70)}\n\n`;
+
+      plan.transfers.forEach((transfer, index) => {
+        output += `${index + 1}. Transfer ${transfer.tokenName} (${transfer.tokenSymbol})\n`;
+        output += `   From:     ${transfer.from}\n`;
+        output += `   To:       ${transfer.to}\n`;
+        output += `   Contract: ${transfer.tokenAddress}\n`;
+        output += `   Balance:  ${transfer.rawBalance} (raw)\n`;
+        if (transfer.usdValue !== null && transfer.usdValue !== undefined) {
+          output += `   USD Value: $${parseFloat(transfer.usdValue).toFixed(2)}\n`;
+        }
+        if (transfer.calldata) {
+          output += `   Calldata: ${transfer.calldata}\n`;
+        }
+        if (transfer.note) {
+          output += `   Note:     ${transfer.note}\n`;
+        }
+        output += '\n';
+      });
+    } else {
+      output += 'No transfers needed — all tokens are already at the destination address.\n';
+    }
+
+    return output;
+  }
+
+  /**
    * Display statistics
    */
   displayStatistics() {
@@ -370,12 +543,14 @@ class AddressConsolidator {
   }
 
   /**
-   * Run the complete consolidation workflow
+   * Run the complete consolidation workflow and generate a transfer plan to yaketh.eth
+   * @param {string} destinationAddress - Destination for token transfers (default: yaketh.eth)
    */
-  async run() {
+  async run(destinationAddress = DESTINATION_ADDRESS) {
     try {
       console.log('\n🚀 Starting Address Consolidation Workflow\n');
       console.log('='.repeat(70) + '\n');
+      console.log(`📍 Consolidating all token balances to: ${destinationAddress}\n`);
 
       // Initialize addresses
       this.initializeAddresses();
@@ -394,8 +569,13 @@ class AddressConsolidator {
       console.log('\n📋 Consolidated Report:\n');
       console.log(this.fetcher.formatConsolidatedTokens(consolidated));
 
+      // Generate and display transfer plan
+      const transferPlan = this.generateTransferPlan(consolidated, destinationAddress);
+      console.log('\n💸 Transfer Plan:\n');
+      console.log(this.formatTransferPlan(transferPlan));
+
       console.log('\n✅ Consolidation workflow completed successfully!\n');
-      return consolidated;
+      return { consolidated, transferPlan };
     } catch (error) {
       console.error('\n❌ Error during consolidation:', error.message);
       throw error;
@@ -404,7 +584,7 @@ class AddressConsolidator {
 }
 
 // Export for use as a module
-module.exports = { AddressConsolidator, TRACKED_ADDRESSES };
+module.exports = { AddressConsolidator, TRACKED_ADDRESSES, DESTINATION_ADDRESS };
 
 // Run if executed directly
 if (require.main === module) {

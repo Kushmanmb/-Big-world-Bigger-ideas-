@@ -89,19 +89,14 @@ See [Bitcoin Mining Module](Bitcoin-Mining-Module) for details.
 
 ### How do feature flags work?
 
-Feature flags can be managed via code or ChatOps:
+Feature flags can be managed via code:
 
 ```javascript
 const featureFlags = require('big-world-bigger-ideas').featureFlags;
 featureFlags.setFlag('my_feature', true);
 ```
 
-Or via GitHub comments:
-```
-/chatops run feature set my_feature
-```
-
-See [ChatOps Guide](ChatOps-Guide) for more information.
+See the [Feature Flags Module](Feature-Flags-Module) for more information.
 
 ### Can I track NFT ownership history?
 
@@ -206,7 +201,7 @@ Yes, but consider:
 
 In `feature-flags.json` at the repository root.
 
-### Can I use feature flags without ChatOps?
+### Can I use feature flags without a CI/CD system?
 
 Yes, you can use the Feature Flags module programmatically:
 

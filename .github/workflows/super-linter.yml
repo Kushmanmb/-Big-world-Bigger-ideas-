@@ -1,0 +1,96 @@
+name: Super Linter
+
+# Lint all source files using GitHub Super Linter.
+# The linter configuration is driven by the environment variables in
+# .github/super-linter.env and any per-language config files under
+# .github/linters/.
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  lint:
+    name: Lint Code Base
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Full history is needed for diff-based linting
+          fetch-depth: 0
+
+      - name: Run Super Linter
+        uses: super-linter/super-linter/slim@v7
+        env:
+          # GitHub token used to report lint status
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          # Load per-language configuration from .github/linters/
+          LINTER_RULES_PATH: .github/linters
+
+          # Only lint files changed in the current PR / push (faster CI)
+          VALIDATE_ALL_CODEBASE: false
+
+          # --- Language toggles ---
+          # JavaScript / Node.js
+          VALIDATE_JAVASCRIPT_ES:         true
+          VALIDATE_JAVASCRIPT_STANDARD:   false   # only run one JS linter
+
+          # JSON (e.g. package.json, feature-flags.json)
+          VALIDATE_JSON:                  true
+
+          # YAML (GitHub Actions workflows, config files)
+          VALIDATE_YAML:                  true
+
+          # Markdown documentation
+          VALIDATE_MARKDOWN:              true
+
+          # CSS
+          VALIDATE_CSS:                   true
+
+          # HTML (index.html, editor.html)
+          VALIDATE_HTML:                  true
+
+          # Bash / shell scripts
+          VALIDATE_BASH:                  true
+
+          # Solidity smart contracts
+          VALIDATE_SOLIDITY:              false   # Foundry handles this separately
+
+          # Disable linters not relevant to this repo
+          VALIDATE_PYTHON_PYLINT:         false
+          VALIDATE_PYTHON_FLAKE8:         false
+          VALIDATE_PYTHON_BLACK:          false
+          VALIDATE_PYTHON_MYPY:           false
+          VALIDATE_PYTHON_ISORT:          false
+          VALIDATE_GO:                    false
+          VALIDATE_RUST_2015:             false
+          VALIDATE_RUST_2018:             false
+          VALIDATE_RUST_2021:             false
+          VALIDATE_RUBY:                  false
+          VALIDATE_PHP:                   false
+          VALIDATE_JAVA:                  false
+          VALIDATE_KOTLIN:                false
+          VALIDATE_SWIFT:                 false
+          VALIDATE_TYPESCRIPT_ES:         false
+          VALIDATE_TYPESCRIPT_STANDARD:   false
+
+          # --- Paths to ignore ---
+          # node_modules, dist, lib (vendored/generated code)
+          FILTER_REGEX_EXCLUDE: >-
+            (node_modules|dist|lib|\.min\.js|\.min\.css|package-lock\.json)
+
+          # --- Output format ---
+          LOG_LEVEL: NOTICE

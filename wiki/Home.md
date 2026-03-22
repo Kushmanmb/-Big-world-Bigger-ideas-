@@ -29,7 +29,6 @@ Welcome to the **Big World Bigger Ideas** documentation wiki! This comprehensive
 - **[Development Workflow](Development-Workflow)** - Best practices for contributing
 
 ### Operations & Automation
-- **[ChatOps Commands](ChatOps-Guide)** - Automated feature flag management
 - **[GitHub Actions](GitHub-Actions)** - CI/CD workflows and automation
 
 ### Additional Resources
@@ -61,7 +60,7 @@ This repository provides comprehensive blockchain utilities, crypto clarity tool
 - ✅ **Governance Tools** - DAO council management with voting systems
 - ✅ **Security** - ISO 27001 compliance tracking and ZK-PDF verification
 - ✅ **Developer Friendly** - Comprehensive tests, examples, and documentation
-- ✅ **ChatOps Integration** - Automated feature flag management via GitHub
+- ✅ **Feature Flag Management** - Programmatic runtime feature control
 
 ## 📦 Installation
 

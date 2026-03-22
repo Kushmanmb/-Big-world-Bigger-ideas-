@@ -99,7 +99,7 @@ class ERC20Fetcher {
         path: endpoint,
         method: 'GET',
         headers: {
-          'User-Agent': 'ERC20Fetcher/1.0'
+          'User-Agent': 'kushmanmb/yaketh'
         }
       };
 

@@ -32,7 +32,7 @@ class EthereumBlockchairFetcher {
       hostname: this.baseUrl,
       path: endpoint,
       headers: {
-        'User-Agent': 'EthereumBlockchairFetcher/1.0'
+        'User-Agent': 'kushmanmb/yaketh'
       }
     });
   }

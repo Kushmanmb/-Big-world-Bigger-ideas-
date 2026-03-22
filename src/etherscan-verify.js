@@ -134,7 +134,7 @@ class EtherscanVerifier {
       path: url,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'User-Agent': 'EtherscanVerifier/1.0'
+        'User-Agent': 'kushmanmb/yaketh'
       }
     });
   }

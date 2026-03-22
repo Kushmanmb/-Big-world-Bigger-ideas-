@@ -7,7 +7,7 @@ Runtime feature flag management system for enabling/disabling features without c
 The Feature Flags module provides:
 - Runtime feature toggling
 - Persistent flag storage
-- Programmatic and ChatOps management
+- Programmatic management
 - Flag state tracking with timestamps
 - Simple API for checking feature status
 
@@ -171,23 +171,23 @@ Feature flags are stored in `feature-flags.json` at the repository root:
 }
 ```
 
-## 🤖 ChatOps Integration
+## 🚩 Programmatic Flag Management
 
-Manage flags via GitHub comments. See [ChatOps Guide](ChatOps-Guide) for details.
+Manage flags directly via the API:
 
 **Enable a flag:**
-```
-/chatops run feature set dark_mode
+```javascript
+featureFlags.setFlag('dark_mode', true);
 ```
 
 **Disable a flag:**
-```
-/chatops run feature unset experimental_ui
+```javascript
+featureFlags.setFlag('experimental_ui', false);
 ```
 
 **List all flags:**
-```
-/chatops run feature list
+```javascript
+featureFlags.listFlags();
 ```
 
 ## 💡 Use Cases
@@ -399,7 +399,6 @@ npm run feature-flags:demo
 
 ## 🔗 Related
 
-- [ChatOps Guide](ChatOps-Guide) - Manage flags via GitHub comments
 - [GitHub Actions](GitHub-Actions) - Automated flag updates
 - [API Reference](API-Reference) - Complete API documentation
 

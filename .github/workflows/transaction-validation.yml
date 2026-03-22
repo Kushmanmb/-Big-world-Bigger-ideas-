@@ -1,0 +1,284 @@
+name: Transaction Validation
+
+# Validates blockchain transactions using Etherscan, Mempool.space, and Blockchair APIs.
+# Runs on a self-hosted runner so private network access and custom tooling are available.
+#
+# Triggers:
+#   - Manual dispatch (supply tx hash + chain)
+#   - Issue / PR comment starting with "/validate-tx"
+#
+# Comment syntax:
+#   /validate-tx <txHash> <chain>
+#
+# Examples:
+#   /validate-tx 0xabc...def ethereum
+#   /validate-tx abc...def bitcoin
+
+on:
+  workflow_dispatch:
+    inputs:
+      tx_hash:
+        description: 'Transaction hash to validate'
+        required: true
+      chain:
+        description: 'Chain (ethereum | bitcoin | litecoin | dogecoin)'
+        required: true
+        default: 'bitcoin'
+      etherscan_chain_id:
+        description: 'Etherscan chain ID (1=mainnet, 8453=Base, 137=Polygon)'
+        required: false
+        default: '1'
+
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  # ------------------------------------------------------------------
+  # Parse a /validate-tx comment trigger
+  # ------------------------------------------------------------------
+  parse-comment:
+    if: >
+      github.event_name == 'issue_comment' &&
+      startsWith(github.event.comment.body, '/validate-tx') &&
+      github.event.comment.user.login == 'kushmanmb'
+    runs-on: ubuntu-latest
+    outputs:
+      tx_hash: ${{ steps.parse.outputs.tx_hash }}
+      chain:   ${{ steps.parse.outputs.chain }}
+      valid:   ${{ steps.parse.outputs.valid }}
+    steps:
+      - name: Parse /validate-tx comment
+        id: parse
+        env:
+          BODY: ${{ github.event.comment.body }}
+        run: |
+          # Expected format: /validate-tx <hash> [chain]
+          TX_HASH=$(echo "$BODY" | awk '{print $2}')
+          CHAIN=$(echo "$BODY" | awk '{print $3}')
+          CHAIN="${CHAIN:-bitcoin}"
+
+          if [ -z "$TX_HASH" ]; then
+            echo "valid=false" >> "$GITHUB_OUTPUT"
+            echo "❌ Missing transaction hash in /validate-tx command" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "tx_hash=$TX_HASH" >> "$GITHUB_OUTPUT"
+            echo "chain=$CHAIN"      >> "$GITHUB_OUTPUT"
+            echo "valid=true"        >> "$GITHUB_OUTPUT"
+          fi
+
+  # ------------------------------------------------------------------
+  # Core validation job — runs on a self-hosted runner
+  # ------------------------------------------------------------------
+  validate:
+    name: Validate Transaction (${{ github.event.inputs.chain || needs.parse-comment.outputs.chain }})
+    runs-on: [self-hosted, linux]
+    needs: [parse-comment]
+    if: >
+      always() && (
+        (github.event_name == 'workflow_dispatch' && github.actor == 'kushmanmb') ||
+        (github.event_name == 'issue_comment' && needs.parse-comment.outputs.valid == 'true')
+      )
+
+    env:
+      TX_HASH:  ${{ github.event.inputs.tx_hash  || needs.parse-comment.outputs.tx_hash }}
+      CHAIN:    ${{ github.event.inputs.chain    || needs.parse-comment.outputs.chain   }}
+      ETHERSCAN_CHAIN_ID: ${{ github.event.inputs.etherscan_chain_id || '1' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # ---------------------------------------------------------------
+      # Etherscan validation (Ethereum and EVM-compatible chains)
+      # ---------------------------------------------------------------
+      - name: Validate via Etherscan API
+        id: etherscan
+        if: >
+          env.CHAIN == 'ethereum' ||
+          env.CHAIN == 'base'     ||
+          env.CHAIN == 'polygon'
+        env:
+          ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
+        run: |
+          node - << 'EOF'
+          const TransactionValidator = require('./src/transaction-validator.js');
+
+          async function main() {
+            const txHash  = process.env.TX_HASH;
+            const chainId = parseInt(process.env.ETHERSCAN_CHAIN_ID, 10) || 1;
+            const apiKey  = process.env.ETHERSCAN_API_KEY;
+
+            if (!apiKey) {
+              console.log('⚠️  ETHERSCAN_API_KEY secret not set – skipping Etherscan validation');
+              process.exit(0);
+            }
+
+            const validator = new TransactionValidator({ etherscanApiKey: apiKey });
+            try {
+              const result = await validator.validateEthereumTransaction(txHash, chainId);
+              console.log(validator.formatResult(result));
+              if (!result.isValid) process.exit(1);
+            } catch (err) {
+              console.error('Etherscan validation error:', err.message);
+              process.exit(1);
+            }
+          }
+
+          main();
+          EOF
+
+      # ---------------------------------------------------------------
+      # Mempool.space validation (Bitcoin)
+      # ---------------------------------------------------------------
+      - name: Validate via Mempool.space API
+        id: mempool
+        if: env.CHAIN == 'bitcoin'
+        run: |
+          node - << 'EOF'
+          const TransactionValidator = require('./src/transaction-validator.js');
+
+          async function main() {
+            const txHash = process.env.TX_HASH;
+            const validator = new TransactionValidator();
+            try {
+              const result = await validator.validateBitcoinTransaction(txHash);
+              console.log(validator.formatResult(result));
+              if (!result.isValid) process.exit(1);
+            } catch (err) {
+              console.error('Mempool.space validation error:', err.message);
+              process.exit(1);
+            }
+          }
+
+          main();
+          EOF
+
+      # ---------------------------------------------------------------
+      # Blockchair validation (all supported chains)
+      # ---------------------------------------------------------------
+      - name: Validate via Blockchair API
+        id: blockchair
+        run: |
+          node - << 'EOF'
+          const TransactionValidator = require('./src/transaction-validator.js');
+
+          async function main() {
+            const txHash = process.env.TX_HASH;
+            const chain  = process.env.CHAIN || 'bitcoin';
+            const validator = new TransactionValidator();
+            try {
+              const result = await validator.validateBlockchairTransaction(txHash, chain);
+              console.log(validator.formatResult(result));
+              if (!result.isValid) process.exit(1);
+            } catch (err) {
+              console.error('Blockchair validation error:', err.message);
+              process.exit(1);
+            }
+          }
+
+          main();
+          EOF
+
+      # ---------------------------------------------------------------
+      # Cross-API aggregated validation
+      # ---------------------------------------------------------------
+      - name: Aggregated cross-API validation
+        id: aggregated
+        run: |
+          node - << 'EOF'
+          const TransactionValidator = require('./src/transaction-validator.js');
+
+          async function main() {
+            const txHash = process.env.TX_HASH;
+            const chain  = process.env.CHAIN || 'bitcoin';
+            const apiKey = process.env.ETHERSCAN_API_KEY || null;
+
+            const validator = new TransactionValidator({ etherscanApiKey: apiKey });
+            try {
+              const result = await validator.validateTransaction(txHash, chain);
+              console.log(validator.formatAggregatedResult(result));
+
+              // Write a summary to the GitHub Step Summary
+              const summary = [
+                `## Transaction Validation Summary`,
+                `| Field | Value |`,
+                `|-------|-------|`,
+                `| Hash  | \`${result.txHash}\` |`,
+                `| Chain | ${result.chain} |`,
+                `| Valid | ${result.isValid ? '✅ Yes' : '❌ No'} |`,
+                `| Confirmed by | ${result.confirmedBy} / ${result.totalSources} source(s) |`,
+              ].join('\n');
+              require('fs').appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary + '\n');
+
+              if (!result.isValid) process.exit(1);
+            } catch (err) {
+              console.error('Aggregated validation error:', err.message);
+              process.exit(1);
+            }
+          }
+
+          main();
+          EOF
+        env:
+          ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
+
+  # ------------------------------------------------------------------
+  # Post result as a comment on the triggering issue / PR
+  # ------------------------------------------------------------------
+  post-comment:
+    name: Post Validation Result
+    runs-on: ubuntu-latest
+    needs: [parse-comment, validate]
+    if: >
+      always() &&
+      github.event_name == 'issue_comment' &&
+      needs.parse-comment.outputs.valid == 'true'
+
+    steps:
+      - name: Post result comment
+        uses: actions/github-script@v7
+        env:
+          TX_HASH: ${{ needs.parse-comment.outputs.tx_hash }}
+          CHAIN: ${{ needs.parse-comment.outputs.chain }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const outcome = '${{ needs.validate.result }}';
+            const txHash  = process.env.TX_HASH;
+            const chain   = process.env.CHAIN;
+
+            const icon    = outcome === 'success' ? '✅' : '❌';
+            const status  = outcome === 'success' ? 'passed' : 'failed';
+
+            const body = [
+              `${icon} **Transaction Validation ${status}**`,
+              ``,
+              `| Field | Value |`,
+              `|-------|-------|`,
+              `| Transaction Hash | \`${txHash}\` |`,
+              `| Chain | ${chain} |`,
+              `| Outcome | ${status} |`,
+              ``,
+              `View full details in the [workflow run](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}).`,
+            ].join('\n');
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner:        context.repo.owner,
+              repo:         context.repo.repo,
+              body,
+            });

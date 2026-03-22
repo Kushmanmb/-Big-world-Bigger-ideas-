@@ -10,6 +10,9 @@ class Wallet {
     this.address = null;
     this.privateKey = null;
     this.encryptedData = null;
+    this.isLocked = false;
+    this.isPaused = false;
+    this.ownerAddress = null;
   }
 
   /**
@@ -144,6 +147,9 @@ class Wallet {
     // Generate a wallet address (simplified - not a real blockchain address)
     const hash = crypto.createHash('sha256').update(this.privateKey).digest('hex');
     this.address = '0x' + hash.substring(0, 40);
+
+    // The address that generated the wallet becomes the owner
+    this.ownerAddress = this.address;
     
     return {
       address: this.address,
@@ -171,6 +177,105 @@ class Wallet {
       throw new Error('Invalid encrypted data');
     }
     this.encryptedData = encryptedData;
+  }
+
+  /**
+   * Locks the wallet to prevent sends
+   * Clears the private key from memory for security
+   */
+  lock() {
+    this.isLocked = true;
+    if (this.privateKey) {
+      this.privateKey = this._secureWipe(this.privateKey);
+      this.privateKey = null;
+    }
+  }
+
+  /**
+   * Unlocks the wallet using the encrypted password
+   * @param {string} password - The password to decrypt the wallet with
+   */
+  unlock(password) {
+    if (!this.encryptedData) {
+      throw new Error('No encrypted data found. Encrypt the wallet before unlocking.');
+    }
+    this.decrypt(password);
+    this.isLocked = false;
+  }
+
+  /**
+   * Pauses the wallet to block sends (owner only)
+   * @param {string} callerAddress - Address of the caller; must match ownerAddress
+   */
+  pause(callerAddress) {
+    if (!this.ownerAddress) {
+      throw new Error('Wallet has no owner. Generate the wallet first.');
+    }
+    if (!callerAddress || typeof callerAddress !== 'string') {
+      throw new Error('Caller address must be a non-empty string');
+    }
+    if (callerAddress !== this.ownerAddress) {
+      throw new Error('Only the owner can pause the wallet');
+    }
+    this.isPaused = true;
+  }
+
+  /**
+   * Unpauses the wallet to allow sends (owner only)
+   * @param {string} callerAddress - Address of the caller; must match ownerAddress
+   */
+  unpause(callerAddress) {
+    if (!this.ownerAddress) {
+      throw new Error('Wallet has no owner. Generate the wallet first.');
+    }
+    if (!callerAddress || typeof callerAddress !== 'string') {
+      throw new Error('Caller address must be a non-empty string');
+    }
+    if (callerAddress !== this.ownerAddress) {
+      throw new Error('Only the owner can unpause the wallet');
+    }
+    this.isPaused = false;
+  }
+
+  /**
+   * Sends funds to a recipient address
+   * Throws if the wallet is locked or paused
+   * @param {string} to - Recipient address
+   * @param {number|string} amount - Amount to send
+   * @returns {object} Transaction details
+   */
+  send(to, amount) {
+    if (this.isLocked) {
+      throw new Error('Wallet is locked. Unlock the wallet before sending.');
+    }
+
+    if (this.isPaused) {
+      throw new Error('Wallet is paused. Unpause the wallet before sending.');
+    }
+
+    if (!this.address) {
+      throw new Error('Wallet has not been initialized. Generate or import a wallet first.');
+    }
+
+    if (!to || typeof to !== 'string') {
+      throw new Error('Recipient address must be a non-empty string');
+    }
+
+    if (amount === undefined || amount === null || amount === '') {
+      throw new Error('Amount must be provided');
+    }
+
+    const numericAmount = Number(amount);
+    if (isNaN(numericAmount) || numericAmount <= 0) {
+      throw new Error('Amount must be a positive number');
+    }
+
+    return {
+      from: this.address,
+      to,
+      amount: numericAmount,
+      timestamp: Date.now()
+    };
   }
 }
 

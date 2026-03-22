@@ -146,7 +146,6 @@ function prepareDeployment() {
   
   console.log('\n📖 Copying main documentation files...');
   copyFile('README.md', path.join(siteDir, 'README.md'));
-  copyFile('CHATOPS.md', path.join(siteDir, 'CHATOPS.md'));
   copyFile('DEPLOYMENT.md', path.join(siteDir, 'DEPLOYMENT.md'));
   copyFile('DEPLOYMENT-CHECKLIST.md', path.join(siteDir, 'DEPLOYMENT-CHECKLIST.md'));
   copyFile('ETH_COMPONENT_OWNERSHIP.md', path.join(siteDir, 'ETH_COMPONENT_OWNERSHIP.md'));

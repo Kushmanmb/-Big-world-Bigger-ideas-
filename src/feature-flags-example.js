@@ -61,6 +61,6 @@ console.log(`   After removal: experimental_features exists = ${featureFlags.has
 console.log('✅ Feature flags demo completed!\n');
 console.log('💡 Tips:');
 console.log('   - Use feature flags to enable/disable features without code changes');
-console.log('   - Manage flags via ChatOps: /chatops run feature set <flag_name>');
-console.log('   - List all flags: /chatops run feature list');
-console.log('   - Remove flags: /chatops run feature unset <flag_name>');
+console.log('   - Manage flags programmatically: featureFlags.setFlag(<flag_name>, true/false)');
+console.log('   - List all flags: featureFlags.listFlags()');
+console.log('   - Remove flags: featureFlags.removeFlag(<flag_name>)');

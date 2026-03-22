@@ -104,7 +104,7 @@ Repository maintainers control feature flags and application configuration:
 
 **Responsibilities:**
 - ✅ Enable/disable features via `feature-flags.json`
-- ✅ Manage feature flags through ChatOps commands
+- ✅ Manage feature flags programmatically
 - ✅ Document feature flag purposes and dependencies
 - ✅ Review feature flag impact on users
 
@@ -120,10 +120,9 @@ if (featureFlags.isEnabled('advanced_analytics')) {
 // List all features
 const allFlags = featureFlags.listFlags();
 
-// Via ChatOps (in GitHub issues/PRs)
-// /chatops run feature set my_feature
-// /chatops run feature unset my_feature
-// /chatops run feature list
+// Update flags programmatically
+featureFlags.setFlag('my_feature', true);
+featureFlags.setFlag('my_feature', false);
 ```
 
 ### 4. Wallet Owner
@@ -782,7 +781,7 @@ Proxy proxy = new Proxy(multiSigWalletAddress);
 - [Smart Contracts README](/contracts/README.md)
 - [ERC-721 Module Documentation](/src/ERC721.md)
 - [Token History Tracker](/src/TOKEN-HISTORY.md)
-- [Feature Flags Documentation](/CHATOPS.md)
+- [Feature Flags Documentation](/README.md#-feature-flags)
 - [Main Project README](/README.md)
 
 ### Related Modules
@@ -825,10 +824,10 @@ npm run wallet:demo
 ### Feature Flag Management
 
 ```bash
-# Via ChatOps in GitHub issues/PRs:
-/chatops run feature list
-/chatops run feature set ownership_verification
-/chatops run feature unset legacy_admin_mode
+# Programmatically via Node.js:
+node -e "const ff = require('./src/feature-flags'); ff.setFlag('ownership_verification', true);"
+node -e "const ff = require('./src/feature-flags'); ff.setFlag('legacy_admin_mode', false);"
+node -e "const ff = require('./src/feature-flags'); console.log(JSON.stringify(ff.listFlags(), null, 2));"
 ```
 
 ## ⚠️ Security Warnings

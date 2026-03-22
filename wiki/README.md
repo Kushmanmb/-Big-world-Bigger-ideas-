@@ -16,7 +16,6 @@ The following wiki pages have been created and are ready to be added to the GitH
 - **Bitcoin-Mining-Module.md** - Bitcoin mining statistics module
 
 ### Operations & Automation
-- **ChatOps-Guide.md** - ChatOps commands for feature flag management
 - **Testing-Guide.md** - Comprehensive testing documentation
 
 ### Resources
@@ -89,8 +88,7 @@ Create pages in this order to ensure links work properly:
 3. **API-Reference.md** - Core reference documentation
 4. **ERC721-Module.md** - Module documentation
 5. **Bitcoin-Mining-Module.md** - Module documentation
-6. **ChatOps-Guide.md** - Operations guide
-7. **Testing-Guide.md** - Testing documentation
+6. **Testing-Guide.md** - Testing documentation
 8. **Examples-and-Use-Cases.md** - Examples
 9. **FAQ.md** - Frequently asked questions
 10. **Contributing.md** - Contribution guidelines
@@ -218,7 +216,6 @@ All wiki content files in this directory:
 ├── API-Reference.md                # Complete API documentation
 ├── ERC721-Module.md                # ERC-721 module docs
 ├── Bitcoin-Mining-Module.md        # Bitcoin mining docs
-├── ChatOps-Guide.md                # ChatOps documentation
 ├── Testing-Guide.md                # Testing documentation
 ├── Examples-and-Use-Cases.md       # Usage examples
 ├── FAQ.md                          # Frequently asked questions

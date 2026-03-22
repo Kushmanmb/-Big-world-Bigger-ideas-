@@ -48,7 +48,7 @@ class BlockchairFetcher {
       hostname: this.baseUrl,
       path: endpoint,
       headers: {
-        'User-Agent': 'BlockchairFetcher/1.0'
+        'User-Agent': 'kushmanmb/yaketh'
       }
     });
   }

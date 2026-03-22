@@ -24,7 +24,8 @@ permissions:
 jobs:
   fetch-and-publish:
     runs-on: ubuntu-latest
-    
+    if: github.event_name == 'schedule' || github.actor == 'kushmanmb'
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -196,8 +197,8 @@ jobs:
       
       - name: Commit and push data
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          git config --local user.email "193178375+Kushmanmb@users.noreply.github.com"
+          git config --local user.name "kushmanmb"
           
           git add docs/blockchair-data/
           

@@ -78,7 +78,6 @@ The following files are copied to the `_site` directory for deployment:
 
 **Documentation Files (Root Level):**
 - `README.md` - Main documentation
-- `CHATOPS.md` - ChatOps feature documentation
 - `DEPLOYMENT.md` - This deployment guide
 - `DEPLOYMENT-CHECKLIST.md` - Pre and post-deployment checklist
 - `ETH_COMPONENT_OWNERSHIP.md` - Ethereum component ownership

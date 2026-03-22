@@ -2,8 +2,6 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:
@@ -16,7 +14,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  security-audit:
+    if: (github.ref == format('refs/heads/{0}', github.event.repository.default_branch) || github.event_name == 'workflow_dispatch') && github.actor == 'kushmanmb'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,6 +32,26 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+      - name: Security audit
+        run: npm audit --audit-level=moderate
+
+  build:
+    if: (github.ref == format('refs/heads/{0}', github.event.repository.default_branch) || github.event_name == 'workflow_dispatch') && github.actor == 'kushmanmb'
+    runs-on: ubuntu-latest
+    needs: security-audit
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Build CSS
         run: npm run build:css
@@ -55,15 +74,12 @@ jobs:
           # Copy configuration files
           cp CNAME _site/
           cp feature-flags.json _site/
-          cp mint.json _site/
 
           # Copy source code
           cp -r src _site/
           cp -r contracts _site/
 
           # Copy documentation directories
-          cp -r api-reference _site/
-          cp -r guides _site/
           cp -r docs _site/
           cp -r wiki _site/
 
@@ -74,7 +90,6 @@ jobs:
 
           # Copy main documentation files
           cp README.md _site/
-          cp CHATOPS.md _site/
           cp DEPLOYMENT.md _site/
           cp DEPLOYMENT-CHECKLIST.md _site/
           cp ETH_COMPONENT_OWNERSHIP.md _site/
@@ -85,11 +100,7 @@ jobs:
           cp SECURITY-GUIDE.md _site/ 2>/dev/null || true
           cp SECURITY-AUDIT-SUMMARY.md _site/ 2>/dev/null || true
           cp PUBLISHING.md _site/ 2>/dev/null || true
-          cp MINTLIFY.md _site/ 2>/dev/null || true
           cp FRONTEND.md _site/ 2>/dev/null || true
-
-          # Copy mdx files at root level
-          cp *.mdx _site/ 2>/dev/null || true
 
           echo "Deployment package created with all documentation"
           echo "Contents of _site:"
@@ -116,3 +127,23 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  post-deploy:
+    runs-on: ubuntu-latest
+    needs: deploy
+    permissions:
+      contents: write
+      administration: write
+    steps:
+      - name: Set repository to private and archive
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.repos.update({
+              owner: context.repo.owner,
+              repo:  context.repo.repo,
+              private:  true,
+              archived: true,
+            });
+            core.info('✅ Repository has been set to private and archived.');

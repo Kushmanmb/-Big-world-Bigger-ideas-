@@ -20,7 +20,15 @@ try {
   console.log(`✓ Configuration loaded successfully`);
   console.log(`  Version: ${config.version}`);
   console.log(`  Last Updated: ${config.lastUpdated}`);
-  console.log(`  Total Managers: ${config.managers.length}\n`);
+  console.log(`  Transfer Address: ${config.transferAddress} (${config.transferAddressHex})`);
+  console.log(`  Active Managers: ${config.managers.length}`);
+  if (config.deprecated && config.deprecated.length > 0) {
+    console.log(`  Deprecated Entries: ${config.deprecated.length}`);
+    config.deprecated.forEach(d => {
+      console.log(`    - ${d.tokenAddress}: ${d.reason}`);
+    });
+  }
+  console.log('');
   
   // Create token manager instance
   const manager = new TokenManager('Production Token Manager');
@@ -48,12 +56,13 @@ try {
     console.log();
   });
   
-  // Verify the specific manager requested in the problem statement
+  // Verify the transfer address is yaketh.eth for all active managers
   console.log('=== Verification ===\n');
   
-  // Verify USDC manager
+  const yakethAddress = config.transferAddressHex;
+  
+  // Verify USDC manager is yaketh.eth
   const usdcAddress = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48';
-  const expectedManager = '0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253';
   
   if (manager.hasManager(usdcAddress)) {
     const usdcManager = manager.getManager(usdcAddress);
@@ -61,12 +70,11 @@ try {
     console.log(`  Token:   ${usdcManager.tokenAddress}`);
     console.log(`  Manager: ${usdcManager.managerAddress}`);
     
-    // Verify it matches the expected manager
-    if (usdcManager.managerAddress.toLowerCase() === expectedManager.toLowerCase()) {
-      console.log(`✅ SUCCESS: Manager for ${usdcAddress} is correctly set to ${expectedManager}`);
+    if (usdcManager.managerAddress.toLowerCase() === yakethAddress.toLowerCase()) {
+      console.log(`✅ SUCCESS: USDC manager correctly set to yaketh.eth (${yakethAddress})`);
     } else {
       console.log(`❌ ERROR: Manager mismatch`);
-      console.log(`  Expected: ${expectedManager}`);
+      console.log(`  Expected: ${yakethAddress}`);
       console.log(`  Actual:   ${usdcManager.managerAddress}`);
       process.exit(1);
     }
@@ -75,28 +83,41 @@ try {
     process.exit(1);
   }
   
-  // Verify the newly added manager for 0xEe7aE85f2Fe2239E27D9c1E23fFFe168D63b4055
+  // Verify the token contract address 0xEe7aE85f2Fe2239E27D9c1E23fFFe168D63b4055
   console.log();
-  const newTokenAddress = '0xEe7aE85f2Fe2239E27D9c1E23fFFe168D63b4055';
+  const tokenContractAddress = '0xEe7aE85f2Fe2239E27D9c1E23fFFe168D63b4055';
   
-  if (manager.hasManager(newTokenAddress)) {
-    const tokenManager = manager.getManager(newTokenAddress);
-    console.log(`✓ Manager found for token ${newTokenAddress}`);
+  if (manager.hasManager(tokenContractAddress)) {
+    const tokenManager = manager.getManager(tokenContractAddress);
+    console.log(`✓ Manager found for token ${tokenContractAddress}`);
     console.log(`  Token:   ${tokenManager.tokenAddress}`);
     console.log(`  Manager: ${tokenManager.managerAddress}`);
     
-    // Verify it matches the expected manager
-    if (tokenManager.managerAddress.toLowerCase() === expectedManager.toLowerCase()) {
-      console.log(`✅ SUCCESS: Manager for ${newTokenAddress} is correctly set to ${expectedManager}`);
+    if (tokenManager.managerAddress.toLowerCase() === yakethAddress.toLowerCase()) {
+      console.log(`✅ SUCCESS: Token contract manager correctly set to yaketh.eth (${yakethAddress})`);
     } else {
       console.log(`❌ ERROR: Manager mismatch`);
-      console.log(`  Expected: ${expectedManager}`);
+      console.log(`  Expected: ${yakethAddress}`);
       console.log(`  Actual:   ${tokenManager.managerAddress}`);
       process.exit(1);
     }
   } else {
-    console.log(`❌ ERROR: No manager found for token ${newTokenAddress}`);
+    console.log(`❌ ERROR: No manager found for token ${tokenContractAddress}`);
     process.exit(1);
+  }
+
+  // Verify deprecated tokens are NOT in active managers
+  console.log();
+  const deprecatedAddresses = (config.deprecated || []).map(d => d.tokenAddress.toLowerCase());
+  let allDeprecatedClean = true;
+  deprecatedAddresses.forEach(addr => {
+    if (manager.hasManager(addr)) {
+      console.log(`❌ ERROR: Deprecated token ${addr} is still in active manager list`);
+      allDeprecatedClean = false;
+    }
+  });
+  if (allDeprecatedClean && deprecatedAddresses.length > 0) {
+    console.log(`✅ SUCCESS: All ${deprecatedAddresses.length} deprecated token(s) removed from active configuration`);
   }
   
   console.log('\n✅ Token manager configuration applied successfully!');

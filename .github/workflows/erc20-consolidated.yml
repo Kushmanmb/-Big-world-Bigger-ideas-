@@ -19,7 +19,8 @@ permissions:
 jobs:
   consolidate-balances:
     runs-on: ubuntu-latest
-    
+    if: github.event_name == 'schedule' || github.actor == 'kushmanmb'
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -268,7 +269,7 @@ jobs:
               <div class="links">
                 <a href="report.md" class="link-button">📊 View Consolidated Report</a>
                 <a href="data.json" class="link-button">📄 Download JSON</a>
-                <a href="../kushmanmb/index.html" class="link-button secondary">kushmanmb.eth</a>
+                <a href="../kushmanmb.eth/index.html" class="link-button secondary">kushmanmb.eth</a>
                 <a href="../yaketh/index.html" class="link-button secondary">yaketh.eth</a>
               </div>
               
@@ -369,7 +370,7 @@ jobs:
                 <div class="card">
                   <h3>👤 kushmanmb.eth</h3>
                   <p>ERC-20 token balances for kushmanmb.eth</p>
-                  <a href="kushmanmb/index.html" class="card-link">View Report →</a>
+                  <a href="kushmanmb.eth/index.html" class="card-link">View Report →</a>
                 </div>
                 
                 <div class="card">
@@ -403,8 +404,8 @@ jobs:
       
       - name: Commit and push data
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          git config --local user.email "193178375+Kushmanmb@users.noreply.github.com"
+          git config --local user.name "kushmanmb"
           
           git add docs/erc20-balances/
           

@@ -1,22 +1,8 @@
 {
   "managers": [
     {
-      "tokenAddress": "0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
-      "managerAddress": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253",
-      "metadata": {
-        "tokenName": "Unknown Token",
-        "tokenSymbol": "N/A",
-        "network": "Ethereum Mainnet",
-        "chainId": 1,
-        "type": "Token Contract",
-        "setBy": "Manual Configuration",
-        "notes": "Manager assignment for token 0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B"
-      },
-      "setAt": "2026-02-25T17:22:18.131Z"
-    },
-    {
       "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-      "managerAddress": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253",
+      "managerAddress": "0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17",
       "metadata": {
         "tokenName": "USD Coin",
         "tokenSymbol": "USDC",
@@ -24,28 +10,15 @@
         "chainId": 1,
         "decimals": 6,
         "type": "Stablecoin",
-        "setBy": "Automated Configuration",
-        "notes": "Primary USDC token manager assignment"
+        "setBy": "yaketh.eth",
+        "notes": "USDC token manager updated to yaketh.eth transfer address"
       },
-      "setAt": "2026-02-25T16:07:00.000Z"
-    },
-    {
-      "tokenAddress": "0x0000000000000000000000000000000000000000",
-      "managerAddress": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253",
-      "metadata": {
-        "tokenName": "Zero Address",
-        "tokenSymbol": "ZERO",
-        "network": "Ethereum Mainnet",
-        "chainId": 1,
-        "type": "Special Address",
-        "setBy": "Manual Configuration",
-        "notes": "Manager assignment for zero address"
-      },
-      "setAt": "2026-02-25T16:16:00.000Z"
+      "setAt": "2026-02-25T16:07:00.000Z",
+      "updatedAt": "2026-03-08T21:52:56.156Z"
     },
     {
       "tokenAddress": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-      "managerAddress": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253",
+      "managerAddress": "0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17",
       "metadata": {
         "tokenName": "Tether USD",
         "tokenSymbol": "USDT",
@@ -53,14 +26,15 @@
         "chainId": 1,
         "decimals": 6,
         "type": "Stablecoin",
-        "setBy": "Manual Configuration",
-        "notes": "Manager assignment for USDT stablecoin"
+        "setBy": "yaketh.eth",
+        "notes": "USDT token manager updated to yaketh.eth transfer address"
       },
-      "setAt": "2026-02-25T17:22:18.131Z"
+      "setAt": "2026-02-25T17:22:18.131Z",
+      "updatedAt": "2026-03-08T21:52:56.156Z"
     },
     {
       "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "managerAddress": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253",
+      "managerAddress": "0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17",
       "metadata": {
         "tokenName": "Wrapped Ether",
         "tokenSymbol": "WETH",
@@ -68,26 +42,44 @@
         "chainId": 1,
         "decimals": 18,
         "type": "Wrapped Native Token",
-        "setBy": "Manual Configuration",
-        "notes": "Manager assignment for WETH wrapped ether"
+        "setBy": "yaketh.eth",
+        "notes": "WETH token manager updated to yaketh.eth transfer address"
       },
-      "setAt": "2026-02-25T17:22:18.131Z"
+      "setAt": "2026-03-07T01:23:57.891Z",
+      "updatedAt": "2026-03-08T21:52:56.156Z"
     },
     {
       "tokenAddress": "0xEe7aE85f2Fe2239E27D9c1E23fFFe168D63b4055",
-      "managerAddress": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253",
+      "managerAddress": "0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17",
       "metadata": {
-        "tokenName": "Unknown Token",
+        "tokenName": "Token Contract",
         "tokenSymbol": "N/A",
         "network": "Ethereum Mainnet",
         "chainId": 1,
         "type": "Token Contract",
-        "setBy": "Manual Configuration",
-        "notes": "Manager assignment for token 0xEe7aE85f2Fe2239E27D9c1E23fFFe168D63b4055"
+        "setBy": "yaketh.eth",
+        "notes": "Token contract manager updated to yaketh.eth transfer address"
       },
-      "setAt": "2026-02-25T16:44:38.681Z"
+      "setAt": "2026-02-25T16:44:38.681Z",
+      "updatedAt": "2026-03-08T21:52:56.156Z"
     }
   ],
-  "lastUpdated": "2026-02-25T17:22:18.131Z",
-  "version": "1.0.0"
+  "deprecated": [
+    {
+      "tokenAddress": "0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+      "managerAddress": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253",
+      "deprecatedAt": "2026-03-08T21:52:56.156Z",
+      "reason": "Unknown token with no valid symbol or name; removed from active configuration"
+    },
+    {
+      "tokenAddress": "0x0000000000000000000000000000000000000000",
+      "managerAddress": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253",
+      "deprecatedAt": "2026-03-08T21:52:56.156Z",
+      "reason": "Zero address is not a valid token contract; removed from active configuration"
+    }
+  ],
+  "transferAddress": "yaketh.eth",
+  "transferAddressHex": "0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17",
+  "lastUpdated": "2026-03-08T21:52:56.156Z",
+  "version": "1.1.0"
 }

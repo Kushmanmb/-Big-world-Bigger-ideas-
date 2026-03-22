@@ -276,13 +276,122 @@ For manual verification using `solc-settings.json`:
 5. Upload source files
 6. Submit for verification
 
+## Import Resolution via remappings.txt
+
+### How OpenZeppelin Imports Are Resolved
+
+Solidity imports using the `@openzeppelin/contracts/` prefix are resolved through the remapping:
+
+```
+@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/
+```
+
+This means the import:
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+```
+
+resolves at compile time to:
+
+```
+lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol
+```
+
+The remapping is defined in **three places** to ensure consistent resolution across all tools (all three files already exist in the repository root):
+
+| File | Purpose |
+|------|---------|
+| `remappings.txt` | Foundry's primary remapping source, also read by editors (e.g., Hardhat, solidity-ls) |
+| `foundry.toml` | Inline remappings array for Foundry builds (`remappings = [...]` under `[profile.default]`) |
+| `solc-settings.json` | Standard JSON format for direct `solc --standard-json` usage (key: `"remappings"`) |
+
+### Vendored OpenZeppelin Contracts
+
+The OpenZeppelin ERC20 implementation and its dependencies are vendored directly in this repository under `lib/openzeppelin-contracts/`:
+
+```
+lib/openzeppelin-contracts/contracts/
+├── token/ERC20/
+│   ├── ERC20.sol                    ← resolved target for the import
+│   ├── IERC20.sol                   ← ERC20 standard interface
+│   └── extensions/
+│       └── IERC20Metadata.sol       ← optional metadata extension
+└── utils/
+    └── Context.sol                  ← base context abstraction
+```
+
+These files are committed to the repository so the import always resolves correctly without needing to run `forge install`.
+
+### Example Contract
+
+`contracts/ERC20Token.sol` demonstrates successful import resolution:
+
+```solidity
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+contract ERC20Token is ERC20 {
+    constructor(string memory name_, string memory symbol_, uint256 initialSupply)
+        ERC20(name_, symbol_)
+    {
+        _mint(msg.sender, initialSupply);
+    }
+}
+```
+
+Compile with Foundry to verify resolution:
+
+```bash
+forge build --contracts contracts/ERC20Token.sol
+```
+
+### Error Handling: If the File Moves
+
+If `lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol` is moved or deleted, the compiler will emit:
+
+```
+Error: Source "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol" not found
+```
+
+**Resolution steps:**
+
+1. Verify the file exists at the expected path:
+   ```bash
+   test -f lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol && echo "OK" || echo "MISSING"
+   ```
+
+2. Confirm the remapping in `remappings.txt` is correct:
+   ```
+   @openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/
+   ```
+
+3. Restore the file from the OpenZeppelin repository or re-install via Foundry:
+   ```bash
+   forge install OpenZeppelin/openzeppelin-contracts@v4.9.4 --no-commit
+   ```
+
+### Dependency Management Recommendations
+
+- **Vendoring (current approach):** The required OpenZeppelin files are committed directly to `lib/`. This guarantees reproducible builds without network access and makes the import path immediately verifiable.
+
+- **Git submodules:** For a full OpenZeppelin installation, add it as a submodule:
+  ```bash
+  forge install OpenZeppelin/openzeppelin-contracts --no-commit
+  ```
+  Then add `lib/` to `.gitmodules`. Submodule refs are tracked by git even when `lib/` contents are gitignored.
+
+- **Never change the prefix `@openzeppelin/contracts/`** in import statements without updating `remappings.txt`, `foundry.toml`, and `solc-settings.json` simultaneously.
+
 ## Troubleshooting
 
 ### Common Issues
 
-**Issue: "Library not found"**
+**Issue: "Library not found" / import not resolved**
 ```bash
-# Solution: Install dependencies
+# Verify the vendored file exists
+test -f lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol && echo "OK"
+
+# If missing, re-install dependencies
 forge install
 ```
 

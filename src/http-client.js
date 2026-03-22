@@ -31,7 +31,7 @@ function makeRequest(options) {
       path: options.path,
       method: 'GET',
       headers: options.headers || {
-        'User-Agent': 'HttpClient/1.0'
+        'User-Agent': 'kushmanmb/yaketh'
       }
     };
 

@@ -35,12 +35,10 @@ Each module has:
 - `*.md` - Module documentation (e.g., `ERC721.md`, `BITCOIN-MINING.md`)
 
 **GitHub Configuration (`.github/`):**
-- `.github/workflows/chatops.yml` - ChatOps workflow for feature flag management
 - `.github/copilot-instructions.md` - This file
 
 **Documentation:**
 - `README.md` - Comprehensive repository documentation
-- `CHATOPS.md` - ChatOps and feature flags documentation
 - `src/*.md` - Module-specific documentation
 
 **Contracts Directory (`contracts/`):**
@@ -107,28 +105,6 @@ npm run watch:css
 
 ## GitHub Actions & CI/CD
 
-### ChatOps Workflow (`.github/workflows/chatops.yml`)
-
-**Trigger:** Comments on issues/PRs starting with `/chatops`
-
-**Commands:**
-- `/chatops run feature set <flag_name>` - Enable feature flag
-- `/chatops run feature unset <flag_name>` - Disable feature flag
-- `/chatops run feature list` - List all feature flags
-
-**Workflow Steps:**
-1. Checkout code
-2. Setup Node.js v18
-3. Install dependencies with `npm ci`
-4. Parse and execute command
-5. Commit changes to `feature-flags.json`
-6. Post result as comment
-
-**Permissions Required:**
-- `contents: write` - For committing changes
-- `issues: write` - For posting comments
-- `pull-requests: write` - For PR comments
-
 ## Coding Guidelines
 
 ### Module System
@@ -149,7 +125,7 @@ npm run watch:css
 ### Feature Flags
 - Stored in `feature-flags.json` at repository root
 - Managed via `src/feature-flags.js` module
-- Can be updated via ChatOps commands or programmatically
+- Updated programmatically via the module API
 - Format: `{ "flags": { "flag_name": { "enabled": true, "updatedAt": "..." } } }`
 
 ## Common Patterns

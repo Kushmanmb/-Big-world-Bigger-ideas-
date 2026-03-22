@@ -28,7 +28,6 @@ The wiki includes comprehensive documentation covering:
 - **[Examples & Use Cases](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/Examples-and-Use-Cases)** - Real-world examples
 
 ### 🔧 Operations
-- **[ChatOps Guide](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/ChatOps-Guide)** - Automated feature flag management
 - **[Contributing](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/Contributing)** - How to contribute
 
 ### 💬 Support
@@ -48,7 +47,6 @@ wiki/
 ├── Bitcoin-Mining-Module.md     # Bitcoin mining docs
 ├── Token-History-Module.md      # Token ownership tracking
 ├── Feature-Flags-Module.md      # Feature flags management
-├── ChatOps-Guide.md             # ChatOps documentation
 ├── Testing-Guide.md             # Testing guide
 ├── Examples-and-Use-Cases.md    # Usage examples
 ├── FAQ.md                       # Frequently asked questions
@@ -100,7 +98,7 @@ See [Contributing Guide](https://github.com/kushmanmb-org/-Big-world-Bigger-idea
 ✅ **API reference** with all methods documented  
 ✅ **Real-world examples** and use cases  
 ✅ **Testing guides** and best practices  
-✅ **ChatOps documentation** for automation  
+✅ **Operations guides** for automation  
 ✅ **FAQ** answering common questions  
 ✅ **Contributing guidelines** for developers  
 

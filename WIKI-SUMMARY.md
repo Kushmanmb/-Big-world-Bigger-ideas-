@@ -16,8 +16,7 @@ Comprehensive wiki documentation has been created for the Big World Bigger Ideas
 6. **Bitcoin-Mining-Module.md** (6,229 chars) - Bitcoin mining statistics documentation
 7. **Token-History-Module.md** (8,448 chars) - NFT ownership tracking documentation
 8. **Feature-Flags-Module.md** (9,304 chars) - Feature flag management documentation
-9. **ChatOps-Guide.md** (6,325 chars) - ChatOps automation documentation
-10. **Testing-Guide.md** (7,391 chars) - Testing best practices and procedures
+9. **Testing-Guide.md** (7,391 chars) - Testing best practices and procedures
 11. **Examples-and-Use-Cases.md** (11,852 chars) - Real-world usage examples
 12. **FAQ.md** (9,060 chars) - Frequently asked questions
 13. **Contributing.md** (10,636 chars) - Contribution guidelines for developers
@@ -52,8 +51,7 @@ Comprehensive wiki documentation has been created for the Big World Bigger Ideas
 - Testing Guide
 - Examples & Use Cases
 
-### Operations & Support (3 pages)
-- ChatOps Guide
+### Operations & Support (2 pages)
 - Contributing Guidelines
 - FAQ
 
@@ -85,7 +83,6 @@ Comprehensive wiki documentation has been created for the Big World Bigger Ideas
 ├── Bitcoin-Mining-Module.md    # Module docs
 ├── Token-History-Module.md     # Module docs
 ├── Feature-Flags-Module.md     # Module docs
-├── ChatOps-Guide.md            # Operations
 ├── Testing-Guide.md            # Testing
 ├── Examples-and-Use-Cases.md   # Examples
 ├── FAQ.md                      # Support

@@ -16,7 +16,7 @@ const wallet = new Wallet();
 console.log('Generating new wallet...');
 const walletData = wallet.generate();
 console.log('Wallet Address:', walletData.address);
-console.log('Private Key:', walletData.privateKey.substring(0, 10) + '...');
+console.log('Private Key:', '[REDACTED]');
 
 // Encrypt the wallet with a password
 console.log('\nEncrypting wallet...');
@@ -47,7 +47,7 @@ try {
   const decryptedData = importedWallet.decrypt(newPassword);
   console.log('Wallet decrypted successfully!');
   console.log('Decrypted Address:', decryptedData.address);
-  console.log('Decrypted Private Key:', decryptedData.privateKey.substring(0, 10) + '...');
+  console.log('Decrypted Private Key:', '[REDACTED]');
 } catch (error) {
   console.error('Decryption failed:', error.message);
 }

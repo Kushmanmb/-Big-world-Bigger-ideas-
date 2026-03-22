@@ -84,6 +84,21 @@ const Resolver = require('./src/resolver.js');
 // Token manager
 const TokenManager = require('./src/token-manager.js');
 
+// Google API announcements
+const GoogleAnnouncements = require('./src/google-announcements.js');
+
+// Microsoft API announcements
+const MicrosoftAnnouncements = require('./src/microsoft-announcements.js');
+
+// Ownership announcement coordinator
+const OwnershipAnnouncements = require('./src/ownership-announcements.js');
+
+// Etherscan contract verification
+const EtherscanVerifier = require('./src/etherscan-verify.js');
+
+// Blockchain path fetcher
+const { BlockchainPathFetcher, DEFAULT_OWNER } = require('./src/blockchain-path-fetcher.js');
+
 /**
  * Main exports for the package
  */
@@ -146,6 +161,18 @@ module.exports = {
   WithdrawalCredentials,
   WITHDRAWAL_TYPES,
   
+  // Announcement utilities
+  GoogleAnnouncements,
+  MicrosoftAnnouncements,
+  OwnershipAnnouncements,
+
+  // Etherscan contract verification
+  EtherscanVerifier,
+
+  // Blockchain path fetcher
+  BlockchainPathFetcher,
+  DEFAULT_OWNER,
+
   // Helper utilities
   HelloBitcoin
 };

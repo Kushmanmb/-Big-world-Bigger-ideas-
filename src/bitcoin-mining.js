@@ -31,7 +31,7 @@ class BitcoinMiningFetcher {
       hostname: this.baseUrl,
       path: endpoint,
       headers: {
-        'User-Agent': 'BitcoinMiningFetcher/1.0'
+        'User-Agent': 'kushmanmb/yaketh'
       }
     });
   }

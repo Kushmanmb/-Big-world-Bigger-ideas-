@@ -58,7 +58,7 @@ class EtherscanTokenBalanceFetcher {
       path: url,
       headers: {
         'Content-Type': 'application/json',
-        'User-Agent': 'EtherscanTokenBalanceFetcher/1.0'
+        'User-Agent': 'kushmanmb/yaketh'
       }
     });
   }

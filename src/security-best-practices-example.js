@@ -21,7 +21,7 @@ try {
   const walletData = wallet.generate();
   console.log('   ✓ Wallet generated');
   console.log('   Address:', walletData.address);
-  console.log('   Private Key:', walletData.privateKey.substring(0, 10) + '...[REDACTED]');
+  console.log('   Private Key:', '[REDACTED]');
   
   // Encrypt with a strong password
   console.log('\n2. Encrypting wallet with strong password...');
@@ -45,7 +45,7 @@ try {
   const decrypted = newWallet.decrypt(password);
   console.log('   ✓ Wallet decrypted successfully');
   console.log('   Address:', decrypted.address);
-  console.log('   Private Key:', decrypted.privateKey.substring(0, 10) + '...[REDACTED]');
+  console.log('   Private Key:', '[REDACTED]');
   
   // Clear again after use
   console.log('\n5. Clearing sensitive data after use...');
@@ -65,7 +65,7 @@ console.log('   Good: "MyV3ryS3cur3P@ssw0rd!2026"');
 
 console.log('\n❌ DON\'T: Log private keys to console');
 console.log('   Bad: console.log(privateKey)');
-console.log('   Good: console.log(privateKey.substring(0, 10) + "...[REDACTED]")');
+console.log('   Good: console.log("[REDACTED]") // never log any portion of the key');
 
 console.log('\n❌ DON\'T: Store private keys in plain text');
 console.log('   Bad: localStorage.setItem("key", privateKey)');

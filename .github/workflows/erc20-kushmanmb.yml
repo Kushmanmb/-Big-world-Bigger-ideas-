@@ -19,7 +19,8 @@ permissions:
 jobs:
   fetch-token-balances:
     runs-on: ubuntu-latest
-    
+    if: github.event_name == 'schedule' || github.actor == 'kushmanmb'
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -39,7 +40,7 @@ jobs:
         id: fetch
         run: |
           # Create output directory
-          mkdir -p docs/erc20-balances/kushmanmb
+          mkdir -p docs/erc20-balances/kushmanmb.eth
           
           # Create a Node.js script to fetch and save data
           cat > fetch-erc20-kushmanmb.js << 'EOF'
@@ -93,7 +94,7 @@ jobs:
                 timestamp: timestamp,
                 data: balances
               };
-              fs.writeFileSync('docs/erc20-balances/kushmanmb/balances.json', JSON.stringify(rawData, null, 2));
+              fs.writeFileSync('docs/erc20-balances/kushmanmb.eth/balances.json', JSON.stringify(rawData, null, 2));
               console.log('Raw data saved to balances.json');
               
             } catch (error) {
@@ -108,7 +109,7 @@ jobs:
             output += `**Repository:** [Big World Bigger Ideas](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-)\n`;
             
             // Save the report
-            fs.writeFileSync('docs/erc20-balances/kushmanmb/report.md', output);
+            fs.writeFileSync('docs/erc20-balances/kushmanmb.eth/report.md', output);
             console.log('Report saved to report.md');
             
             // Create an index file for GitHub Pages
@@ -196,7 +197,7 @@ jobs:
           </body>
           </html>`;
             
-            fs.writeFileSync('docs/erc20-balances/kushmanmb/index.html', indexContent);
+            fs.writeFileSync('docs/erc20-balances/kushmanmb.eth/index.html', indexContent);
             console.log('Index page saved to index.html');
           }
           
@@ -211,10 +212,10 @@ jobs:
       
       - name: Commit and push data
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          git config --local user.email "193178375+Kushmanmb@users.noreply.github.com"
+          git config --local user.name "kushmanmb"
           
-          git add docs/erc20-balances/kushmanmb/
+          git add docs/erc20-balances/kushmanmb.eth/
           
           if git diff --staged --quiet; then
             echo "No changes to commit"

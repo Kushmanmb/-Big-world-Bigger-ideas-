@@ -21,6 +21,7 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    if: github.actor == 'kushmanmb'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -43,6 +44,7 @@ jobs:
   publish:
     needs: test
     runs-on: ubuntu-latest
+    if: github.actor == 'kushmanmb'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -62,8 +64,8 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "kushmanmb"
+          git config user.email "193178375+Kushmanmb@users.noreply.github.com"
 
       - name: Bump version
         if: github.event.inputs.bump_type
@@ -79,7 +81,7 @@ jobs:
           echo "✅ Version bump pushed successfully"
 
       - name: Publish to npm
-        run: npm publish --provenance --access public
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

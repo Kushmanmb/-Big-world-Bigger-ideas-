@@ -144,7 +144,7 @@ The following files are automatically deployed to GitHub Pages:
 - `feature-flags.json` - Feature flags
 - `src/` - Source JavaScript modules
 - `contracts/` - Smart contract files
-- Documentation files (README.md, CHATOPS.md, etc.)
+- Documentation files (README.md, etc.)
 
 ### Excluded from Deployment
 
