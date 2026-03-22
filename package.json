@@ -66,6 +66,8 @@
     "etherscan-stats:demo": "node src/etherscan-stats-example.js",
     "blockchain-path-fetcher:demo": "node src/blockchain-path-fetcher-example.js",
     "transaction-validator:demo": "node src/transaction-validator-example.js",
+    "block-rewards": "node scripts/fetch-block-rewards.js",
+    "hello-bitcoin": "node scripts/hello-bitcoin.js",
     "metadata": "node src/metadata.js",
     "metadata:demo": "node src/metadata-example.js",
     "prepublishOnly": "npm test",
