@@ -251,6 +251,69 @@ forge create contracts/Proxy.sol:Proxy \
   --etherscan-api-key <API_KEY>
 ```
 
+### Sepolia Testnet Deployment
+
+The repository is pre-configured for the Sepolia testnet
+(`https://rpc.sepolia.ethpandaops.io`) via `foundry.toml` and the
+`scripts/deploy-sepolia.sh` helper script.
+
+#### 1. Set up environment variables
+
+Copy `.env.example` to `.env` and fill in your values:
+
+```bash
+cp .env.example .env
+# Then edit .env:
+#   PRIVATE_KEY=0x...         (your deployer private key – never commit this)
+#   ETHERSCAN_API_KEY=...     (from https://etherscan.io/apis)
+#   SEPOLIA_RPC_URL=...       (optional, defaults to https://rpc.sepolia.ethpandaops.io)
+```
+
+Source the file before running any deployment command:
+
+```bash
+source .env
+export PRIVATE_KEY ETHERSCAN_API_KEY SEPOLIA_RPC_URL
+```
+
+#### 2. Deploy using the helper script
+
+```bash
+# Deploy ERC20Token with constructor arguments
+./scripts/deploy-sepolia.sh contracts/ERC20Token.sol ERC20Token \
+  "MyToken" "MTK" 1000000000000000000000000
+
+# Deploy Proxy with an admin address
+./scripts/deploy-sepolia.sh contracts/Proxy.sol Proxy 0xYourAdminAddress
+```
+
+#### 3. Deploy directly with forge create
+
+> **Security note:** `--private-key` is passed on the command line, which may
+> be visible in process listings (`ps aux`). For greater security use a
+> hardware wallet (`--ledger`) or an encrypted keystore
+> (`--keystore <path> --password <pass>`) instead of a raw private key.
+
+```bash
+forge create contracts/ERC20Token.sol:ERC20Token \
+  --rpc-url "${SEPOLIA_RPC_URL:-https://rpc.sepolia.ethpandaops.io}" \
+  --private-key "$PRIVATE_KEY" \
+  --constructor-args "MyToken" "MTK" 1000000000000000000000000 \
+  --verify \
+  --verifier etherscan \
+  --etherscan-api-key "$ETHERSCAN_API_KEY"
+```
+
+The `[rpc_endpoints]` and `[etherscan]` sections in `foundry.toml` let you also
+reference Sepolia by name in `forge script`:
+
+```bash
+forge script script/Deploy.s.sol:DeployScript \
+  --rpc-url sepolia \
+  --broadcast \
+  --verify
+```
+
 ## Verification
 
 ### Verify on Block Explorer
