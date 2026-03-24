@@ -17,10 +17,11 @@ async function runExample() {
   console.log('\n📊 Example 1: Bitcoin block rewards (sample data)\n');
   console.log('='.repeat(60));
 
+  // Sample data uses BTC units for avgRewards, matching mempool reward docs/examples
   const sampleBtcData = [
-    { timestamp: 1609459200, blockHeight: 665000, avgRewards: 625000000, blockCount: 144 },
-    { timestamp: 1609545600, blockHeight: 665144, avgRewards: 624875000, blockCount: 143 },
-    { timestamp: 1609632000, blockHeight: 665287, avgRewards: 625125000, blockCount: 145 }
+    { timestamp: 1609459200, blockHeight: 665000, avgRewards: 6.25, blockCount: 144 },
+    { timestamp: 1609545600, blockHeight: 665144, avgRewards: 6.24875, blockCount: 143 },
+    { timestamp: 1609632000, blockHeight: 665287, avgRewards: 6.25125, blockCount: 145 }
   ];
 
   // Simulate what fetch() does internally without hitting the network
