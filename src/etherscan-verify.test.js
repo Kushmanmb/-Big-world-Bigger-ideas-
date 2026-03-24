@@ -91,13 +91,13 @@ async function runTests() {
   try {
     const verifier = new EtherscanVerifier('test-api-key', 8453);
     assertEqual(verifier.chainId, 8453, 'Should set custom chain ID (Base)');
-    assertEqual(verifier.apiBaseUrl, 'api.basescan.org', 'Should use Base API URL');
+    assertEqual(verifier.apiBaseUrl, 'api.etherscan.io', 'Should use unified Etherscan v2 API URL');
 
     const polygonVerifier = new EtherscanVerifier('test-api-key', 137);
-    assertEqual(polygonVerifier.apiBaseUrl, 'api.polygonscan.com', 'Should use Polygon API URL');
+    assertEqual(polygonVerifier.apiBaseUrl, 'api.etherscan.io', 'Should use unified Etherscan v2 API URL for Polygon');
 
     const optimismVerifier = new EtherscanVerifier('test-api-key', 10);
-    assertEqual(optimismVerifier.apiBaseUrl, 'api-optimistic.etherscan.io', 'Should use Optimism API URL');
+    assertEqual(optimismVerifier.apiBaseUrl, 'api.etherscan.io', 'Should use unified Etherscan v2 API URL for Optimism');
   } catch (error) {
     assert(false, `Custom chain ID test failed: ${error.message}`);
   }
@@ -434,6 +434,17 @@ async function runTests() {
     }, 'Should reject empty address');
   } catch (error) {
     assert(false, `Get contract creation validation test failed: ${error.message}`);
+  }
+
+  // Test 18: Verify _makePostRequest method exists for Etherscan API v2 POST support
+  console.log('\n📮 Testing POST request method exists...');
+  try {
+    const verifier = new EtherscanVerifier('test-api-key');
+    assert(typeof verifier._makePostRequest === 'function', 'Should have _makePostRequest method for v2 API');
+    assert(typeof verifier._makeRequest === 'function', 'Should have _makeRequest method for v2 API GET requests');
+    assertEqual(verifier.apiBaseUrl, 'api.etherscan.io', 'Should use unified v2 API endpoint for all chains');
+  } catch (error) {
+    assert(false, `POST request method test failed: ${error.message}`);
   }
 
   // Final results
