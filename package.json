@@ -123,6 +123,7 @@
   ],
   "author": "Matthew Brace <kushmanmb@gmx.com>",
   "owner": "kushmanmb.eth",
+  "coinbaseId": "kushman.cb.id",
   "controller": "yaketh.eth",
   "license": "ISC",
   "type": "commonjs",
