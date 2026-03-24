@@ -99,6 +99,9 @@ const EtherscanVerifier = require('./src/etherscan-verify.js');
 // Blockchain path fetcher
 const { BlockchainPathFetcher, DEFAULT_OWNER } = require('./src/blockchain-path-fetcher.js');
 
+// Validator rewards parser
+const ValidatorRewards = require('./src/validator-rewards.js');
+
 /**
  * Main exports for the package
  */
@@ -172,6 +175,9 @@ module.exports = {
   // Blockchain path fetcher
   BlockchainPathFetcher,
   DEFAULT_OWNER,
+
+  // Validator rewards parser
+  ValidatorRewards,
 
   // Helper utilities
   HelloBitcoin

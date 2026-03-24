@@ -4,7 +4,7 @@
   "description": "Blockchain network documentation and crypto clarity platform",
   "main": "index.js",
   "scripts": {
-    "test": "node src/wallet.test.js && node src/feature-flags.test.js && node src/erc721.test.js && node src/erc20.test.js && node src/token-history.test.js && node src/token-manager.test.js && node src/bitcoin-mining.test.js && node src/hello-bitcoin.test.js && node src/consensus-tracker.test.js && node src/address-tracker.test.js && node src/address-consolidator.test.js && node src/litecoin-blockchair.test.js && node src/ethereum-blockchair.test.js && node src/iso27001.test.js && node src/zkpdf.test.js && node src/contract-abi.test.js && node src/blockchain-council.test.js && node src/google-announcements.test.js && node src/microsoft-announcements.test.js && node src/ownership-announcements.test.js && node src/etherscan-verify.test.js && node src/blockchain-path-fetcher.test.js && node src/transaction-validator.test.js",
+    "test": "node src/wallet.test.js && node src/feature-flags.test.js && node src/erc721.test.js && node src/erc20.test.js && node src/token-history.test.js && node src/token-manager.test.js && node src/bitcoin-mining.test.js && node src/hello-bitcoin.test.js && node src/consensus-tracker.test.js && node src/address-tracker.test.js && node src/address-consolidator.test.js && node src/litecoin-blockchair.test.js && node src/ethereum-blockchair.test.js && node src/iso27001.test.js && node src/zkpdf.test.js && node src/contract-abi.test.js && node src/blockchain-council.test.js && node src/google-announcements.test.js && node src/microsoft-announcements.test.js && node src/ownership-announcements.test.js && node src/etherscan-verify.test.js && node src/blockchain-path-fetcher.test.js && node src/transaction-validator.test.js && node src/validator-rewards.test.js",
     "test:wallet": "node src/wallet.test.js",
     "test:eth-call": "node src/eth-call.test.js",
     "test:feature-flags": "node src/feature-flags.test.js",
@@ -35,6 +35,7 @@
     "test:etherscan-stats": "node src/etherscan-stats.test.js",
     "test:blockchain-path-fetcher": "node src/blockchain-path-fetcher.test.js",
     "test:transaction-validator": "node src/transaction-validator.test.js",
+    "test:validator-rewards": "node src/validator-rewards.test.js",
     "build:css": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
     "watch:css": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
     "wallet:demo": "node src/example.js",
@@ -66,6 +67,7 @@
     "etherscan-stats:demo": "node src/etherscan-stats-example.js",
     "blockchain-path-fetcher:demo": "node src/blockchain-path-fetcher-example.js",
     "transaction-validator:demo": "node src/transaction-validator-example.js",
+    "validator-rewards:demo": "node src/validator-rewards-example.js",
     "metadata": "node src/metadata.js",
     "metadata:demo": "node src/metadata-example.js",
     "prepublishOnly": "npm test",
@@ -165,6 +167,7 @@
     "src/etherscan-stats.js",
     "src/blockchain-path-fetcher.js",
     "src/transaction-validator.js",
+    "src/validator-rewards.js",
     "src/*.md",
     "README.md"
   ],
