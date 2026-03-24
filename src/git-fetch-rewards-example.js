@@ -3,7 +3,7 @@
  * Demonstrates how to use the GitFetchRewards module
  */
 
-const { GitFetchRewards, RewardCommit } = require('./git-fetch-rewards');
+const { GitFetchRewards } = require('./git-fetch-rewards');
 
 async function runExample() {
   console.log('🌏 Big World Bigger Ideas — Git Fetch Rewards Example\n');
