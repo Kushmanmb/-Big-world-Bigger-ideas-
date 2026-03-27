@@ -2,7 +2,7 @@
  * Test suite for http-client module
  */
 
-const { makeRequest, CacheManager } = require('./http-client');
+const { makeRequest, makePostRequest, CacheManager } = require('./http-client');
 const { test, testAsync, assertEqual, assertNotNull, assertThrows, printSummary } = require('./test-helpers');
 
 console.log('Running HTTP Client Tests...\n');
@@ -87,6 +87,11 @@ testAsync('CacheManager should expire old cache entries', async () => {
 // makeRequest tests - Note: These test the structure, not actual HTTP calls
 test('makeRequest should be a function', () => {
   assertEqual(typeof makeRequest, 'function');
+});
+
+// makePostRequest tests
+test('makePostRequest should be a function', () => {
+  assertEqual(typeof makePostRequest, 'function');
 });
 
 // Summary

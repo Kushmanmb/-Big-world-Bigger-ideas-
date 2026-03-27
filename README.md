@@ -11,6 +11,7 @@
 [![npm version](https://img.shields.io/npm/v/big-world-bigger-ideas?style=flat-square)](https://www.npmjs.com/package/big-world-bigger-ideas)
 [![Profile](https://img.shields.io/badge/Profile-kushmanmb.org-informational?style=flat-square&logo=ethereum)](https://kushmanmb.org)
 [![ENS](https://img.shields.io/badge/ENS-kushmanmb.eth-9cf?style=flat-square&logo=ethereum)](https://app.ens.domains/name/kushmanmb.eth)
+[![Coinbase ID](https://img.shields.io/badge/Coinbase%20ID-kushman.cb.id-0052FF?style=flat-square&logo=coinbase)](https://kushman.cb.id)
 [![Email](https://img.shields.io/badge/Contact-kushmanmb@gmx.com-red?style=flat-square&logo=gmail)](mailto:kushmanmb@gmx.com)
 
 [![Tests](https://img.shields.io/badge/Tests-Passing-success?style=flat-square&logo=github-actions)](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions)
@@ -27,6 +28,7 @@
 **Organization:** [kushmanmb-org](https://github.com/kushmanmb-org)  
 **Email:** kushmanmb@gmx.com  
 **ENS:** kushmanmb.eth  
+**Coinbase ID:** kushman.cb.id  
 
 This repository is the original work and intellectual property of Matthew Brace. All blockchain utilities, crypto clarity tools, and documentation contained herein were created, designed, and maintained by the owner.
 
@@ -37,6 +39,7 @@ This repository is the original work and intellectual property of Matthew Brace.
 - ✅ **Repository Ownership**: Confirmed and documented
 - ✅ **Commit History**: All contributions tracked and verified
 - ✅ **NPM Package**: Published and maintained by author
+- ✅ **Coinbase ID**: kushman.cb.id
 
 ---
 

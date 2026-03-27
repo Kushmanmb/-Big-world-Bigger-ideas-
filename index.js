@@ -99,8 +99,8 @@ const EtherscanVerifier = require('./src/etherscan-verify.js');
 // Blockchain path fetcher
 const { BlockchainPathFetcher, DEFAULT_OWNER } = require('./src/blockchain-path-fetcher.js');
 
-// Validator rewards parser
-const ValidatorRewards = require('./src/validator-rewards.js');
+// BTCK (BtcTurk) exchange API
+const BTCKFetcher = require('./src/btck.js');
 
 /**
  * Main exports for the package
@@ -176,8 +176,8 @@ module.exports = {
   BlockchainPathFetcher,
   DEFAULT_OWNER,
 
-  // Validator rewards parser
-  ValidatorRewards,
+  // BTCK (BtcTurk) exchange API
+  BTCKFetcher,
 
   // Helper utilities
   HelloBitcoin

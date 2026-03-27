@@ -70,6 +70,73 @@ function makeRequest(options) {
 }
 
 /**
+ * Makes an HTTP/HTTPS POST request with form-encoded body
+ * @param {Object} options - Request options
+ * @param {string} options.hostname - The hostname to request
+ * @param {number} [options.port] - The port (defaults to 443 for https, 80 for http)
+ * @param {string} options.path - The request path
+ * @param {string} [options.protocol='https'] - Protocol to use ('http' or 'https')
+ * @param {Object} [options.headers] - Additional headers
+ * @param {number} [options.timeout=10000] - Request timeout in milliseconds
+ * @param {Object} options.body - Request body as key-value pairs (form-encoded)
+ * @returns {Promise<any>} Parsed JSON response
+ */
+function makePostRequest(options) {
+  return new Promise((resolve, reject) => {
+    const protocol = options.protocol === 'http' ? http : https;
+    const port = options.port || (options.protocol === 'http' ? 80 : 443);
+    const timeout = options.timeout || 10000;
+
+    const bodyString = new URLSearchParams(options.body || {}).toString();
+
+    const requestOptions = {
+      hostname: options.hostname,
+      port: port,
+      path: options.path,
+      method: 'POST',
+      headers: Object.assign({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(bodyString),
+        'User-Agent': 'kushmanmb/yaketh'
+      }, options.headers || {})
+    };
+
+    const req = protocol.request(requestOptions, (res) => {
+      let data = '';
+
+      res.on('data', (chunk) => {
+        data += chunk;
+      });
+
+      res.on('end', () => {
+        try {
+          if (res.statusCode >= 200 && res.statusCode < 300) {
+            const parsed = JSON.parse(data);
+            resolve(parsed);
+          } else {
+            reject(new Error(`HTTP ${res.statusCode}: ${data}`));
+          }
+        } catch (error) {
+          reject(new Error(`Failed to parse response: ${error.message}`));
+        }
+      });
+    });
+
+    req.on('error', (error) => {
+      reject(new Error(`Request failed: ${error.message}`));
+    });
+
+    req.setTimeout(timeout, () => {
+      req.destroy();
+      reject(new Error('Request timeout'));
+    });
+
+    req.write(bodyString);
+    req.end();
+  });
+}
+
+/**
  * Simple cache manager for API responses
  */
 class CacheManager {
@@ -138,5 +205,6 @@ class CacheManager {
 
 module.exports = {
   makeRequest,
+  makePostRequest,
   CacheManager
 };
