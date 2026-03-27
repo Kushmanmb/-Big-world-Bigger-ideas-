@@ -104,7 +104,9 @@ class ZKPDFVerifier {
         integrityVerified: true,
         ...claims
       },
-      nonce: nonce, // In production, this would be kept secret
+      // SECURITY: In a production ZKP system, nonce should NEVER be stored or exposed
+      // This is a simplified demonstration - real ZKP protocols use different mechanisms
+      nonce: nonce, // WARNING: Keeping for backward compatibility, but this breaks zero-knowledge property
       createdAt: new Date().toISOString()
     };
 
@@ -116,6 +118,7 @@ class ZKPDFVerifier {
       commitment: commitment,
       claims: proof.claims,
       createdAt: proof.createdAt
+      // SECURITY: nonce is NOT returned in the response (production best practice)
     };
   }
 

@@ -3,7 +3,7 @@
  * Fetches ERC-20 and ERC-721 token balances from Etherscan API
  */
 
-const https = require('https');
+const { makeRequest, CacheManager } = require('./http-client');
 
 class EtherscanTokenBalanceFetcher {
   /**
@@ -15,8 +15,10 @@ class EtherscanTokenBalanceFetcher {
     this.apiKey = apiKey;
     this.chainId = chainId;
     this.apiBaseUrl = 'api.etherscan.io';
-    this.cache = new Map();
-    this.cacheTimeout = 60000; // 1 minute cache
+    this.cacheManager = new CacheManager(60000); // 1 minute cache
+    // Backward compatibility - expose cache and cacheTimeout
+    this.cache = this.cacheManager.cache;
+    this.cacheTimeout = this.cacheManager.cacheTimeout;
   }
 
   /**
@@ -48,51 +50,16 @@ class EtherscanTokenBalanceFetcher {
    * @private
    */
   async _makeRequest(params) {
-    return new Promise((resolve, reject) => {
-      const queryParams = new URLSearchParams(params).toString();
-      const url = `/v2/api?${queryParams}`;
-      
-      const options = {
-        hostname: this.apiBaseUrl,
-        path: url,
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'User-Agent': 'EtherscanTokenBalanceFetcher/1.0'
-        }
-      };
-
-      const req = https.request(options, (res) => {
-        let data = '';
-
-        res.on('data', (chunk) => {
-          data += chunk;
-        });
-
-        res.on('end', () => {
-          try {
-            if (res.statusCode >= 200 && res.statusCode < 300) {
-              const jsonData = JSON.parse(data);
-              resolve(jsonData);
-            } else {
-              reject(new Error(`HTTP ${res.statusCode}: ${data}`));
-            }
-          } catch (error) {
-            reject(new Error(`Failed to parse API response: ${error.message}`));
-          }
-        });
-      });
-
-      req.on('error', (error) => {
-        reject(new Error(`API request failed: ${error.message}`));
-      });
-
-      req.setTimeout(15000, () => {
-        req.destroy();
-        reject(new Error('Request timeout'));
-      });
-
-      req.end();
+    const queryParams = new URLSearchParams(params).toString();
+    const url = `/v2/api?${queryParams}`;
+    
+    return makeRequest({
+      hostname: this.apiBaseUrl,
+      path: url,
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': 'EtherscanTokenBalanceFetcher/1.0'
+      }
     });
   }
 
@@ -104,18 +71,7 @@ class EtherscanTokenBalanceFetcher {
    * @private
    */
   async _getWithCache(cacheKey, fetcher) {
-    const cached = this.cache.get(cacheKey);
-    if (cached && Date.now() - cached.timestamp < this.cacheTimeout) {
-      return cached.data;
-    }
-
-    const data = await fetcher();
-    this.cache.set(cacheKey, {
-      data,
-      timestamp: Date.now()
-    });
-
-    return data;
+    return await this.cacheManager.getWithCache(cacheKey, fetcher);
   }
 
   /**
@@ -255,7 +211,7 @@ class EtherscanTokenBalanceFetcher {
    * Clears the internal cache
    */
   clearCache() {
-    this.cache.clear();
+    this.cacheManager.clearCache();
   }
 
   /**
@@ -264,9 +220,9 @@ class EtherscanTokenBalanceFetcher {
    */
   getCacheStats() {
     return {
-      size: this.cache.size,
-      timeout: this.cacheTimeout,
-      keys: Array.from(this.cache.keys())
+      size: this.cacheManager.cache.size,
+      timeout: this.cacheManager.cacheTimeout,
+      keys: Array.from(this.cacheManager.cache.keys())
     };
   }
 

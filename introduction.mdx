@@ -1,0 +1,129 @@
+---
+title: Introduction
+description: 'Welcome to Big World Bigger Ideas - Your comprehensive blockchain documentation and crypto clarity platform'
+---
+
+<img
+  className="block dark:hidden"
+  src="/BeyondGlobal.svg"
+  alt="Big World Bigger Ideas Logo"
+/>
+<img
+  className="hidden dark:block"
+  src="/BeyondGlobal.svg"
+  alt="Big World Bigger Ideas Logo"
+/>
+
+## Welcome to Big World Bigger Ideas
+
+Big World Bigger Ideas is a comprehensive blockchain documentation and crypto clarity platform created by [Matthew Brace (kushmanmb)](https://github.com/kushmanmb). This platform provides multiple tools and utilities for working with blockchain networks, NFTs, and cryptocurrency data.
+
+<CardGroup cols={2}>
+  <Card
+    title="Quick Start"
+    icon="rocket"
+    href="/quickstart"
+  >
+    Get started with Big World Bigger Ideas in minutes
+  </Card>
+  <Card
+    title="API Reference"
+    icon="code"
+    href="/api-reference/erc721"
+  >
+    Explore our comprehensive API documentation
+  </Card>
+  <Card
+    title="Guides"
+    icon="book"
+    href="/guides/chatops"
+  >
+    Learn best practices and advanced usage
+  </Card>
+  <Card
+    title="GitHub"
+    icon="github"
+    href="https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-"
+  >
+    View the source code and contribute
+  </Card>
+</CardGroup>
+
+## Features
+
+<AccordionGroup>
+  <Accordion title="Blockchain Utilities">
+    - **ERC-721 NFT Fetcher**: Retrieve NFT data from any EVM-compatible blockchain
+    - **ERC-20 Token Tools**: Work with fungible tokens across multiple chains
+    - **Bitcoin Mining Data**: Access real-time Bitcoin mining statistics
+    - **Multi-chain Support**: Ethereum, Bitcoin, Litecoin, and more
+  </Accordion>
+
+  <Accordion title="Token & NFT Tools">
+    - **Token History Tracker**: Git-style NFT ownership history
+    - **Token UUID Generator**: Generate unique identifiers for tokens
+    - **Contract ABI Manager**: Load and validate smart contract ABIs
+    - **ETH Call Helper**: Make read-only calls to smart contracts
+  </Accordion>
+
+  <Accordion title="Tracking & Monitoring">
+    - **Address Tracker**: Monitor blockchain addresses
+    - **Consensus Tracker**: Track blockchain consensus mechanisms
+    - **OP_RETURN Handler**: Encode and decode OP_RETURN data
+  </Accordion>
+
+  <Accordion title="Security & Compliance">
+    - **Wallet Encryption**: Secure wallet encryption/decryption
+    - **Zero-Knowledge PDF**: ZK proof-based PDF verification
+    - **ISO 27001 Compliance**: Information security management
+    - **Withdraw Credentials**: ETH2 validator credential handling
+  </Accordion>
+
+  <Accordion title="Governance">
+    - **Blockchain Council**: On-chain governance and voting
+    - **Feature Flags**: Runtime feature management with ChatOps
+  </Accordion>
+</AccordionGroup>
+
+## Key Information
+
+- **Language**: JavaScript (Node.js CommonJS modules)
+- **Package**: Available on NPM as `big-world-bigger-ideas`
+- **License**: ISC
+- **Node Version**: >= 14.0.0
+- **Owner**: Matthew Brace (kushmanmb)
+- **Organization**: kushmanmb-org
+
+## Quick Example
+
+```javascript
+// Import the package
+const { ERC721Fetcher, BitcoinMiningFetcher } = require('big-world-bigger-ideas');
+
+// Fetch NFT data
+const nftFetcher = new ERC721Fetcher('0x1234...abcd');
+const owner = await nftFetcher.getOwner('1');
+
+// Get Bitcoin mining stats
+const btcFetcher = new BitcoinMiningFetcher();
+const hashRate = await btcFetcher.getHashRate('1w');
+```
+
+## Getting Help
+
+<CardGroup cols={2}>
+  <Card
+    title="GitHub Issues"
+    icon="bug"
+    href="https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues"
+  >
+    Report bugs or request features
+  </Card>
+  <Card
+    title="Contact"
+    icon="envelope"
+    href="mailto:kushmanmb@gmx.com"
+  >
+    Email: kushmanmb@gmx.com
+  </Card>
+</CardGroup>

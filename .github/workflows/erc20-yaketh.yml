@@ -1,0 +1,224 @@
+name: ERC-20 Token Balance Monitor - yaketh.eth
+
+# This workflow monitors ERC-20 token balances for yaketh.eth
+# Runs daily at 6 AM UTC and can be triggered manually
+# Publishes data to GitHub Pages for easy access
+
+on:
+  # Run on schedule - daily at 6 AM UTC
+  schedule:
+    - cron: '0 6 * * *'
+  # Allow manual trigger
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  fetch-token-balances:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Fetch ERC-20 token balances for yaketh.eth
+        id: fetch
+        run: |
+          # Create output directory
+          mkdir -p docs/erc20-balances/yaketh
+          
+          # Create a Node.js script to fetch and save data
+          cat > fetch-erc20-yaketh.js << 'EOF'
+          const ERC20Fetcher = require('./src/erc20.js');
+          const fs = require('fs');
+          
+          async function fetchAndSave() {
+            const fetcher = new ERC20Fetcher();
+            const address = 'yaketh.eth';
+            const timestamp = new Date().toISOString();
+            
+            console.log(`Fetching ERC-20 token balances for ${address}...`);
+            
+            let output = `# ERC-20 Token Balance Report\n\n`;
+            output += `**Address:** ${address}\n`;
+            output += `**Generated:** ${timestamp}\n\n`;
+            output += `---\n\n`;
+            
+            try {
+              const balances = await fetcher.getTokenBalances(address);
+              
+              output += `## Token Holdings\n\n`;
+              output += `**Total Tokens:** ${balances.tokenCount}\n\n`;
+              
+              if (balances.tokens && balances.tokens.length > 0) {
+                output += `### Token Details\n\n`;
+                output += `| # | Token | Symbol | Balance | USD Value |\n`;
+                output += `|---|-------|--------|---------|----------|\n`;
+                
+                balances.tokens.forEach((token, index) => {
+                  const usdValue = token.usdValue !== null 
+                    ? `$${token.usdValue.toFixed(2)}` 
+                    : 'N/A';
+                  output += `| ${index + 1} | ${token.tokenName} | ${token.tokenSymbol} | ${token.balance} | ${usdValue} |\n`;
+                });
+                
+                output += `\n`;
+                
+                // Calculate total USD value
+                const totalUsdValue = balances.tokens.reduce((sum, token) => 
+                  sum + (token.usdValue || 0), 0
+                );
+                output += `**Total Portfolio Value:** $${totalUsdValue.toFixed(2)}\n\n`;
+              } else {
+                output += 'No ERC-20 tokens found for this address.\n\n';
+              }
+              
+              // Save raw JSON data
+              const rawData = {
+                address: address,
+                timestamp: timestamp,
+                data: balances
+              };
+              fs.writeFileSync('docs/erc20-balances/yaketh/balances.json', JSON.stringify(rawData, null, 2));
+              console.log('Raw data saved to balances.json');
+              
+            } catch (error) {
+              output += `## Error\n\n`;
+              output += `Failed to fetch token balances: ${error.message}\n\n`;
+              console.error('Error:', error.message);
+            }
+            
+            // Add footer
+            output += `---\n\n`;
+            output += `**Data Source:** [Blockchair API](https://blockchair.com/api/docs)\n`;
+            output += `**Repository:** [Big World Bigger Ideas](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-)\n`;
+            
+            // Save the report
+            fs.writeFileSync('docs/erc20-balances/yaketh/report.md', output);
+            console.log('Report saved to report.md');
+            
+            // Create an index file for GitHub Pages
+            const indexContent = `<!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>ERC-20 Balances - ${address}</title>
+            <style>
+              body { 
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; 
+                max-width: 1000px; 
+                margin: 40px auto; 
+                padding: 20px; 
+                line-height: 1.6;
+                background: #f6f8fa;
+              }
+              .container {
+                background: white;
+                padding: 30px;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+              }
+              h1 { 
+                color: #24292e;
+                border-bottom: 3px solid #0366d6; 
+                padding-bottom: 10px; 
+              }
+              .timestamp { 
+                color: #586069; 
+                font-size: 14px;
+                margin-bottom: 20px;
+              }
+              .address {
+                background: #f6f8fa;
+                padding: 10px;
+                border-radius: 4px;
+                font-family: monospace;
+                word-break: break-all;
+                margin: 20px 0;
+              }
+              .links {
+                display: flex;
+                gap: 15px;
+                margin: 30px 0;
+              }
+              .link-button {
+                display: inline-block;
+                padding: 10px 20px;
+                background: #0366d6;
+                color: white;
+                text-decoration: none;
+                border-radius: 6px;
+                transition: background 0.2s;
+              }
+              .link-button:hover {
+                background: #0256c7;
+              }
+              .footer {
+                margin-top: 40px;
+                padding-top: 20px;
+                border-top: 1px solid #e1e4e8;
+                color: #586069;
+                font-size: 14px;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <h1>🪙 ERC-20 Token Balance Report</h1>
+              <p class="timestamp">Last updated: ${timestamp}</p>
+              <div class="address"><strong>Address:</strong> ${address}</div>
+              
+              <div class="links">
+                <a href="report.md" class="link-button">📊 View Report</a>
+                <a href="balances.json" class="link-button">📄 Download JSON</a>
+              </div>
+              
+              <div class="footer">
+                <p>Data fetched from <a href="https://blockchair.com/api/docs" target="_blank">Blockchair API</a></p>
+                <p>Generated by <a href="https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-" target="_blank">Big World Bigger Ideas</a></p>
+              </div>
+            </div>
+          </body>
+          </html>`;
+            
+            fs.writeFileSync('docs/erc20-balances/yaketh/index.html', indexContent);
+            console.log('Index page saved to index.html');
+          }
+          
+          fetchAndSave().catch(error => {
+            console.error('Fatal error:', error);
+            process.exit(1);
+          });
+          EOF
+          
+          # Run the script
+          node fetch-erc20-yaketh.js
+      
+      - name: Commit and push data
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          git add docs/erc20-balances/yaketh/
+          
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update ERC-20 token balances for yaketh.eth"
+            git push
+          fi

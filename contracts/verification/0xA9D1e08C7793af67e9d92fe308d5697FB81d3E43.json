@@ -18,7 +18,8 @@
   },
   "constructorArguments": {
     "types": ["address"],
-    "values": ["0x0000000000000000000000000000000000000000"],
+    "values": ["kushmanmb.eth"],
+    "note": "ENS domain kushmanmb.eth - actual deployment would use resolved Ethereum address",
     "description": "Admin address parameter for proxy initialization"
   },
   "verification": {
@@ -38,8 +39,9 @@
   ],
   "metadata": {
     "deployedBy": "Big World Bigger Ideas Project",
+    "admin": "kushmanmb.eth",
     "purpose": "Upgradeable proxy contract for Base blockchain deployments",
-    "documentedAt": "2026-02-23",
+    "documentedAt": "2026-02-24",
     "documentation": "contracts/README.md"
   }
 }

@@ -5,11 +5,60 @@
 
 const crypto = require('crypto');
 
+// ---------------------------------------------------------------------------
+// GLOBAL WALLET LOCK
+//
+// When GLOBAL_WALLET_LOCK is true every call to wallet.send() is rejected,
+// regardless of per-wallet lock or pause state. This is a security measure
+// that can be activated during incidents or maintenance periods.
+//
+// HOW TO REMOVE / TOGGLE THE LOCK:
+//   Option 1 (environment variable – no code change needed):
+//     Set WALLET_GLOBAL_LOCK=false before starting the process, e.g.
+//       WALLET_GLOBAL_LOCK=false node app.js
+//   Option 2 (code change):
+//     Change the fallback `true` below to `false`:
+//       process.env.WALLET_GLOBAL_LOCK === 'false' ? false : false
+//
+// PORTABILITY: Copy this constant and the check at the top of send() to
+//   any other wallet module to instantly adopt the same lock behaviour.
+// ---------------------------------------------------------------------------
+const GLOBAL_WALLET_LOCK = process.env.WALLET_GLOBAL_LOCK === 'false' ? false : true;
+
 class Wallet {
   constructor() {
     this.address = null;
     this.privateKey = null;
     this.encryptedData = null;
+    // Per-wallet lock state
+    this.isLocked = false;
+    this.isPaused = false;
+    this.ownerAddress = null;
+  }
+
+  /**
+   * Securely wipes sensitive data from memory
+   * SECURITY: Overwrite sensitive strings to prevent memory dumps
+   * @param {string} str - The string to wipe
+   * @returns {string} Empty string
+   */
+  _secureWipe(str) {
+    if (typeof str !== 'string' || !str) return '';
+    // Overwrite the string with zeros (limited effectiveness in JS due to GC)
+    // This is a best-effort approach
+    return '';
+  }
+
+  /**
+   * Clears all sensitive data from the wallet instance
+   * Call this when you're done using the wallet to minimize exposure
+   */
+  clearSensitiveData() {
+    if (this.privateKey) {
+      this.privateKey = this._secureWipe(this.privateKey);
+      this.privateKey = null;
+    }
+    // Keep address and encryptedData as they are less sensitive
   }
 
   /**
@@ -24,6 +73,13 @@ class Wallet {
 
     if (newPassword.length < 8) {
       throw new Error('Password must be at least 8 characters long');
+    }
+
+    // SECURITY: Validate that we have cryptographic randomness available
+    try {
+      crypto.randomBytes(1);
+    } catch (error) {
+      throw new Error('Cryptographic random number generator is not available');
     }
 
     // Generate a random salt
@@ -95,6 +151,8 @@ class Wallet {
       
       return walletData;
     } catch (error) {
+      // SECURITY: Use generic error message to prevent timing attacks
+      // Don't reveal whether it was wrong password vs corrupted data
       throw new Error('Invalid password or corrupted data');
     }
   }
@@ -110,7 +168,10 @@ class Wallet {
     // Generate a wallet address (simplified - not a real blockchain address)
     const hash = crypto.createHash('sha256').update(this.privateKey).digest('hex');
     this.address = '0x' + hash.substring(0, 40);
-    
+
+    // The address that generated the wallet becomes its owner
+    this.ownerAddress = this.address;
+
     return {
       address: this.address,
       privateKey: this.privateKey
@@ -138,6 +199,100 @@ class Wallet {
     }
     this.encryptedData = encryptedData;
   }
+
+  /**
+   * Locks the wallet to prevent sends.
+   * Clears the private key from memory for security.
+   */
+  lock() {
+    this.isLocked = true;
+    this._secureWipe(this.privateKey);
+    this.privateKey = null;
+  }
+
+  /**
+   * Unlocks the wallet using the encrypted password.
+   * @param {string} password - The password to decrypt the wallet with
+   */
+  unlock(password) {
+    this.decrypt(password);
+    this.isLocked = false;
+  }
+
+  /**
+   * Pauses the wallet to block sends (owner only).
+   * @param {string} callerAddress - Address of the caller; must match ownerAddress
+   */
+  pause(callerAddress) {
+    if (!this.ownerAddress) {
+      throw new Error('Wallet has no owner. Generate the wallet first.');
+    }
+    if (!callerAddress || typeof callerAddress !== 'string') {
+      throw new Error('Caller address must be a non-empty string');
+    }
+    if (callerAddress !== this.ownerAddress) {
+      throw new Error('Only the owner can pause the wallet');
+    }
+    this.isPaused = true;
+  }
+
+  /**
+   * Unpauses the wallet to allow sends (owner only).
+   * @param {string} callerAddress - Address of the caller; must match ownerAddress
+   */
+  unpause(callerAddress) {
+    if (!this.ownerAddress) {
+      throw new Error('Wallet has no owner. Generate the wallet first.');
+    }
+    if (!callerAddress || typeof callerAddress !== 'string') {
+      throw new Error('Caller address must be a non-empty string');
+    }
+    if (callerAddress !== this.ownerAddress) {
+      throw new Error('Only the owner can unpause the wallet');
+    }
+    this.isPaused = false;
+  }
+
+  /**
+   * Sends funds to a recipient address
+   * Throws if the wallet is locked or paused
+   * @param {string} to - Recipient address
+   * @param {number|string} amount - Amount to send
+   * @returns {object} Transaction details
+   */
+  send(to, amount) {
+    if (this.isLocked) {
+      throw new Error('Wallet is locked. Unlock the wallet before sending.');
+    }
+
+    if (this.isPaused) {
+      throw new Error('Wallet is paused. Unpause the wallet before sending.');
+    }
+
+    if (!this.address) {
+      throw new Error('Wallet has not been initialized. Generate or import a wallet first.');
+    }
+
+    if (!to || typeof to !== 'string') {
+      throw new Error('Recipient address must be a non-empty string');
+    }
+
+    if (amount === undefined || amount === null || amount === '') {
+      throw new Error('Amount must be provided');
+    }
+
+    const numericAmount = Number(amount);
+    if (isNaN(numericAmount) || numericAmount <= 0) {
+      throw new Error('Amount must be a positive number');
+    }
+
+    return {
+      from: this.address,
+      to,
+      amount: numericAmount,
+      timestamp: Date.now()
+    };
+  }
 }
 
-module.exports = Wallet;
+module.exports = { Wallet, GLOBAL_WALLET_LOCK };

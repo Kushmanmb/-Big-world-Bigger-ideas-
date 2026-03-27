@@ -113,7 +113,7 @@ jobs:
               body: `❌ Invalid chatops command. 
               
 Available commands:
-- \`/chatops run feature set <flag_name>\` - Enable a feature flag
-- \`/chatops run feature unset <flag_name>\` - Disable a feature flag  
+- \`/chatops run feature set kushmanmb\` - Enable a feature flag
+- \`/chatops run feature unset kushmanmb\` - Disable a feature flag  
 - \`/chatops run feature list\` - List all feature flags`
             });

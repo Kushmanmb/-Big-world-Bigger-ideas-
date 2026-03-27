@@ -1,0 +1,11 @@
+# Blockchain RPC Server Requirements
+# 
+# This server uses only Python standard library modules.
+# No external dependencies are required for basic functionality.
+#
+# For development and testing, you may want to install:
+# - requests (for easier testing)
+# - pytest (for unit tests)
+#
+# To install development dependencies:
+#   pip install -r requirements-dev.txt

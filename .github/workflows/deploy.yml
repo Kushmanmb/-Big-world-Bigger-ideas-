@@ -34,20 +34,69 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Build CSS
+        run: npm run build:css
+
       - name: Prepare deployment files
         run: |
           mkdir -p _site
+
+          # Copy HTML files
           cp index.html _site/
           cp editor.html _site/
+          cp BeyondGlobal.html _site/
+
+          # Copy assets
+          cp BeyondGlobal.svg _site/
           cp styles.css _site/
+          mkdir -p _site/dist
+          cp dist/output.css _site/dist/
+
+          # Copy configuration files
+          cp CNAME _site/
+          cp feature-flags.json _site/
+          cp mint.json _site/
+
+          # Copy source code
           cp -r src _site/
           cp -r contracts _site/
+
+          # Copy documentation directories
+          cp -r api-reference _site/
+          cp -r guides _site/
+          cp -r docs _site/
+          cp -r wiki _site/
+
+          # Copy EIPs directory if exists
+          if [ -d "EIPsInsight" ]; then
+            cp -r EIPsInsight _site/
+          fi
+
+          # Copy main documentation files
           cp README.md _site/
           cp CHATOPS.md _site/
+          cp DEPLOYMENT.md _site/
+          cp DEPLOYMENT-CHECKLIST.md _site/
           cp ETH_COMPONENT_OWNERSHIP.md _site/
           cp OCTANT-V2-CORE.md _site/
-          echo "Deployment package created with only necessary files"
+
+          # Copy additional documentation files
+          cp BUILD.md _site/ 2>/dev/null || true
+          cp SECURITY-GUIDE.md _site/ 2>/dev/null || true
+          cp SECURITY-AUDIT-SUMMARY.md _site/ 2>/dev/null || true
+          cp PUBLISHING.md _site/ 2>/dev/null || true
+          cp MINTLIFY.md _site/ 2>/dev/null || true
+          cp FRONTEND.md _site/ 2>/dev/null || true
+
+          # Copy mdx files at root level
+          cp *.mdx _site/ 2>/dev/null || true
+
+          echo "Deployment package created with all documentation"
+          echo "Contents of _site:"
           ls -la _site/
+          echo ""
+          echo "Total size:"
+          du -sh _site/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

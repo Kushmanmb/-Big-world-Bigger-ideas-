@@ -1,0 +1,108 @@
+{
+  "managers": [
+    {
+      "tokenAddress": "0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+      "managerAddress": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253",
+      "metadata": {
+        "tokenName": "Unknown Token",
+        "tokenSymbol": "N/A",
+        "network": "Ethereum Mainnet",
+        "chainId": 1,
+        "type": "Token Contract",
+        "setBy": "Manual Configuration",
+        "notes": "Manager assignment for token 0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B"
+      },
+      "setAt": "2026-02-25T17:22:18.131Z"
+    },
+    {
+      "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "managerAddress": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253",
+      "metadata": {
+        "tokenName": "USD Coin",
+        "tokenSymbol": "USDC",
+        "network": "Ethereum Mainnet",
+        "chainId": 1,
+        "decimals": 6,
+        "type": "Stablecoin",
+        "setBy": "Automated Configuration",
+        "notes": "Primary USDC token manager assignment"
+      },
+      "setAt": "2026-02-25T16:07:00.000Z"
+    },
+    {
+      "tokenAddress": "0x0000000000000000000000000000000000000000",
+      "managerAddress": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253",
+      "metadata": {
+        "tokenName": "Zero Address",
+        "tokenSymbol": "ZERO",
+        "network": "Ethereum Mainnet",
+        "chainId": 1,
+        "type": "Special Address",
+        "setBy": "Manual Configuration",
+        "notes": "Manager assignment for zero address"
+      },
+      "setAt": "2026-02-25T16:16:00.000Z"
+    },
+    {
+      "tokenAddress": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+      "managerAddress": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253",
+      "metadata": {
+        "tokenName": "Tether USD",
+        "tokenSymbol": "USDT",
+        "network": "Ethereum Mainnet",
+        "chainId": 1,
+        "decimals": 6,
+        "type": "Stablecoin",
+        "setBy": "Manual Configuration",
+        "notes": "Manager assignment for USDT stablecoin"
+      },
+      "setAt": "2026-02-25T17:22:18.131Z"
+    },
+    {
+      "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "managerAddress": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253",
+      "metadata": {
+        "tokenName": "Wrapped Ether",
+        "tokenSymbol": "WETH",
+        "network": "Ethereum Mainnet",
+        "chainId": 1,
+        "decimals": 18,
+        "type": "Wrapped Native Token",
+        "setBy": "Manual Configuration",
+        "notes": "Manager assignment for WETH wrapped ether"
+      },
+      "setAt": "2026-02-25T17:22:18.131Z"
+    },
+    {
+      "tokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "managerAddress": "0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17",
+      "metadata": {
+        "tokenName": "Wrapped Ether 9",
+        "tokenSymbol": "WETH9",
+        "network": "Ethereum Mainnet",
+        "chainId": 1,
+        "decimals": 18,
+        "type": "Controller",
+        "setBy": "Manual Configuration",
+        "notes": "Controller assignment for WETH9"
+      },
+      "setAt": "2026-03-07T01:23:57.891Z"
+    },
+    {
+      "tokenAddress": "0xEe7aE85f2Fe2239E27D9c1E23fFFe168D63b4055",
+      "managerAddress": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253",
+      "metadata": {
+        "tokenName": "Unknown Token",
+        "tokenSymbol": "N/A",
+        "network": "Ethereum Mainnet",
+        "chainId": 1,
+        "type": "Token Contract",
+        "setBy": "Manual Configuration",
+        "notes": "Manager assignment for token 0xEe7aE85f2Fe2239E27D9c1E23fFFe168D63b4055"
+      },
+      "setAt": "2026-02-25T16:44:38.681Z"
+    }
+  ],
+  "lastUpdated": "2026-03-07T01:23:57.891Z",
+  "version": "1.0.0"
+}

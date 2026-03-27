@@ -4,29 +4,19 @@
  */
 
 const { TokenHistoryTracker, OwnershipEvent } = require('./token-history');
+const { test: helperTest, printSummary, getResults } = require('./test-helpers');
 
-// Simple test framework
-let testsPassed = 0;
-let testsFailed = 0;
-
+// Custom assert for this test file
 function assert(condition, message) {
-  if (condition) {
-    console.log(`✅ ${message}`);
-    testsPassed++;
-  } else {
-    console.log(`❌ ${message}`);
-    testsFailed++;
+  if (!condition) {
     throw new Error(`Assertion failed: ${message}`);
   }
+  console.log(`✅ ${message}`);
 }
 
 function test(description, fn) {
   console.log(`\n🧪 ${description}`);
-  try {
-    fn();
-  } catch (error) {
-    console.log(`   Error: ${error.message}`);
-  }
+  helperTest(description, fn);
 }
 
 console.log('🔍 Token Ownership History - Test Suite\n');
@@ -287,13 +277,14 @@ test('TokenHistoryTracker - Limited log output', () => {
 });
 
 // Summary
+const results = getResults();
 console.log('\n' + '='.repeat(70));
 console.log('\n📊 Test Summary:');
-console.log(`   Passed: ${testsPassed}`);
-console.log(`   Failed: ${testsFailed}`);
-console.log(`   Total:  ${testsPassed + testsFailed}`);
+console.log(`   Passed: ${results.passed}`);
+console.log(`   Failed: ${results.failed}`);
+console.log(`   Total:  ${results.total}`);
 
-if (testsFailed === 0) {
+if (results.failed === 0) {
   console.log('\n✨ All tests passed!\n');
   process.exit(0);
 } else {

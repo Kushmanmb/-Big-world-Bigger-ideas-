@@ -30,6 +30,10 @@ CHATOPS.md
 # Build artifacts
 dist/
 node_modules/
+_site/
+
+# Deployment scripts (local development only)
+scripts/
 
 # Temporary files
 tmp/

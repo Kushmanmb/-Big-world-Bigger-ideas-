@@ -1,8 +1,13 @@
 /**
  * Example usage of the Wallet encryption functionality
+ * 
+ * SECURITY NOTE: This is a demonstration file showing how to use the wallet
+ * encryption features. The password 'MySecurePassword123!' is used as an
+ * example only. In production, users should provide their own strong passwords
+ * and NEVER hardcode them in source code.
  */
 
-const Wallet = require('./wallet');
+const { Wallet } = require('./wallet');
 
 // Create a new wallet instance
 const wallet = new Wallet();

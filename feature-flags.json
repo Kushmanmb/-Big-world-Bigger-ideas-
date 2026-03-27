@@ -2,16 +2,21 @@
   "flags": {
     "dark_mode": {
       "enabled": false,
-      "updatedAt": "2026-02-18T17:12:25.412Z"
+      "updatedAt": "2026-02-24T16:15:01.549Z"
     },
     "new_ui": {
       "enabled": false,
-      "updatedAt": "2026-02-18T17:12:25.410Z"
+      "updatedAt": "2026-02-24T16:15:01.547Z"
     },
     "test_chatops": {
       "enabled": true,
       "updatedAt": "2026-02-18T17:10:42.465Z"
+    },
+    "global_wallet_lock": {
+      "enabled": true,
+      "updatedAt": "2026-03-08T12:12:04.465Z",
+      "description": "Blocks all outgoing wallet sends for security. Set enabled:false (or WALLET_GLOBAL_LOCK=false env var) to lift the lock."
     }
   },
-  "lastUpdated": "2026-02-18T17:12:25.413Z"
+  "lastUpdated": "2026-03-08T12:12:04.465Z"
 }

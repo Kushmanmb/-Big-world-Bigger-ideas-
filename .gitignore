@@ -2,6 +2,7 @@
 node_modules/
 dist/
 _site/
+.mintlify/
 
 # Private Keys and Certificates
 *.key
@@ -30,13 +31,13 @@ id_ed25519.*
 
 # Environment Variables and Configuration Files with Secrets
 .env
-.env.*
 .env.local
 .env.development
 .env.test
 .env.production
 .env.staging
-*.env
+# Allow .env.example as a template
+!.env.example
 
 # Secret Files
 *secret*
@@ -64,12 +65,25 @@ tokens.json
 *.wallet
 wallet.json
 wallet.dat
+*wallet*.json
+wallet-*.json
+encrypted-wallet.json
+encrypted_wallet.json
 keystore/
 keystore.json
+*keystore*.json
 mnemonic.txt
+mnemonic.json
 seed.txt
+seed.json
 private-key.txt
 privatekey.txt
+private-key.json
+privatekey.json
+*-private-key.txt
+*-privatekey.txt
+*_private_key.txt
+*_privatekey.txt
 
 # AWS Credentials
 .aws/
@@ -135,3 +149,71 @@ tmp/
 temp/
 *.tmp
 *.temp
+
+# Encrypted Wallet and Key Files
+encrypted/
+encrypted-keys/
+*.encrypted
+*-encrypted.*
+encrypted-*.json
+*_encrypted.json
+*.enc
+*.aes
+
+# Additional Blockchain Wallet Formats
+*.keys
+accounts.txt
+accounts.json
+*-accounts.json
+recovery.txt
+recovery-phrase.txt
+recovery-phrase.json
+
+# Ruby/Bundler Credential Files
+.bundle/config
+bundle/config
+.gem/credentials
+credentials.gem
+gem-credentials
+.gemrc
+vendor/bundle/
+
+# NPM/Node.js Credential Files
+.npmrc
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python/Pip Credential Files
+.pypirc
+pip.conf
+pip.ini
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.venv
+venv/
+ENV/
+env/

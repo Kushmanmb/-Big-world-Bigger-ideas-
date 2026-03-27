@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![GitHub Owner](https://img.shields.io/badge/Owner-Kushmanmb-blue?style=for-the-badge&logo=github)
+![GitHub Owner](https://img.shields.io/badge/Owner-kushmanmb-blue?style=for-the-badge&logo=github)
 ![Creator](https://img.shields.io/badge/Creator-Matthew%20Brace-purple?style=for-the-badge&logo=github)
 ![Maintained](https://img.shields.io/badge/Maintained-Yes-green?style=for-the-badge)
 ![Focus](https://img.shields.io/badge/Focus-Blockchain-orange?style=for-the-badge&logo=ethereum)
@@ -13,8 +13,8 @@
 [![ENS](https://img.shields.io/badge/ENS-kushmanmb.eth-9cf?style=flat-square&logo=ethereum)](https://app.ens.domains/name/kushmanmb.eth)
 [![Email](https://img.shields.io/badge/Contact-kushmanmb@gmx.com-red?style=flat-square&logo=gmail)](mailto:kushmanmb@gmx.com)
 
-[![Tests](https://img.shields.io/badge/Tests-Passing-success?style=flat-square&logo=github-actions)](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/actions)
-[![Security](https://img.shields.io/badge/Security-No%20Vulnerabilities-success?style=flat-square&logo=github)](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/security)
+[![Tests](https://img.shields.io/badge/Tests-Passing-success?style=flat-square&logo=github-actions)](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions)
+[![Security](https://img.shields.io/badge/Security-No%20Vulnerabilities-success?style=flat-square&logo=github)](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/security)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D14.0.0-brightgreen?style=flat-square&logo=node.js)](https://nodejs.org/)
 
 </div>
@@ -60,6 +60,12 @@ const bigWorld = require('big-world-bigger-ideas');
 const { 
   ERC721Fetcher, 
   BitcoinMiningFetcher,
+  BlockchairFetcher,
+  EthereumBlockchairFetcher,
+  EtherscanTokenBalanceFetcher,
+  HelloBitcoin,
+  TokenUUID,
+  OPReturnFetcher,
   ZKPDFVerifier,
   ConsensusTracker,
   AddressTracker,
@@ -74,6 +80,31 @@ const owner = await nftFetcher.getOwner('1');
 const btcFetcher = new BitcoinMiningFetcher();
 const miningData = await btcFetcher.getHashRate('1w');
 
+// Example: OP_RETURN data encoding for blockchain
+const opReturn = new OPReturnFetcher('bitcoin');
+const encoded = opReturn.encodeData('Hello Blockchain!');
+const script = opReturn.createOpReturnScript('Timestamped data');
+
+// Example: Multi-chain blockchain data with Blockchair
+const blockchair = new BlockchairFetcher('bitcoin');
+const blockData = await blockchair.getBlock(700000);
+
+// Example: Ethereum blockchain data with ENS support
+const ethBlockchair = new EthereumBlockchairFetcher();
+const addressData = await ethBlockchair.getAddressData('0x1234...');
+
+// Example: Token balance checking with Etherscan
+const etherscan = new EtherscanTokenBalanceFetcher('your-api-key');
+const balance = await etherscan.getTokenBalance('0xAddress...', '0xTokenContract...');
+
+// Example: Generate UUIDs for tokens
+const tokenUUID = new TokenUUID();
+const uuid = tokenUUID.generateForToken('0xContract...', '1');
+
+// Example: Hello Bitcoin greeting
+const hello = new HelloBitcoin('World');
+console.log(hello.greet()); // "Hello Bitcoin from World! 🌍"
+
 // Example: Blockchain governance with council
 const council = new BlockchainCouncil('DAO Council');
 council.addMember('0x1234...', 'Alice', MEMBER_ROLES.FOUNDER);
@@ -84,22 +115,64 @@ const zkVerifier = new ZKPDFVerifier('your-name');
 const doc = zkVerifier.registerDocument('doc-id', pdfBuffer, { title: 'My Document' });
 ```
 
+### 🚀 Blockchain RPC Server
+
+> **🌟 New!** Python-based JSON-RPC server for easy HTTP access to blockchain data!
+>
+> Start the server: `python3 blockchain_rpc_server.py`
+>
+> Query blockchain data via HTTP/JSON-RPC for Ethereum, Bitcoin, NFTs, and more.
+>
+> Learn more: [BLOCKCHAIN-RPC-SERVER.md](./BLOCKCHAIN-RPC-SERVER.md)
+
+### 📚 Interactive Documentation
+
+> **🌟 New!** Explore our comprehensive Mintlify documentation with interactive examples, searchable API references, and step-by-step guides.
+>
+> **Run locally:** `npm run docs:dev`
+>
+> Learn more: [MINTLIFY.md](./MINTLIFY.md)
+
 ### Available Modules
 
-This package includes the following modules:
+This package includes the following modules organized by category:
 
+**Wallet & Configuration:**
 - **`wallet`** - Wallet encryption and decryption utilities
 - **`featureFlags`** - Feature flag management system
+
+**NFT & Token Utilities:**
 - **`ERC721Fetcher`** - ERC-721 NFT token data fetcher
 - **`TokenHistoryTracker`** - Git-style NFT ownership history tracker
+- **`TokenUUID`** - UUID generation and validation for blockchain tokens and NFTs
+
+**Blockchain Data Fetchers:**
 - **`BitcoinMiningFetcher`** - Bitcoin mining data from mempool.space
+- **`BlockchairFetcher`** - Multi-chain blockchain data fetcher for Bitcoin, Ethereum, Litecoin, and more
 - **`LitecoinBlockchairFetcher`** - Litecoin blockchain data from Blockchair
-- **`ISO27001Fetcher`** - ISO 27001 certification management
+- **`EthereumBlockchairFetcher`** - Ethereum blockchain data from Blockchair with ENS support
+- **`EtherscanTokenBalanceFetcher`** - ERC-20 and ERC-721 token balance fetcher from Etherscan
+
+**Network & Consensus:**
 - **`ConsensusTracker`** - Blockchain consensus mechanism tracker
 - **`AddressTracker`** - Multi-chain address tracking and management
+
+**Contract Utilities:**
+- **`ContractABIFetcher`** - Contract ABI fetcher
+- **`EthCallClient`** - Ethereum eth_call RPC client
+- **`OPReturnFetcher`** - OP_RETURN data encoding/decoding across Bitcoin, Litecoin, and Ethereum
+
+**Governance & Compliance:**
 - **`BlockchainCouncil`** - Governance and council management for DAOs
-- **`PackageMetadata`** - Metadata processing utilities
+- **`ISO27001Fetcher`** - ISO 27001 certification management
+- **`WithdrawalCredentials`** - Ethereum withdrawal credentials management
+
+**Advanced Features:**
 - **`ZKPDFVerifier`** - Zero-knowledge PDF verification system
+- **`PackageMetadata`** - Metadata processing utilities
+
+**Helper Utilities:**
+- **`HelloBitcoin`** - Simple Bitcoin greeting module for getting started
 
 ### Package Structure
 
@@ -113,27 +186,120 @@ Test files, examples, and development files are excluded from the npm package to
 
 ### Publishing to NPM
 
-**For maintainers:** To publish a new version:
+**For maintainers:** This package uses automated GitHub Actions workflow for publishing to npm.
 
-1. Ensure all tests pass:
+**Quick publish:**
+1. Update version: `npm run version:patch` (or `version:minor`, `version:major`)
+2. Push changes: `git push origin main --follow-tags`
+3. Create a GitHub release with the version tag
+4. The workflow automatically publishes to npm
+
+**For detailed publishing instructions, see [PUBLISHING.md](./PUBLISHING.md)** which covers:
+- Automated publishing via GitHub releases
+- Manual workflow dispatch
+- Version management
+- Pre-publish checks
+- Troubleshooting
+
+Tests run automatically before every publish to ensure quality.
+
+---
+
+## 🔨 Smart Contracts & Build Configuration
+
+This repository includes Solidity smart contracts with a comprehensive build configuration using **Foundry**, a modern Ethereum development framework.
+
+### 📄 Available Contracts
+
+The `contracts/` directory contains production-ready smart contracts:
+
+- **`Proxy.sol`** - EIP-1967 transparent proxy for upgradeable contracts
+- **`MultiOwnable.sol`** - Multi-owner authentication with address and public key support
+- **`Receiver.sol`** - Abstract contract for receiving ERC-721 and ERC-1155 tokens
+- **`SignatureCheckerLib.sol`** - Signature verification utilities
+
+### 🛠️ Build Configuration
+
+The project uses **Foundry** for smart contract development with highly optimized settings:
+
+- **Compiler Version:** Solidity 0.8.20
+- **Optimizer:** Enabled with **999,999 runs** (optimized for runtime efficiency)
+- **EVM Version:** Paris (post-merge Ethereum)
+- **Build Framework:** Foundry
+
+**Configuration Files:**
+- `foundry.toml` - Primary Foundry configuration
+- `remappings.txt` - Dependency path mappings
+- `solc-settings.json` - Standard JSON compiler settings
+
+### 📚 Dependencies
+
+Pre-configured with industry-standard libraries:
+- OpenZeppelin Contracts
+- Solady (gas-optimized contracts)
+- Forge Standard Library
+- Account Abstraction (ERC-4337)
+- WebAuthn verification
+- P256 signature verification
+
+### 🚀 Building Contracts
+
 ```bash
-npm test
+# Install Foundry
+curl -L https://foundry.paradigm.xyz | bash
+foundryup
+
+# Install dependencies
+forge install
+
+# Compile contracts
+forge build
+
+# Run tests (when available)
+forge test
 ```
 
-2. Update the version in `package.json`:
+### 📖 Documentation
+
+#### 🌐 Interactive Documentation Portal
+
+This project features a comprehensive **Mintlify documentation portal** with interactive examples, API references, and guides:
+
+- **📚 Interactive Docs**: Modern, searchable documentation with live code examples
+- **🚀 Quick Start**: Get started in under 5 minutes
+- **📖 API Reference**: Detailed documentation for all modules
+- **📝 Guides**: Best practices, ChatOps, security, and more
+
+**Run Documentation Locally:**
+
 ```bash
-npm version patch  # or minor, or major
+# Install dependencies
+npm install
+
+# Start the documentation server
+npm run docs:dev
 ```
 
-3. Publish to npm:
-```bash
-npm publish
-```
+**Documentation Structure:**
+- **[MINTLIFY.md](./MINTLIFY.md)** - Mintlify setup and usage guide
+- **[introduction.mdx](./introduction.mdx)** - Documentation homepage
+- **[quickstart.mdx](./quickstart.mdx)** - Quick start guide
+- **[installation.mdx](./installation.mdx)** - Installation instructions
+- **[api-reference/](./api-reference/)** - Complete API documentation
+- **[guides/](./guides/)** - User guides and best practices
 
-4. Create a git tag and push:
-```bash
-git push --tags
-```
+#### 📚 Build & Contract Documentation
+
+For detailed build configuration, compilation settings, and deployment instructions, see:
+- **[BUILD.md](./BUILD.md)** - Comprehensive build documentation
+- **[contracts/README.md](./contracts/README.md)** - Contract-specific documentation
+
+### ✅ Verified Deployments
+
+**Base Network (Chain ID: 8453)**
+- Contract: Proxy.sol
+- Address: `0xA9D1e08C7793af67e9d92fe308d5697FB81d3E43`
+- Verified: [View on Basescan](https://basescan.org/address/0xA9D1e08C7793af67e9d92fe308d5697FB81d3E43)
 
 ---
 
@@ -146,27 +312,77 @@ This repository implements comprehensive security measures to protect sensitive 
 **CRITICAL SECURITY NOTICE**: This repository follows strict security practices to protect private keys and sensitive data:
 
 - ✅ **No hardcoded private keys** in source code
+- ✅ **No hardcoded API keys** - all use environment variables
 - ✅ **Environment variables** for all sensitive configuration (`.env` files)
 - ✅ **Comprehensive .gitignore** prevents accidental commits of credentials
-- ✅ **Wallet encryption utilities** use secure algorithms (AES-256-GCM)
+- ✅ **Wallet encryption utilities** use secure algorithms (AES-256-CBC with PBKDF2)
 - ✅ **Example files** use placeholder values, never real credentials
 - ✅ **Security.md** documents best practices and reporting procedures
 - ✅ **Regular security audits** via npm audit and CodeQL
+- ✅ **Security-Guide.md** comprehensive developer security guide
 
 **Best Practices for Users:**
 
 ```javascript
 // ❌ NEVER DO THIS
 const privateKey = '0x1234567890abcdef...'; // Hardcoded private key
+const apiKey = 'sk_live_1234567890abcdef'; // Hardcoded API key
 
 // ✅ ALWAYS DO THIS
 require('dotenv').config();
 const privateKey = process.env.PRIVATE_KEY; // From environment variable
+const apiKey = process.env.ETHERSCAN_API_KEY; // From environment variable
 
 // ✅ OR USE WALLET ENCRYPTION
-const wallet = require('./src/wallet.js');
-const encrypted = wallet.encrypt(myWallet, process.env.PASSWORD);
+const Wallet = require('./src/wallet.js');
+const wallet = new Wallet();
+wallet.generate();
+const encrypted = wallet.encrypt(process.env.PASSWORD);
 ```
+
+### 🔧 Environment Variables Setup
+
+1. **Copy the example file**:
+   ```bash
+   cp .env.example .env
+   ```
+
+2. **Add your actual values**:
+   ```bash
+   ETHERSCAN_API_KEY=your_etherscan_api_key_here
+   BLOCKCHAIR_API_KEY=your_blockchair_api_key_here
+   ```
+
+3. **Never commit `.env` files** (already in `.gitignore`)
+
+### 📚 Security Documentation
+
+- **[SECURITY.md](./SECURITY.md)** - Vulnerability disclosure policy and security guidelines
+- **[SECURITY-GUIDE.md](./SECURITY-GUIDE.md)** - Comprehensive security best practices for developers
+- **[SECURITY-AUDIT-2026-02-25.md](./SECURITY-AUDIT-2026-02-25.md)** - Latest security audit report (February 2026)
+- **[PRE-COMMIT-HOOKS-SETUP.md](./PRE-COMMIT-HOOKS-SETUP.md)** - Guide to prevent accidental secret commits
+- **[PACKAGE-MANAGER-SECURITY.md](./PACKAGE-MANAGER-SECURITY.md)** - Package manager credential security guide (npm, RubyGems, pip)
+- **[.env.example](./.env.example)** - Template for environment variables
+
+### 🔍 Security Audit History
+
+- **2026-02-25**: Comprehensive blockchain data leak audit completed ✅
+  - ✅ **No sensitive data leaks detected** - Private keys, API keys, and passwords verified secure
+  - ✅ **Git history clean** - No accidentally committed secrets found
+  - ✅ **Exceptional .gitignore** - 220+ patterns protecting sensitive files
+  - ✅ **All tests passing** - 100% of security-critical modules tested
+  - ✅ **Security documentation complete** - Added SECURITY.md and audit reports
+  - ✅ **Pre-commit hooks guide** - Created setup guide to prevent future leaks
+  - ⚠️ **Dependency updates needed** - 28 vulnerabilities in dev dependencies (low risk)
+  - **Security Grade: A (Excellent)** - No critical issues, production-ready
+
+- **2026-02-24**: Initial security audit completed
+  - ✅ Removed hardcoded Etherscan API key from example files
+  - ✅ Added security documentation (SECURITY-GUIDE.md)
+  - ✅ Created .env.example template
+  - ✅ Added security comments to test files
+  - ✅ Verified no private keys or real credentials in codebase
+  - ✅ All tests pass after security fixes
 
 ### Branch Protection Rules
 
@@ -215,20 +431,44 @@ To work on the website locally:
 # Install dependencies
 npm ci
 
+# Build the deployment package (runs tests, builds CSS, prepares files)
+npm run deploy
+
 # For editor preview, you can use any HTTP server
 python3 -m http.server 8000
 
 # Then visit http://localhost:8000
 ```
 
+### Local Deployment Testing
+
+You can test the deployment process locally using:
+
+```bash
+npm run deploy
+```
+
+This command will:
+- ✅ Run all tests to ensure code quality
+- 🎨 Build optimized CSS with Tailwind
+- 📦 Prepare deployment package in `_site/` directory
+- 🚀 Create the same structure that GitHub Actions deploys
+
+The `_site/` directory will contain all files ready for deployment, allowing you to verify the deployment package before pushing to GitHub.
+
 ### Files Deployed
 
 - `index.html` - Main documentation page
 - `editor.html` - Interactive web editor
+- `BeyondGlobal.html` - BeyondGlobal branding page
 - `styles.css` - Main stylesheet
-- All supporting assets and documentation
+- `dist/output.css` - Compiled Tailwind CSS
+- All JavaScript modules (`src/`)
+- Smart contracts (`contracts/`)
+- Supporting documentation files
 
-📖 **For complete setup instructions, see [.github/PAGES-SETUP.md](./.github/PAGES-SETUP.md)**
+📖 **For complete deployment guide, see [DEPLOYMENT.md](./DEPLOYMENT.md)**  
+📖 **For GitHub Pages setup instructions, see [.github/PAGES-SETUP.md](./.github/PAGES-SETUP.md)**
 
 ---
 
@@ -496,6 +736,45 @@ The **Web Editor** (`editor.html`) is a powerful, browser-based tool for creatin
 - 📊 **Character/Word Counter**: Live tracking of document length
 - 🎨 **Responsive Design**: Works on desktop, tablet, and mobile devices
 - 👁️ **Dual-Pane View**: Side-by-side editor and preview panels
+- 🚩 **Feature Flags Integration**: Dynamic theming and UI based on feature flags
+
+**Feature Flags Support:**
+
+The web editor integrates with the repository's feature flags system to enable dynamic features:
+
+- **🌙 Dark Mode** (`dark_mode` flag): When enabled, applies a dark theme to the entire editor interface
+  - Dark background colors for reduced eye strain
+  - Syntax-highlighted code blocks with dark theme
+  - Optimized contrast for better readability
+  
+- **✨ New UI** (`new_ui` flag): When enabled, applies enhanced UI styling
+  - Refined typography and spacing
+  - Enhanced visual polish
+  - Modern design elements
+
+**To enable feature flags:**
+
+1. Edit `feature-flags.json` in the repository root
+2. Set the desired flag to `"enabled": true`
+3. Reload the editor in your browser
+
+Example `feature-flags.json`:
+```json
+{
+  "flags": {
+    "dark_mode": {
+      "enabled": true,
+      "updatedAt": "2026-02-24T16:30:00.000Z"
+    },
+    "new_ui": {
+      "enabled": true,
+      "updatedAt": "2026-02-24T16:30:00.000Z"
+    }
+  }
+}
+```
+
+The editor will automatically load and apply the flags when the page loads. Active features are displayed in the header.
 
 **To use the web editor:**
 1. Open `editor.html` in a web browser
@@ -998,6 +1277,24 @@ Use these commands in any issue or PR comment:
 - 🚀 Gradual feature rollouts
 - 🔬 A/B testing capabilities
 - 🛡️ Emergency feature disable
+- 🖊️ **Web Editor Integration**: Control editor themes and UI dynamically
+
+### Supported Feature Flags
+
+The following feature flags are currently supported:
+
+- **`dark_mode`**: Enables dark mode theme in the web editor
+- **`new_ui`**: Enables enhanced UI styling in the web editor  
+- **`test_chatops`**: Test flag for ChatOps workflow validation
+
+### Web Editor Integration
+
+The web editor (`editor.html`) automatically loads feature flags from `feature-flags.json` and applies them:
+
+- When `dark_mode` is enabled, the editor switches to a dark theme
+- When `new_ui` is enabled, enhanced styling is applied
+- Active features are displayed in the editor header
+- Changes take effect on page reload
 
 ### Documentation
 
@@ -1294,7 +1591,7 @@ const baseFetcher = new ERC721Fetcher(
 
 ## 🔐 Ownership Status & Verification
 **Name:** Matthew Brace  
-**GitHub:** [@Kushmanmb](https://github.com/Kushmanmb)  
+**GitHub:** [@kushmanmb](https://github.com/kushmanmb)  
 **Verification:** kushmanmb.eth | [kushmanmb.org](https://kushmanmb.org)  
 **Contact:** [kushmanmb@gmx.com](mailto:kushmanmb@gmx.com)
 
@@ -1322,6 +1619,16 @@ cd octant-v2-core
 - Dragon Protocol for Safe integration
 - ERC-4626 compliant tokenized strategies
 - Comprehensive factory contracts for deployment
+
+### kywmahmb
+
+A related repository by kushmanmb for blockchain development and utilities.
+
+**Quick Clone:**
+```bash
+git clone https://github.com/Kushmanmb/kywmahmb.git
+cd kywmahmb
+```
 
 ---
 
@@ -1441,7 +1748,7 @@ All blockchain information has been verified through official documentation:
 
 ## 📢 Repository Announcement
 
-**This repository is owned, maintained, and curated by Kushmanmb (Matthew Brace)**
+**This repository is owned, maintained, and curated by kushmanmb (Matthew Brace)**
 
 All content, documentation, and blockchain information presented here represents verified research and careful curation by the owner. This project demonstrates commitment to:
 
@@ -1463,7 +1770,7 @@ For questions, collaborations, or inquiries, please reach out via:
 *WWJD*
 
 ![Made with Love](https://img.shields.io/badge/Made%20with-❤️-red?style=flat-square)
-![By Kushmanmb](https://img.shields.io/badge/By-Kushmanmb-blue?style=flat-square&logo=github)
+![By kushmanmb](https://img.shields.io/badge/By-kushmanmb-blue?style=flat-square&logo=github)
 
 **© 2024-2026 Matthew Brace (kushmanmb) | All Rights Reserved**
 

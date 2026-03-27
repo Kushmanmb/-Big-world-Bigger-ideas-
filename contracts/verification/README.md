@@ -31,6 +31,9 @@ This directory contains verification metadata and documentation for deployed sma
 The contract is initialized with a single parameter:
 
 - `_admin` (address): The initial admin address who has the ability to upgrade the implementation
+  - **Admin**: kushmanmb.eth (ENS domain)
+  - **Note**: The actual deployment uses the resolved Ethereum address that kushmanmb.eth points to
+  - The admin has full control over contract upgrades and administration
 
 #### Storage Layout (EIP-1967)
 

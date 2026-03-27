@@ -1,0 +1,222 @@
+name: Blockchair Data Fetch and Publish
+
+# This workflow fetches blockchain data for kushmanmb.eth from Blockchair API
+# Runs daily at midnight UTC and can be triggered manually
+# Publishes data to GitHub Pages for easy access
+
+on:
+  # Run on schedule - daily at midnight UTC (00:00)
+  schedule:
+    - cron: '0 0 * * *'
+  # Allow manual trigger with optional custom address
+  workflow_dispatch:
+    inputs:
+      address:
+        description: 'ENS name or Ethereum address to fetch data for'
+        required: false
+        default: 'kushmanmb.eth'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  fetch-and-publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Fetch Blockchair data for kushmanmb.eth
+        id: fetch
+        run: |
+          # Create output directory
+          mkdir -p docs/blockchair-data
+          
+          # Set the address (use input or default)
+          ADDRESS="${{ github.event.inputs.address || 'kushmanmb.eth' }}"
+          echo "Fetching data for: $ADDRESS"
+          
+          # Create a Node.js script to fetch and save data
+          cat > fetch-data.js << 'EOF'
+          const EthereumBlockchairFetcher = require('./src/ethereum-blockchair.js');
+          const fs = require('fs');
+          
+          async function fetchAndSave() {
+            const fetcher = new EthereumBlockchairFetcher();
+            const address = process.argv[2] || 'kushmanmb.eth';
+            const timestamp = new Date().toISOString();
+            
+            console.log(`Fetching data for ${address}...`);
+            
+            let output = `# Blockchair Data Report\n\n`;
+            output += `**Address:** ${address}\n`;
+            output += `**Generated:** ${timestamp}\n\n`;
+            output += `---\n\n`;
+            
+            // Fetch and format stats
+            try {
+              console.log('Fetching blockchain statistics...');
+              const stats = await fetcher.getStats();
+              output += `## Ethereum Blockchain Statistics\n\n`;
+              output += fetcher.formatStats(stats);
+              output += `\n\n`;
+            } catch (error) {
+              output += `## Ethereum Blockchain Statistics\n\n`;
+              output += `Error fetching stats: ${error.message}\n\n`;
+              console.error('Stats error:', error.message);
+            }
+            
+            // Fetch and format address data
+            try {
+              console.log(`Fetching address data for ${address}...`);
+              const addressData = await fetcher.getAddress(address);
+              output += `## Address Information: ${address}\n\n`;
+              output += fetcher.formatAddress(addressData);
+              output += `\n\n`;
+              
+              // Save raw JSON data
+              const rawData = {
+                address: address,
+                timestamp: timestamp,
+                data: addressData
+              };
+              fs.writeFileSync('docs/blockchair-data/address-raw.json', JSON.stringify(rawData, null, 2));
+            } catch (error) {
+              output += `## Address Information: ${address}\n\n`;
+              output += `Error fetching address data: ${error.message}\n\n`;
+              console.error('Address error:', error.message);
+            }
+            
+            // Fetch and format token balances
+            try {
+              console.log(`Fetching token balances for ${address}...`);
+              const tokens = await fetcher.getTokenBalances(address);
+              output += `## ERC-20 Token Balances\n\n`;
+              output += fetcher.formatTokenBalances(tokens);
+              output += `\n\n`;
+              
+              // Save raw JSON data
+              const rawTokens = {
+                address: address,
+                timestamp: timestamp,
+                data: tokens
+              };
+              fs.writeFileSync('docs/blockchair-data/tokens-raw.json', JSON.stringify(rawTokens, null, 2));
+            } catch (error) {
+              output += `## ERC-20 Token Balances\n\n`;
+              output += `Error fetching token data: ${error.message}\n\n`;
+              console.error('Token error:', error.message);
+            }
+            
+            // Fetch recent blocks
+            try {
+              console.log('Fetching recent blocks...');
+              const recentBlocks = await fetcher.getRecentBlocks(10);
+              output += `## Recent Blocks (Last 10)\n\n`;
+              if (recentBlocks.data && Array.isArray(recentBlocks.data)) {
+                recentBlocks.data.forEach((block, index) => {
+                  output += `${index + 1}. Block ${block.id} - ${block.transaction_count} transactions\n`;
+                });
+              }
+              output += `\n\n`;
+            } catch (error) {
+              output += `## Recent Blocks\n\n`;
+              output += `Error fetching recent blocks: ${error.message}\n\n`;
+              console.error('Blocks error:', error.message);
+            }
+            
+            // Add footer
+            output += `---\n\n`;
+            output += `**Data Source:** [Blockchair API](https://blockchair.com/api/docs)\n`;
+            output += `**Repository:** [Big World Bigger Ideas](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-)\n`;
+            
+            // Save the report
+            fs.writeFileSync('docs/blockchair-data/report.md', output);
+            console.log('Report saved to docs/blockchair-data/report.md');
+            
+            // Create an index file for GitHub Pages
+            const indexContent = `<!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Blockchair Data - ${address}</title>
+            <style>
+              body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; max-width: 900px; margin: 40px auto; padding: 20px; line-height: 1.6; }
+              pre { background: #f6f8fa; padding: 16px; border-radius: 6px; overflow-x: auto; }
+              code { background: #f6f8fa; padding: 2px 6px; border-radius: 3px; }
+              h1, h2, h3 { border-bottom: 1px solid #eaecef; padding-bottom: 8px; }
+              .timestamp { color: #586069; font-size: 14px; }
+              a { color: #0366d6; text-decoration: none; }
+              a:hover { text-decoration: underline; }
+            </style>
+          </head>
+          <body>
+            <h1>Blockchair Data Report</h1>
+            <p class="timestamp">Last updated: ${timestamp}</p>
+            <p><strong>Address:</strong> ${address}</p>
+            <hr>
+            <p>📊 <a href="report.md">View Markdown Report</a></p>
+            <p>📄 <a href="address-raw.json">Download Address Data (JSON)</a></p>
+            <p>🪙 <a href="tokens-raw.json">Download Token Data (JSON)</a></p>
+            <hr>
+            <p><small>Data fetched from <a href="https://blockchair.com/api/docs" target="_blank">Blockchair API</a></small></p>
+            <p><small>Generated by <a href="https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-" target="_blank">Big World Bigger Ideas</a></small></p>
+          </body>
+          </html>`;
+            
+            fs.writeFileSync('docs/blockchair-data/index.html', indexContent);
+            console.log('Index page saved to docs/blockchair-data/index.html');
+          }
+          
+          fetchAndSave().catch(error => {
+            console.error('Fatal error:', error);
+            process.exit(1);
+          });
+          EOF
+          
+          # Run the script
+          node fetch-data.js "$ADDRESS"
+          
+          echo "address=$ADDRESS" >> $GITHUB_OUTPUT
+      
+      - name: Commit and push data
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          git add docs/blockchair-data/
+          
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update Blockchair data for ${{ steps.fetch.outputs.address }}"
+            git push
+          fi
+      
+      - name: Comment on trigger issue (if manual)
+        if: github.event_name == 'workflow_dispatch' && github.event.issue.number
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `✅ Blockchair data fetched and published for \`${{ steps.fetch.outputs.address }}\`\n\nView the report at: https://kushmanmb.org/blockchair-data/`
+            });

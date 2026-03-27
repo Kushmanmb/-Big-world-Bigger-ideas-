@@ -3,22 +3,7 @@
  */
 
 const ISO27001Fetcher = require('./iso27001.js');
-
-// Test counters
-let passed = 0;
-let failed = 0;
-
-function test(name, fn) {
-  try {
-    fn();
-    console.log(`✓ ${name}`);
-    passed++;
-  } catch (error) {
-    console.log(`✗ ${name}`);
-    console.error(`  ${error.message}`);
-    failed++;
-  }
-}
+const { test, testAsync, assertEqual, assertNotNull, assertThrows, printSummary } = require('./test-helpers');
 
 function assert(condition, message) {
   if (!condition) {
@@ -209,16 +194,4 @@ test('should have valid dates', () => {
   assert(nextReview > lastUpdated, 'Next review should be after last updated');
 });
 
-// Summary
-console.log('\n=== Test Summary ===');
-console.log(`Passed: ${passed}`);
-console.log(`Failed: ${failed}`);
-console.log(`Total: ${passed + failed}`);
-
-if (failed === 0) {
-  console.log('\n✅ All tests passed!');
-  process.exit(0);
-} else {
-  console.log(`\n❌ ${failed} test(s) failed`);
-  process.exit(1);
-}
+printSummary();

@@ -1,0 +1,17 @@
+{
+  "name": "eipsinsight",
+  "version": "1.0.0",
+  "description": "EIPs Insight - Ethereum Improvement Proposals explorer and documentation",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": ["ethereum", "eips", "blockchain", "documentation"],
+  "author": "Matthew Brace <kushmanmb@gmx.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}

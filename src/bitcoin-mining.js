@@ -5,7 +5,7 @@
  * API Documentation: https://mempool.space/docs/api/rest
  */
 
-const https = require('https');
+const { makeRequest, CacheManager } = require('./http-client');
 
 class BitcoinMiningFetcher {
   /**
@@ -14,8 +14,10 @@ class BitcoinMiningFetcher {
    */
   constructor(baseUrl = 'mempool.space') {
     this.baseUrl = baseUrl;
-    this.cache = new Map();
-    this.cacheTimeout = 60000; // 1 minute cache
+    this.cacheManager = new CacheManager(60000); // 1 minute cache
+    // Backward compatibility - expose cache and cacheTimeout
+    this.cache = this.cacheManager.cache;
+    this.cacheTimeout = this.cacheManager.cacheTimeout;
   }
 
   /**
@@ -25,48 +27,12 @@ class BitcoinMiningFetcher {
    * @private
    */
   _makeRequest(endpoint) {
-    return new Promise((resolve, reject) => {
-      const options = {
-        hostname: this.baseUrl,
-        port: 443,
-        path: endpoint,
-        method: 'GET',
-        headers: {
-          'User-Agent': 'BitcoinMiningFetcher/1.0'
-        }
-      };
-
-      const req = https.request(options, (res) => {
-        let data = '';
-
-        res.on('data', (chunk) => {
-          data += chunk;
-        });
-
-        res.on('end', () => {
-          try {
-            if (res.statusCode >= 200 && res.statusCode < 300) {
-              const parsed = JSON.parse(data);
-              resolve(parsed);
-            } else {
-              reject(new Error(`HTTP ${res.statusCode}: ${data}`));
-            }
-          } catch (error) {
-            reject(new Error(`Failed to parse response: ${error.message}`));
-          }
-        });
-      });
-
-      req.on('error', (error) => {
-        reject(new Error(`Request failed: ${error.message}`));
-      });
-
-      req.setTimeout(10000, () => {
-        req.destroy();
-        reject(new Error('Request timeout'));
-      });
-
-      req.end();
+    return makeRequest({
+      hostname: this.baseUrl,
+      path: endpoint,
+      headers: {
+        'User-Agent': 'BitcoinMiningFetcher/1.0'
+      }
     });
   }
 
@@ -78,18 +44,7 @@ class BitcoinMiningFetcher {
    * @private
    */
   async _getWithCache(cacheKey, fetcher) {
-    const cached = this.cache.get(cacheKey);
-    if (cached && Date.now() - cached.timestamp < this.cacheTimeout) {
-      return cached.data;
-    }
-
-    const data = await fetcher();
-    this.cache.set(cacheKey, {
-      data,
-      timestamp: Date.now()
-    });
-
-    return data;
+    return await this.cacheManager.getWithCache(cacheKey, fetcher);
   }
 
   /**
@@ -193,7 +148,7 @@ class BitcoinMiningFetcher {
    * Clears the cache
    */
   clearCache() {
-    this.cache.clear();
+    this.cacheManager.clearCache();
   }
 
   /**
@@ -202,9 +157,9 @@ class BitcoinMiningFetcher {
    */
   getCacheStats() {
     return {
-      size: this.cache.size,
-      timeout: this.cacheTimeout,
-      keys: Array.from(this.cache.keys())
+      size: this.cacheManager.cache.size,
+      timeout: this.cacheManager.cacheTimeout,
+      keys: Array.from(this.cacheManager.cache.keys())
     };
   }
 }

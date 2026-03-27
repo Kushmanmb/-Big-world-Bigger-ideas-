@@ -1,0 +1,121 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Big World Bigger Ideas",
+  "logo": {
+    "light": "/BeyondGlobal.svg",
+    "dark": "/BeyondGlobal.svg"
+  },
+  "favicon": "/BeyondGlobal.svg",
+  "colors": {
+    "primary": "#0D9373",
+    "light": "#07C983",
+    "dark": "#0D9373",
+    "anchors": {
+      "from": "#0D9373",
+      "to": "#07C983"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-"
+    },
+    {
+      "name": "NPM",
+      "url": "https://www.npmjs.com/package/big-world-bigger-ideas"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Get Started",
+    "url": "https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-"
+  },
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "api-reference"
+    },
+    {
+      "name": "Guides",
+      "url": "guides"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "Community",
+      "icon": "github",
+      "url": "https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/discussions"
+    },
+    {
+      "name": "Blog",
+      "icon": "newspaper",
+      "url": "https://kushmanmb.org"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Getting Started",
+      "pages": [
+        "introduction",
+        "quickstart",
+        "installation"
+      ]
+    },
+    {
+      "group": "Blockchain Utilities",
+      "pages": [
+        "api-reference/erc721",
+        "api-reference/erc20",
+        "api-reference/bitcoin-mining",
+        "api-reference/blockchair",
+        "api-reference/ethereum-blockchair",
+        "api-reference/litecoin-blockchair"
+      ]
+    },
+    {
+      "group": "Token & NFT Tools",
+      "pages": [
+        "api-reference/token-history",
+        "api-reference/token-uuid",
+        "api-reference/contract-abi",
+        "api-reference/eth-call"
+      ]
+    },
+    {
+      "group": "Tracking & Monitoring",
+      "pages": [
+        "api-reference/address-tracker",
+        "api-reference/consensus-tracker",
+        "api-reference/op-return"
+      ]
+    },
+    {
+      "group": "Security & Compliance",
+      "pages": [
+        "api-reference/wallet",
+        "api-reference/zkpdf",
+        "api-reference/iso27001",
+        "api-reference/withdraw-credentials"
+      ]
+    },
+    {
+      "group": "Governance",
+      "pages": [
+        "api-reference/blockchain-council",
+        "api-reference/feature-flags"
+      ]
+    },
+    {
+      "group": "Guides",
+      "pages": [
+        "guides/chatops",
+        "guides/publishing",
+        "guides/deployment",
+        "guides/security"
+      ]
+    }
+  ],
+  "footerSocials": {
+    "github": "https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-",
+    "twitter": "https://twitter.com/kushmanmb"
+  }
+}

@@ -71,7 +71,16 @@ const BLOCKCHAIN_NETWORKS = {
       slotsPerEpoch: 32,
       epochDuration: 384, // seconds (6.4 minutes)
       validatorActivationQueue: true,
-      withdrawalEnabled: true
+      withdrawalEnabled: true,
+      withdrawalCredentials: {
+        // BLS withdrawal credentials start with 0x00
+        // Execution withdrawal credentials start with 0x01
+        prefixBLS: '0x00',
+        prefixExecution: '0x01',
+        description: 'Validators must set withdrawal credentials to receive rewards and withdrawals',
+        updateAvailable: true, // Can update from BLS to execution credentials
+        required: true
+      }
     }
   },
   

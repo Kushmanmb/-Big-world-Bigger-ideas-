@@ -3,56 +3,7 @@
  */
 
 const ERC721Fetcher = require('./erc721');
-
-let testsPassed = 0;
-let testsFailed = 0;
-
-function test(description, fn) {
-  try {
-    fn();
-    console.log(`✓ ${description}`);
-    testsPassed++;
-  } catch (error) {
-    console.error(`✗ ${description}`);
-    console.error(`  Error: ${error.message}`);
-    testsFailed++;
-  }
-}
-
-function assertEqual(actual, expected, message = '') {
-  if (actual !== expected) {
-    throw new Error(`${message} - Expected ${expected}, got ${actual}`);
-  }
-}
-
-function assertNotNull(value, message = '') {
-  if (value === null || value === undefined) {
-    throw new Error(`${message} - Value should not be null or undefined`);
-  }
-}
-
-function assertThrows(fn, expectedError = null) {
-  try {
-    fn();
-    throw new Error('Expected function to throw an error');
-  } catch (error) {
-    if (expectedError && !error.message.includes(expectedError)) {
-      throw new Error(`Expected error message to include "${expectedError}", got "${error.message}"`);
-    }
-  }
-}
-
-async function testAsync(description, fn) {
-  try {
-    await fn();
-    console.log(`✓ ${description}`);
-    testsPassed++;
-  } catch (error) {
-    console.error(`✗ ${description}`);
-    console.error(`  Error: ${error.message}`);
-    testsFailed++;
-  }
-}
+const { test, testAsync, assertEqual, assertNotNull, assertThrows, printSummary } = require('./test-helpers');
 
 console.log('Running ERC-721 Fetcher Tests...\n');
 
@@ -280,16 +231,5 @@ testAsync('should handle zero token ID', async () => {
 
 // Run all tests and print results
 setTimeout(() => {
-  console.log('\n==================================================');
-  console.log(`Tests Passed: ${testsPassed}`);
-  console.log(`Tests Failed: ${testsFailed}`);
-  console.log('==================================================');
-  
-  if (testsFailed === 0) {
-    console.log('✅ All tests passed!');
-    process.exit(0);
-  } else {
-    console.log('❌ Some tests failed!');
-    process.exit(1);
-  }
+  printSummary();
 }, 100);

@@ -106,6 +106,70 @@
             margin-bottom: 1em;
             color: #666;
         }
+        
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #1a1a1a;
+        }
+        
+        body.dark-mode .bg-gray-50 {
+            background-color: #1a1a1a;
+        }
+        
+        body.dark-mode .text-gray-800 {
+            color: #e0e0e0 !important;
+        }
+        
+        body.dark-mode .text-gray-600 {
+            color: #b0b0b0 !important;
+        }
+        
+        body.dark-mode .bg-white {
+            background-color: #2d2d2d;
+        }
+        
+        body.dark-mode .border-gray-300 {
+            border-color: #404040;
+        }
+        
+        body.dark-mode textarea {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+        
+        body.dark-mode .preview-content {
+            color: #e0e0e0;
+        }
+        
+        body.dark-mode .preview-content code {
+            background-color: #1e1e1e;
+            color: #4ec9b0;
+        }
+        
+        body.dark-mode .preview-content pre {
+            background-color: #1e1e1e;
+        }
+        
+        body.dark-mode .preview-content blockquote {
+            color: #b0b0b0;
+        }
+        
+        /* New UI Styles */
+        body.new-ui {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        body.new-ui .editor-container {
+            gap: 1.5rem;
+        }
+        
+        body.new-ui .bg-white {
+            border: 1px solid #e5e7eb;
+        }
+        
+        body.new-ui h1 {
+            letter-spacing: -0.025em;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -116,6 +180,10 @@
                 <div>
                     <h1 class="text-3xl font-bold text-gray-800">🌏 Web Editor</h1>
                     <p class="text-gray-600 mt-1">Big World Bigger Ideas - Blockchain Documentation</p>
+                    <div id="featureFlagsIndicator" class="mt-2 text-sm text-gray-500 hidden">
+                        <span class="font-semibold">Active Features:</span>
+                        <span id="featureFlagsList"></span>
+                    </div>
                 </div>
                 <div>
                     <a href="index.html" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
@@ -206,7 +274,7 @@ function example() {
 
         <!-- Footer -->
         <footer class="mt-6 text-center text-gray-600 text-sm">
-            <p>© 2024-2026 Matthew Brace (Kushmanmb) | All Rights Reserved</p>
+            <p>© 2024-2026 Matthew Brace (kushmanmb) | All Rights Reserved</p>
             <p class="mt-1">
                 <a href="https://kushmanmb.org" class="text-blue-600 hover:underline">kushmanmb.org</a> |
                 <a href="mailto:kushmanmb@gmx.com" class="text-blue-600 hover:underline">kushmanmb@gmx.com</a>
@@ -215,6 +283,63 @@ function example() {
     </div>
 
     <script>
+        // Feature Flags Management (Browser-compatible)
+        let featureFlags = {
+            dark_mode: false,
+            new_ui: false,
+            test_chatops: false
+        };
+
+        // Load feature flags from JSON file
+        async function loadFeatureFlags() {
+            try {
+                const response = await fetch('./feature-flags.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    // Extract enabled status from flags
+                    for (const [key, value] of Object.entries(data.flags || {})) {
+                        featureFlags[key] = value.enabled || false;
+                    }
+                    console.log('✅ Feature flags loaded:', featureFlags);
+                    applyFeatureFlags();
+                }
+            } catch (error) {
+                console.warn('⚠️  Could not load feature flags, using defaults:', error.message);
+            }
+        }
+
+        // Apply feature flags to the UI
+        function applyFeatureFlags() {
+            const activeFeatures = [];
+            
+            // Apply dark mode
+            if (featureFlags.dark_mode) {
+                document.body.classList.add('dark-mode');
+                activeFeatures.push('🌙 Dark Mode');
+                console.log('🌙 Dark mode enabled');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+
+            // Apply new UI styles if enabled
+            if (featureFlags.new_ui) {
+                document.body.classList.add('new-ui');
+                activeFeatures.push('✨ New UI');
+                console.log('✨ New UI enabled');
+            }
+            
+            // Update feature flags indicator
+            const indicator = document.getElementById('featureFlagsIndicator');
+            const flagsList = document.getElementById('featureFlagsList');
+            
+            if (activeFeatures.length > 0) {
+                indicator.classList.remove('hidden');
+                flagsList.textContent = activeFeatures.join(', ');
+            } else {
+                indicator.classList.add('hidden');
+            }
+        }
+
         // Editor functionality
         const editor = document.getElementById('editor');
         const preview = document.getElementById('preview');
@@ -510,6 +635,9 @@ function example() {
 
         // Initialize
         updatePreview();
+        
+        // Load feature flags on page load
+        loadFeatureFlags();
     </script>
 </body>
 </html>
