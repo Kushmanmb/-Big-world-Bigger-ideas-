@@ -511,6 +511,59 @@ The full Super Linter runs automatically in CI — see the workflow badge at the
 
 ---
 
+## 🤖 GitHub Copilot Coding Agent
+
+This repository is configured to work with [GitHub Copilot coding agent](https://docs.github.com/en/enterprise-cloud@latest/copilot/concepts/agents/coding-agent/about-coding-agent), which can autonomously complete development tasks in a GitHub Actions-powered environment.
+
+### What Copilot Coding Agent Can Do
+
+Copilot coding agent can help with tasks such as:
+
+- 🐛 **Fix bugs** — resolve issues identified in bug reports
+- ✨ **Implement features** — add incremental new functionality
+- 🧪 **Improve test coverage** — write and expand tests across modules
+- 📝 **Update documentation** — keep README, wiki, and module docs current
+- 🧹 **Address technical debt** — refactor and clean up code
+- 🔀 **Resolve merge conflicts** — handle conflicting changes between branches
+
+### How to Use Copilot Coding Agent
+
+**Assign an issue to Copilot:**
+
+1. Open or create a GitHub Issue describing the task
+2. In the **Assignees** field, select **Copilot** as the assignee
+3. Copilot will evaluate the issue, make the required changes, and open a pull request for your review
+
+**Mention `@copilot` on an existing pull request:**
+
+1. Open a pull request comment
+2. Mention `@copilot` and describe the changes you want
+3. Copilot will make the changes and push new commits to the PR
+
+### How It Works
+
+Copilot coding agent operates in an ephemeral development environment powered by GitHub Actions. When assigned a task, it will:
+
+1. Clone the repository and read the `.github/copilot-instructions.md` file for context
+2. Explore the codebase to understand the relevant modules
+3. Make code changes, run `npm test` and linters to validate
+4. Open a pull request with a detailed description of the changes
+5. Request your review when done — you can leave comments to ask for further iteration
+
+### Copilot Instructions
+
+This repository includes a `.github/copilot-instructions.md` file that gives Copilot detailed context about:
+
+- Project structure and module layout
+- How to install dependencies (`npm ci`)
+- How to run tests (`npm test` or `npm run test:<module>`)
+- Coding conventions (CommonJS modules, error handling patterns, test format)
+- Available demo scripts and build commands
+
+Keeping this file up to date ensures Copilot coding agent can work effectively on tasks in this repository.
+
+---
+
 ## 🔐 Zero-Knowledge PDF Verification (zkpdf)
 
 This repository includes a powerful zero-knowledge proof-based PDF verification system that enables document authentication and integrity verification without revealing document contents.
