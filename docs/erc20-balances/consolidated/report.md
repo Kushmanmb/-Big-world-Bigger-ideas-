@@ -13,7 +13,7 @@
 
 ### Addresses
 
-1. `kushmanmb.eth`
+1. `kushmanmb.base.eth`
 2. `yaketh.eth`
 
 No ERC-20 tokens found across tracked addresses.

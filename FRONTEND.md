@@ -384,5 +384,5 @@ npm run build:css
 
 For issues or questions:
 - **Repository Issues:** Open an issue on GitHub
-- **Email:** kushmanmb@gmx.com
+- **Email:** mattbrace92@gmail.com
 - **Owner:** Matthew Brace (@kushmanmb)

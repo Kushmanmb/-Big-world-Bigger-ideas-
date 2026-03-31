@@ -2,7 +2,7 @@
 
 ## Overview
 
-The `eth_call` module provides functionality to perform read-only contract calls on Ethereum and EVM-compatible blockchains using the `eth_call` JSON-RPC method. It supports ENS (Ethereum Name Service) name resolution, making it easy to work with addresses like `kushmanmb.eth`.
+The `eth_call` module provides functionality to perform read-only contract calls on Ethereum and EVM-compatible blockchains using the `eth_call` JSON-RPC method. It supports ENS (Ethereum Name Service) name resolution, making it easy to work with addresses like `kushmanmb.base.eth`.
 
 **⚠️ IMPORTANT: Skeleton Implementation Notice**
 
@@ -42,7 +42,7 @@ const EthCallClient = require('big-world-bigger-ideas/src/eth-call');
 const client = new EthCallClient();
 
 // Resolve an ENS name
-const address = await client.resolveAddress('kushmanmb.eth');
+const address = await client.resolveAddress('kushmanmb.base.eth');
 
 // Make a contract call
 const data = client.encodeFunctionCall('balanceOf(address)', [address]);
@@ -90,7 +90,7 @@ Resolves an ENS name to an Ethereum address.
 
 **Example:**
 ```javascript
-const address = await client.resolveENS('kushmanmb.eth');
+const address = await client.resolveENS('kushmanmb.base.eth');
 console.log(address); // 0x...
 ```
 
@@ -106,7 +106,7 @@ Resolves an address or ENS name. If already an address, returns it as-is.
 **Example:**
 ```javascript
 // Resolves ENS name
-const addr1 = await client.resolveAddress('kushmanmb.eth');
+const addr1 = await client.resolveAddress('kushmanmb.base.eth');
 
 // Returns address as-is
 const addr2 = await client.resolveAddress('0x1234...');
@@ -200,7 +200,7 @@ Performs an eth_call to read contract state.
 **Example:**
 ```javascript
 const result = await client.call({
-  from: 'kushmanmb.eth',
+  from: 'kushmanmb.base.eth',
   to: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
   data: '0x70a08231...',
   block: 'latest'
@@ -232,7 +232,7 @@ Gets ERC-20 token balance for an address.
 **Example:**
 ```javascript
 const usdcContract = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48';
-const balance = await client.getERC20Balance(usdcContract, 'kushmanmb.eth');
+const balance = await client.getERC20Balance(usdcContract, 'kushmanmb.base.eth');
 console.log(`Balance: ${balance.balance}`);
 ```
 
@@ -332,13 +332,13 @@ Gets cache statistics.
 {
   size: 2,
   timeout: 300000,
-  keys: ['ens_kushmanmb.eth', 'ens_vitalik.eth']
+  keys: ['ens_kushmanmb.base.eth', 'ens_vitalik.eth']
 }
 ```
 
 ## Usage Examples
 
-### Example 1: Check Token Balance from kushmanmb.eth
+### Example 1: Check Token Balance from kushmanmb.base.eth
 
 ```javascript
 const EthCallClient = require('big-world-bigger-ideas/src/eth-call');
@@ -349,10 +349,10 @@ async function checkBalance() {
   // USDC contract on Ethereum mainnet
   const usdcContract = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48';
   
-  // Check balance for kushmanmb.eth
+  // Check balance for kushmanmb.base.eth
   const balance = await client.getERC20Balance(
     usdcContract,
-    'kushmanmb.eth'
+    'kushmanmb.base.eth'
   );
   
   // USDC has 6 decimals
@@ -363,7 +363,7 @@ async function checkBalance() {
 checkBalance();
 ```
 
-### Example 2: Make Call FROM kushmanmb.eth
+### Example 2: Make Call FROM kushmanmb.base.eth
 
 ```javascript
 async function callFromKushmanmb() {
@@ -374,9 +374,9 @@ async function callFromKushmanmb() {
     '0x1234567890123456789012345678901234567890'
   ]);
   
-  // Make the call from kushmanmb.eth
+  // Make the call from kushmanmb.base.eth
   const result = await client.call({
-    from: 'kushmanmb.eth',  // Caller address
+    from: 'kushmanmb.base.eth',  // Caller address
     to: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
     data: data
   });
@@ -495,8 +495,8 @@ For full functionality, consider using established Web3 libraries alongside this
 
 For issues, questions, or contributions:
 - **GitHub**: [kushmanmb-org/-Big-world-Bigger-ideas-](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-)
-- **Email**: kushmanmb@gmx.com
-- **ENS**: kushmanmb.eth
+- **Email**: mattbrace92@gmail.com
+- **ENS**: kushmanmb.base.eth
 
 ## License
 
@@ -506,4 +506,4 @@ ISC License - See LICENSE file for details
 
 **Matthew Brace (kushmanmb)**
 - GitHub: [@kushmanmb](https://github.com/kushmanmb)
-- ENS: kushmanmb.eth
+- ENS: kushmanmb.base.eth

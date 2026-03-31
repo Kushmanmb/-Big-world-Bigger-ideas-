@@ -1,6 +1,6 @@
 /**
  * Example usage of Ethereum Blockchair Module
- * Demonstrates fetching data for kushmanmb.eth and other Ethereum addresses
+ * Demonstrates fetching data for kushmanmb.base.eth and other Ethereum addresses
  */
 
 const EthereumBlockchairFetcher = require('./ethereum-blockchair.js');
@@ -26,22 +26,22 @@ async function runExamples() {
       console.log('This is expected in environments without internet access.\n');
     }
 
-    // Example 2: Fetch address information for kushmanmb.eth
-    console.log('\nExample 2: Fetching Address Info for kushmanmb.eth');
+    // Example 2: Fetch address information for kushmanmb.base.eth
+    console.log('\nExample 2: Fetching Address Info for kushmanmb.base.eth');
     console.log('-'.repeat(60));
     try {
-      const addressData = await fetcher.getAddress('kushmanmb.eth');
+      const addressData = await fetcher.getAddress('kushmanmb.base.eth');
       console.log(fetcher.formatAddress(addressData));
     } catch (error) {
       console.log(`Note: Unable to fetch address data: ${error.message}`);
       console.log('This is expected in environments without internet access.\n');
     }
 
-    // Example 3: Fetch ERC-20 token balances for kushmanmb.eth
-    console.log('\nExample 3: Fetching Token Balances for kushmanmb.eth');
+    // Example 3: Fetch ERC-20 token balances for kushmanmb.base.eth
+    console.log('\nExample 3: Fetching Token Balances for kushmanmb.base.eth');
     console.log('-'.repeat(60));
     try {
-      const tokenData = await fetcher.getTokenBalances('kushmanmb.eth');
+      const tokenData = await fetcher.getTokenBalances('kushmanmb.base.eth');
       console.log(fetcher.formatTokenBalances(tokenData));
     } catch (error) {
       console.log(`Note: Unable to fetch token data: ${error.message}`);
@@ -96,7 +96,7 @@ async function runExamples() {
     console.log('\nExample 7: Address Validation');
     console.log('-'.repeat(60));
     const testAddresses = [
-      'kushmanmb.eth',
+      'kushmanmb.base.eth',
       'vitalik.eth',
       '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb0',
       '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045',
@@ -134,7 +134,7 @@ async function runExamples() {
     // Example 9: Multiple ENS names
     console.log('\nExample 9: Working with Different ENS Names');
     console.log('-'.repeat(60));
-    const ensNames = ['kushmanmb.eth', 'vitalik.eth', 'brantly.eth'];
+    const ensNames = ['kushmanmb.base.eth', 'vitalik.eth', 'brantly.eth'];
     
     console.log('Supported ENS names:');
     ensNames.forEach(name => {
@@ -162,7 +162,7 @@ async function runExamples() {
   console.log('- The module supports both Ethereum addresses (0x...) and ENS names (.eth)');
   console.log('- Data is cached for 60 seconds to reduce API calls');
   console.log('- All API calls include timeout protection (10 seconds)');
-  console.log('- kushmanmb.eth is automatically resolved by the Blockchair API');
+  console.log('- kushmanmb.base.eth is automatically resolved by the Blockchair API');
   console.log();
   console.log('For more information, see: https://blockchair.com/api/docs');
 }

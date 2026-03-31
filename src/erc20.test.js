@@ -87,7 +87,7 @@ test('validateAddress accepts valid Ethereum address without 0x prefix', () => {
 
 test('validateAddress accepts ENS names', () => {
   const fetcher = new ERC20Fetcher();
-  const ens = 'kushmanmb.eth';
+  const ens = 'kushmanmb.base.eth';
   const validated = fetcher.validateAddress(ens);
   if (validated !== ens.toLowerCase()) {
     throw new Error('ENS name not validated correctly');

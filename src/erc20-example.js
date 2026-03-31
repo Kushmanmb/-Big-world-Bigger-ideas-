@@ -23,7 +23,7 @@ async function runExamples() {
     const address2 = fetcher.validateAddress('1234567890123456789012345678901234567890');
     console.log(`✓ Valid address (normalized): ${address2}`);
     
-    const ens = fetcher.validateAddress('kushmanmb.eth');
+    const ens = fetcher.validateAddress('kushmanmb.base.eth');
     console.log(`✓ Valid ENS name: ${ens}`);
   } catch (error) {
     console.error(`✗ Validation error: ${error.message}`);
@@ -174,10 +174,10 @@ async function runExamples() {
   console.log('='.repeat(70) + '\n');
 
   console.log('Note: To fetch real data, use:');
-  console.log('  const balances = await fetcher.getTokenBalances("kushmanmb.eth");');
+  console.log('  const balances = await fetcher.getTokenBalances("kushmanmb.base.eth");');
   console.log('  console.log(fetcher.formatTokenBalances(balances));');
   console.log('\nOr to consolidate multiple addresses:');
-  console.log('  const addresses = ["kushmanmb.eth", "yaketh.eth"];');
+  console.log('  const addresses = ["kushmanmb.base.eth", "yaketh.eth"];');
   console.log('  const consolidated = await fetcher.consolidateTokens(addresses);');
   console.log('  console.log(fetcher.formatConsolidatedTokens(consolidated));\n');
 }

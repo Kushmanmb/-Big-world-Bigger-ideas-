@@ -222,4 +222,4 @@ Examples:
 For publishing issues:
 - Check [npm documentation](https://docs.npmjs.com/)
 - Review workflow logs in GitHub Actions
-- Contact repository maintainer: kushmanmb@gmx.com
+- Contact repository maintainer: mattbrace92@gmail.com

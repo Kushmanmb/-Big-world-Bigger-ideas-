@@ -65,7 +65,7 @@ test('TRACKED_ADDRESSES contains kushmanmb', () => {
   if (!TRACKED_ADDRESSES.kushmanmb) {
     throw new Error('kushmanmb address not defined');
   }
-  if (TRACKED_ADDRESSES.kushmanmb !== 'kushmanmb.eth') {
+  if (TRACKED_ADDRESSES.kushmanmb !== 'kushmanmb.base.eth') {
     throw new Error('kushmanmb address incorrect');
   }
 });
@@ -141,7 +141,7 @@ test('initializeAddresses does not throw error', () => {
 test('generateMarkdownReport returns string', () => {
   const consolidator = new AddressConsolidator();
   const mockData = {
-    addresses: ['kushmanmb.eth', 'yaketh.eth'],
+    addresses: ['kushmanmb.base.eth', 'yaketh.eth'],
     totalAddresses: 2,
     uniqueTokens: 3,
     tokens: [
@@ -168,7 +168,7 @@ test('generateMarkdownReport returns string', () => {
 test('generateMarkdownReport includes summary', () => {
   const consolidator = new AddressConsolidator();
   const mockData = {
-    addresses: ['kushmanmb.eth'],
+    addresses: ['kushmanmb.base.eth'],
     totalAddresses: 1,
     uniqueTokens: 2,
     tokens: [],
@@ -190,7 +190,7 @@ test('generateMarkdownReport includes summary', () => {
 test('generateHTMLDashboard returns string', () => {
   const consolidator = new AddressConsolidator();
   const mockData = {
-    addresses: ['kushmanmb.eth'],
+    addresses: ['kushmanmb.base.eth'],
     totalAddresses: 1,
     uniqueTokens: 1,
     tokens: [
@@ -217,7 +217,7 @@ test('generateHTMLDashboard returns string', () => {
 test('generateHTMLDashboard includes stats', () => {
   const consolidator = new AddressConsolidator();
   const mockData = {
-    addresses: ['kushmanmb.eth'],
+    addresses: ['kushmanmb.base.eth'],
     totalAddresses: 1,
     uniqueTokens: 2,
     tokens: [],
@@ -254,7 +254,7 @@ test('generateTransferPlan returns object with required properties', () => {
   const consolidator = new AddressConsolidator();
   const mockData = {
     byAddress: {
-      'kushmanmb.eth': [
+      'kushmanmb.base.eth': [
         {
           tokenAddress: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
           tokenName: 'USD Coin',
@@ -323,7 +323,7 @@ test('generateTransferPlan creates transfer for non-destination address', () => 
   const consolidator = new AddressConsolidator();
   const mockData = {
     byAddress: {
-      'kushmanmb.eth': [
+      'kushmanmb.base.eth': [
         {
           tokenAddress: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
           tokenName: 'USD Coin',
@@ -342,8 +342,8 @@ test('generateTransferPlan creates transfer for non-destination address', () => 
   if (plan.totalTransfers !== 1) {
     throw new Error(`Expected 1 transfer, got ${plan.totalTransfers}`);
   }
-  if (plan.transfers[0].from !== 'kushmanmb.eth') {
-    throw new Error('Transfer from address should be kushmanmb.eth');
+  if (plan.transfers[0].from !== 'kushmanmb.base.eth') {
+    throw new Error('Transfer from address should be kushmanmb.base.eth');
   }
   if (plan.transfers[0].to !== 'yaketh.eth') {
     throw new Error('Transfer to address should be yaketh.eth');
@@ -357,7 +357,7 @@ test('generateTransferPlan uses DESTINATION_ADDRESS default', () => {
   const consolidator = new AddressConsolidator();
   const mockData = {
     byAddress: {
-      'kushmanmb.eth': [
+      'kushmanmb.base.eth': [
         {
           tokenAddress: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
           tokenName: 'Tether USD',
@@ -451,7 +451,7 @@ test('generateTransferPlan skips zero-balance tokens', () => {
   const consolidator = new AddressConsolidator();
   const mockData = {
     byAddress: {
-      'kushmanmb.eth': [
+      'kushmanmb.base.eth': [
         {
           tokenAddress: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
           tokenName: 'USD Coin',
@@ -492,10 +492,10 @@ test('formatTransferPlan returns string', () => {
     destination: 'yaketh.eth',
     totalTransfers: 1,
     tokensToConsolidate: 1,
-    sourceAddresses: ['kushmanmb.eth'],
+    sourceAddresses: ['kushmanmb.base.eth'],
     transfers: [
       {
-        from: 'kushmanmb.eth',
+        from: 'kushmanmb.base.eth',
         to: 'yaketh.eth',
         tokenAddress: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
         tokenName: 'USD Coin',

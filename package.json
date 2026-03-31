@@ -123,8 +123,8 @@
     "rpc",
     "contract-interaction"
   ],
-  "author": "Matthew Brace <kushmanmb@gmx.com>",
-  "owner": "kushmanmb.eth",
+  "author": "Matthew Brace <mattbrace92@gmail.com>",
+  "owner": "kushmanmb.base.eth",
   "coinbaseId": "kushman.cb.id",
   "controller": "yaketh.eth",
   "license": "ISC",

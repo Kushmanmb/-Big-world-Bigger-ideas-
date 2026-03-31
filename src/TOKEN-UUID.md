@@ -505,7 +505,7 @@ This module uses Node.js CommonJS format. For browser usage, bundle with tools l
 For issues, questions, or contributions:
 
 - **GitHub**: [kushmanmb-org/-Big-world-Bigger-ideas-](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-)
-- **Email**: kushmanmb@gmx.com
+- **Email**: mattbrace92@gmail.com
 
 ## License
 

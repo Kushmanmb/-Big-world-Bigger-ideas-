@@ -11,7 +11,7 @@ const { makeRequest, CacheManager } = require('./http-client');
 /**
  * Default owner address used across the repository
  */
-const DEFAULT_OWNER = 'kushmanmb.eth';
+const DEFAULT_OWNER = 'kushmanmb.base.eth';
 
 /**
  * BlockchainPathFetcher
@@ -20,7 +20,7 @@ const DEFAULT_OWNER = 'kushmanmb.eth';
 class BlockchainPathFetcher {
   /**
    * Creates a new BlockchainPathFetcher instance
-   * @param {string} owner - ENS name or Ethereum address of the owner (default: 'kushmanmb.eth')
+   * @param {string} owner - ENS name or Ethereum address of the owner (default: 'kushmanmb.base.eth')
    * @param {string} baseUrl - The Blockchair API hostname (default: 'api.blockchair.com')
    */
   constructor(owner = DEFAULT_OWNER, baseUrl = 'api.blockchair.com') {

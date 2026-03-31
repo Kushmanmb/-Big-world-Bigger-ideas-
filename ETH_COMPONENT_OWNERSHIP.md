@@ -876,9 +876,9 @@ node -e "const ff = require('./src/feature-flags'); console.log(JSON.stringify(f
 For questions about component ownership in this project:
 
 - **GitHub Issues**: [Report issues or ask questions](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues)
-- **Email**: kushmanmb@gmx.com
+- **Email**: mattbrace92@gmail.com
 - **Website**: https://kushmanmb.org
-- **ENS**: kushmanmb.eth
+- **ENS**: kushmanmb.base.eth
 
 ## 📝 License
 
@@ -889,9 +889,9 @@ This documentation is part of the Big World Bigger Ideas project.
 ## 👤 Author
 
 **Matthew Brace (kushmanmb)**
-- Email: kushmanmb@gmx.com
+- Email: mattbrace92@gmail.com
 - Website: https://kushmanmb.org
-- ENS: kushmanmb.eth
+- ENS: kushmanmb.base.eth
 
 ---
 

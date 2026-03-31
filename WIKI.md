@@ -183,7 +183,7 @@ When contributing to wiki documentation:
 For wiki-related questions:
 
 - **Issues**: [GitHub Issues](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues)
-- **Email**: kushmanmb@gmx.com
+- **Email**: mattbrace92@gmail.com
 - **Wiki**: [Browse the wiki](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki)
 
 ---

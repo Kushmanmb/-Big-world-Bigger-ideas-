@@ -450,8 +450,8 @@ Potential improvements for future versions:
 For issues, questions, or contributions:
 
 - **GitHub**: [Kushmanmb/-Big-world-Bigger-ideas-](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-)
-- **Email**: kushmanmb@gmx.com
-- **ENS**: kushmanmb.eth
+- **Email**: mattbrace92@gmail.com
+- **ENS**: kushmanmb.base.eth
 
 ## License
 

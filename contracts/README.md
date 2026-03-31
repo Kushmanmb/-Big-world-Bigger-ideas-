@@ -33,9 +33,9 @@ A multi-owner authentication contract allowing multiple owners identified as byt
 - `ownerCount()`: Get current number of owners
 
 **Storage Transfers:**
-This contract supports transferring ownership and storage control. The contract is designed to work seamlessly with ENS addresses including `kushmanmb.eth`. To transfer ownership to kushmanmb.eth:
+This contract supports transferring ownership and storage control. The contract is designed to work seamlessly with ENS addresses including `kushmanmb.base.eth`. To transfer ownership to kushmanmb.base.eth:
 
-1. Resolve `kushmanmb.eth` to its Ethereum address
+1. Resolve `kushmanmb.base.eth` to its Ethereum address
 2. Use `addOwnerAddress()` to add the resolved address as an owner
 3. Optionally remove other owners if complete transfer is desired
 
@@ -161,7 +161,7 @@ This contract was submitted for verification at basescan.org on 2023-07-24.
 - **Verified:** 2023-07-24
 - **Compiler:** Solidity 0.8.20 with optimization (200 runs)
 - **Type:** Transparent Proxy (EIP-1967)
-- **Admin:** kushmanmb.eth
+- **Admin:** kushmanmb.base.eth
 
 For detailed verification metadata, see `contracts/verification/0xA9D1e08C7793af67e9d92fe308d5697FB81d3E43.json`
 

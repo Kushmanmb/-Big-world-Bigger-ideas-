@@ -10,9 +10,9 @@
 
 [![npm version](https://img.shields.io/npm/v/big-world-bigger-ideas?style=flat-square)](https://www.npmjs.com/package/big-world-bigger-ideas)
 [![Profile](https://img.shields.io/badge/Profile-kushmanmb.org-informational?style=flat-square&logo=ethereum)](https://kushmanmb.org)
-[![ENS](https://img.shields.io/badge/ENS-kushmanmb.eth-9cf?style=flat-square&logo=ethereum)](https://app.ens.domains/name/kushmanmb.eth)
+[![ENS](https://img.shields.io/badge/ENS-kushmanmb.base.eth-9cf?style=flat-square&logo=ethereum)](https://www.base.org/name/kushmanmb)
 [![Coinbase ID](https://img.shields.io/badge/Coinbase%20ID-kushman.cb.id-0052FF?style=flat-square&logo=coinbase)](https://kushman.cb.id)
-[![Email](https://img.shields.io/badge/Contact-kushmanmb@gmx.com-red?style=flat-square&logo=gmail)](mailto:kushmanmb@gmx.com)
+[![Email](https://img.shields.io/badge/Contact-mattbrace92@gmail.com-red?style=flat-square&logo=gmail)](mailto:mattbrace92@gmail.com)
 
 [![Tests](https://img.shields.io/badge/Tests-Passing-success?style=flat-square&logo=github-actions)](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions)
 [![Security](https://img.shields.io/badge/Security-No%20Vulnerabilities-success?style=flat-square&logo=github)](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/security)
@@ -26,8 +26,8 @@
 
 **Created by:** [Matthew Brace (kushmanmb)](https://github.com/kushmanmb)  
 **Organization:** [kushmanmb-org](https://github.com/kushmanmb-org)  
-**Email:** kushmanmb@gmx.com  
-**ENS:** kushmanmb.eth  
+**Email:** mattbrace92@gmail.com  
+**ENS:** kushmanmb.base.eth  
 **Coinbase ID:** kushman.cb.id  
 
 This repository is the original work and intellectual property of Matthew Brace. All blockchain utilities, crypto clarity tools, and documentation contained herein were created, designed, and maintained by the owner.
@@ -1754,8 +1754,8 @@ const baseFetcher = new ERC721Fetcher(
 ## 🔐 Ownership Status & Verification
 **Name:** Matthew Brace  
 **GitHub:** [@kushmanmb](https://github.com/kushmanmb)  
-**Verification:** kushmanmb.eth | [kushmanmb.org](https://kushmanmb.org)  
-**Contact:** [kushmanmb@gmx.com](mailto:kushmanmb@gmx.com)
+**Verification:** kushmanmb.base.eth | [kushmanmb.org](https://kushmanmb.org)  
+**Contact:** [mattbrace92@gmail.com](mailto:mattbrace92@gmail.com)
 
 **Mission Statement:** *Empowering crypto clarity, fueled by innovation and style—relaxing, investing and leveling up, one stat at a time*
 
@@ -1920,9 +1920,9 @@ All content, documentation, and blockchain information presented here represents
 - 📚 **Educational resources for the community**
 
 For questions, collaborations, or inquiries, please reach out via:
-- 📧 Email: [kushmanmb@gmx.com](mailto:kushmanmb@gmx.com)
+- 📧 Email: [mattbrace92@gmail.com](mailto:mattbrace92@gmail.com)
 - 🌐 Website: [kushmanmb.org](https://kushmanmb.org)
-- 🏷️ ENS: kushmanmb.eth
+- 🏷️ ENS: kushmanmb.base.eth
 
 ---
 

@@ -21,12 +21,12 @@ class WithdrawalCredentials {
    * Creates a new Withdrawal Credentials Manager
    * @param {object} config - Configuration options
    * @param {string} config.owner - Owner identifier (e.g., 'kushmanmb')
-   * @param {string} config.ensName - ENS name (e.g., 'kushmanmb.eth')
+   * @param {string} config.ensName - ENS name (e.g., 'kushmanmb.base.eth')
    * @param {string} config.withdrawalAddress - Ethereum address for withdrawals
    */
   constructor(config = {}) {
     this.owner = config.owner || 'kushmanmb';
-    this.ensName = config.ensName || 'kushmanmb.eth';
+    this.ensName = config.ensName || 'kushmanmb.base.eth';
     this.withdrawalAddress = config.withdrawalAddress || null;
     this.network = config.network || 'ethereum';
   }
@@ -112,7 +112,7 @@ class WithdrawalCredentials {
 
   /**
    * Sets ENS name
-   * @param {string} ensName - ENS name (e.g., 'kushmanmb.eth')
+   * @param {string} ensName - ENS name (e.g., 'kushmanmb.base.eth')
    */
   setENSName(ensName) {
     if (!ensName || !ensName.endsWith('.eth')) {
@@ -243,7 +243,7 @@ Configuration Details:
   static createKushmanmbConfig() {
     return new WithdrawalCredentials({
       owner: 'kushmanmb',
-      ensName: 'kushmanmb.eth',
+      ensName: 'kushmanmb.base.eth',
       network: 'ethereum'
     });
   }

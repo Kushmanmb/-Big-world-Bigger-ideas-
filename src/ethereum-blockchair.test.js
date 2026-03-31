@@ -33,7 +33,7 @@ async function runTests() {
   // Test 2: Address validation
   console.log('\n--- Address Validation Tests ---');
   assert(fetcher._isValidEthereumAddress('0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb0'), 'Should accept valid Ethereum address');
-  assert(fetcher._isValidEthereumAddress('kushmanmb.eth'), 'Should accept ENS name');
+  assert(fetcher._isValidEthereumAddress('kushmanmb.base.eth'), 'Should accept ENS name');
   assert(fetcher._isValidEthereumAddress('vitalik.eth'), 'Should accept ENS name');
   assert(!fetcher._isValidEthereumAddress('invalid'), 'Should reject invalid address');
   assert(!fetcher._isValidEthereumAddress('0x123'), 'Should reject short address');
