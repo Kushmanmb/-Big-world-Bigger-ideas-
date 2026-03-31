@@ -889,10 +889,10 @@ fs.appendFileSync('verification-log.txt',
 
 ## 👤 Author & Ownership
 
-**Owner:** kushmanmb.eth  
+**Owner:** kushmanmb.base.eth  
 **Controller:** yaketh.eth  
 **Author:** Matthew Brace (kushmanmb)  
-**Email:** kushmanmb@gmx.com  
+**Email:** mattbrace92@gmail.com  
 **Website:** https://kushmanmb.org  
 
 ---

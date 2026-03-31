@@ -203,7 +203,7 @@ If you encounter issues setting up the wiki:
 
 1. Check GitHub's [Wiki documentation](https://docs.github.com/en/communities/documenting-your-project-with-wikis)
 2. Open an issue in the repository
-3. Contact: kushmanmb@gmx.com
+3. Contact: mattbrace92@gmail.com
 
 ## 📄 File List
 

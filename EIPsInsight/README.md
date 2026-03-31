@@ -56,7 +56,7 @@ This is a component of the larger [Big World Bigger Ideas](../) blockchain docum
 
 ## Author
 
-Matthew Brace (kushmanmb@gmx.com)
+Matthew Brace (mattbrace92@gmail.com)
 
 ## License
 

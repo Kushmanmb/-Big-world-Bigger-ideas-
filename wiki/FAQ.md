@@ -342,7 +342,7 @@ Check the [Security tab](https://github.com/kushmanmb-org/-Big-world-Bigger-idea
 
 - **Documentation**: Start with [Getting Started](Getting-Started)
 - **GitHub Issues**: [Report issues or ask questions](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues)
-- **Email**: kushmanmb@gmx.com
+- **Email**: mattbrace92@gmail.com
 
 ### Is there a community?
 
@@ -350,4 +350,4 @@ Join the discussion on GitHub! Open issues, participate in discussions, and conn
 
 ---
 
-**Still have questions?** Open an [issue on GitHub](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues) or email kushmanmb@gmx.com.
+**Still have questions?** Open an [issue on GitHub](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues) or email mattbrace92@gmail.com.

@@ -5,7 +5,7 @@
  * cryptocurrency data, and ISO 27001 certification management.
  * 
  * @module big-world-bigger-ideas
- * @author Matthew Brace <kushmanmb@gmx.com>
+ * @author Matthew Brace <mattbrace92@gmail.com>
  * @license ISC
  */
 

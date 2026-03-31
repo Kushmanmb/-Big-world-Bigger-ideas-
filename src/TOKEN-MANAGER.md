@@ -436,9 +436,9 @@ ISC License - Part of the Big World Bigger Ideas project
 ## 👤 Author
 
 **Matthew Brace (kushmanmb)**
-- Email: kushmanmb@gmx.com
+- Email: mattbrace92@gmail.com
 - Website: https://kushmanmb.org
-- ENS: kushmanmb.eth
+- ENS: kushmanmb.base.eth
 
 ---
 

@@ -368,8 +368,8 @@ This will:
 
 For issues, questions, or contributions:
 - **GitHub**: [kushmanmb-org/-Big-world-Bigger-ideas-](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-)
-- **Email**: kushmanmb@gmx.com
-- **ENS**: kushmanmb.eth
+- **Email**: mattbrace92@gmail.com
+- **ENS**: kushmanmb.base.eth
 
 ## License
 
@@ -379,4 +379,4 @@ ISC License - See LICENSE file for details
 
 **Matthew Brace (kushmanmb)**
 - GitHub: [@kushmanmb](https://github.com/kushmanmb)
-- ENS: kushmanmb.eth
+- ENS: kushmanmb.base.eth

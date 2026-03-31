@@ -88,7 +88,7 @@ async function runTests() {
   console.log('Test 4: ENS name detection');
   try {
     const client = new EthCallClient();
-    assertTrue(client._isENSName('kushmanmb.eth'), 'kushmanmb.eth should be detected as ENS');
+    assertTrue(client._isENSName('kushmanmb.base.eth'), 'kushmanmb.base.eth should be detected as ENS');
     assertTrue(client._isENSName('vitalik.eth'), 'vitalik.eth should be detected as ENS');
     assertTrue(!client._isENSName('not-ens'), 'non-ENS string should not be detected');
     assertTrue(!client._isENSName('0x1234567890123456789012345678901234567890'), 'Address should not be detected as ENS');
@@ -167,7 +167,7 @@ async function runTests() {
   console.log('Test 10: Resolve ENS name');
   try {
     const client = new EthCallClient();
-    const resolved = await client.resolveENS('kushmanmb.eth');
+    const resolved = await client.resolveENS('kushmanmb.base.eth');
     assertNotNull(resolved, 'ENS resolution should return an address');
     assertTrue(client._isValidAddress(resolved), 'Resolved value should be a valid address');
   } catch (error) {
@@ -184,7 +184,7 @@ async function runTests() {
     assertEqual(stats1.size, 0, 'Cache should start empty');
     
     // Resolve ENS to populate cache
-    await client.resolveENS('kushmanmb.eth');
+    await client.resolveENS('kushmanmb.base.eth');
     
     const stats2 = client.getCacheStats();
     assertTrue(stats2.size > 0, 'Cache should have entries after ENS resolution');

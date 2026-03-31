@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "keywords": ["ethereum", "eips", "blockchain", "documentation"],
-  "author": "Matthew Brace <kushmanmb@gmx.com>",
+  "author": "Matthew Brace <mattbrace92@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "vite": "^5.0.0"

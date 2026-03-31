@@ -266,7 +266,7 @@ Before committing code:
 ## 🆘 Support
 
 For security concerns:
-- Email: kushmanmb@gmx.com
+- Email: mattbrace92@gmail.com
 - Review: [SECURITY-GUIDE.md](./SECURITY-GUIDE.md)
 - Policy: [.github/SECURITY.md](./.github/SECURITY.md)
 

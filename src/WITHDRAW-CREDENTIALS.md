@@ -48,7 +48,7 @@ console.log(creds.formatConfiguration());
 // Custom configuration
 const creds = new WithdrawalCredentials({
   owner: 'kushmanmb',
-  ensName: 'kushmanmb.eth',
+  ensName: 'kushmanmb.base.eth',
   network: 'ethereum',
   withdrawalAddress: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb0'
 });
@@ -85,7 +85,7 @@ console.log(env);
 Output:
 # Withdrawal Credentials Configuration
 WITHDRAWAL_OWNER=kushmanmb
-WITHDRAWAL_ENS=kushmanmb.eth
+WITHDRAWAL_ENS=kushmanmb.base.eth
 WITHDRAWAL_NETWORK=ethereum
 WITHDRAWAL_ADDRESS=0x742d35cc6634c0532925a3b844bc9e7595f0beb0
 WITHDRAWAL_CREDENTIALS=0x010000000000000000000000742d35cc6634c0532925a3b844bc9e7595f0beb0
@@ -105,7 +105,7 @@ new WithdrawalCredentials(config)
 **Parameters:**
 - `config` (Object) - Configuration options
   - `owner` (String) - Owner identifier (default: 'kushmanmb')
-  - `ensName` (String) - ENS name (default: 'kushmanmb.eth')
+  - `ensName` (String) - ENS name (default: 'kushmanmb.base.eth')
   - `withdrawalAddress` (String) - Ethereum withdrawal address (optional)
   - `network` (String) - Network name (default: 'ethereum')
 
@@ -267,7 +267,7 @@ Add to your `.env` file:
 
 ```bash
 WITHDRAWAL_OWNER=kushmanmb
-WITHDRAWAL_ENS=kushmanmb.eth
+WITHDRAWAL_ENS=kushmanmb.base.eth
 WITHDRAWAL_NETWORK=ethereum
 WITHDRAWAL_ADDRESS=your_ethereum_address_here
 ```
@@ -278,10 +278,10 @@ The module integrates with GitHub FUNDING.yml:
 
 ```yaml
 github: kushmanmb
-custom: ['https://kushmanmb.org', 'https://app.ens.domains/name/kushmanmb.eth']
+custom: ['https://kushmanmb.org', 'https://www.base.org/name/kushmanmb']
 
 # Cryptocurrency Withdrawal Credentials for kushmanmb:
-# ENS: kushmanmb.eth
+# ENS: kushmanmb.base.eth
 # Organization: kushmanmb-org
 ```
 
@@ -319,9 +319,9 @@ npm run withdraw-credentials:demo
 ## Owner Information
 
 - **Owner:** kushmanmb
-- **ENS:** kushmanmb.eth
+- **ENS:** kushmanmb.base.eth
 - **Organization:** kushmanmb-org
-- **Email:** kushmanmb@gmx.com
+- **Email:** mattbrace92@gmail.com
 
 ## License
 
@@ -334,5 +334,5 @@ Contributions welcome! Please see the main repository README for guidelines.
 ## Support
 
 - **Issues:** https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues
-- **Email:** kushmanmb@gmx.com
-- **ENS:** kushmanmb.eth
+- **Email:** mattbrace92@gmail.com
+- **ENS:** kushmanmb.base.eth
