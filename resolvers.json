@@ -11,8 +11,19 @@
         "notes": "Resolver assignment for address 0xEe7aE85f2Fe2239E27D9c1E23fFFe168D63b4055"
       },
       "setAt": "2026-02-25T16:43:00.000Z"
+    },
+    {
+      "address": "0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae",
+      "metadata": {
+        "network": "Ethereum Mainnet",
+        "chainId": 1,
+        "type": "Address Resolver",
+        "setBy": "Manual Configuration",
+        "notes": "Attached address 0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae"
+      },
+      "setAt": "2026-03-31T22:57:11.000Z"
     }
   ],
-  "lastUpdated": "2026-02-25T16:43:00.000Z",
+  "lastUpdated": "2026-03-31T22:57:11.000Z",
   "version": "1.0.0"
 }
