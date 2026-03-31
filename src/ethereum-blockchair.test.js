@@ -205,22 +205,15 @@ async function runTests() {
   console.log('\n--- Transaction Hash Validation Tests ---');
   const validHash = '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef';
   const validHashNoPrefix = '1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef';
-  
-  try {
-    await fetcher.getTransaction(validHash);
-    assert(false, 'Network call would fail but format validation should pass');
-  } catch (error) {
-    // Expected to fail on network call, not validation
-    assert(!error.message.includes('Invalid transaction hash format'), 'Should accept valid hash with 0x prefix');
-  }
+  const invalidHashShort = '0x1234567890abcdef';
+  const invalidHashChars = '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890ZZZZZZ';
 
-  try {
-    await fetcher.getTransaction(validHashNoPrefix);
-    assert(false, 'Network call would fail but format validation should pass');
-  } catch (error) {
-    // Expected to fail on network call, not validation
-    assert(!error.message.includes('Invalid transaction hash format'), 'Should accept valid hash without 0x prefix');
-  }
+  assert(fetcher._isValidTransactionHash(validHash), 'Should accept valid hash with 0x prefix');
+  assert(fetcher._isValidTransactionHash(validHashNoPrefix), 'Should accept valid hash without 0x prefix');
+  assert(!fetcher._isValidTransactionHash(invalidHashShort), 'Should reject hash that is too short');
+  assert(!fetcher._isValidTransactionHash(invalidHashChars), 'Should reject hash with invalid characters');
+  assert(!fetcher._isValidTransactionHash(''), 'Should reject empty hash');
+  assert(!fetcher._isValidTransactionHash(null), 'Should reject null hash');
 
   // Print summary
   console.log('\n=================================');

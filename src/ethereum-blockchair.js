@@ -49,6 +49,20 @@ class EthereumBlockchairFetcher {
   }
 
   /**
+   * Validates transaction hash format (64 hex characters, optional 0x prefix)
+   * @param {string} txHash - Transaction hash to validate
+   * @returns {boolean} True if valid
+   * @private
+   */
+  _isValidTransactionHash(txHash) {
+    if (!txHash || typeof txHash !== 'string') {
+      return false;
+    }
+    const cleanHash = txHash.startsWith('0x') ? txHash.slice(2) : txHash;
+    return /^[a-fA-F0-9]{64}$/.test(cleanHash);
+  }
+
+  /**
    * Validates Ethereum address format
    * @param {string} address - Address to validate
    * @returns {boolean} True if valid
@@ -123,8 +137,7 @@ class EthereumBlockchairFetcher {
     }
 
     // Basic hash validation (64 hex characters, with optional 0x prefix)
-    const cleanHash = txHash.startsWith('0x') ? txHash.slice(2) : txHash;
-    if (!cleanHash.match(/^[a-fA-F0-9]{64}$/)) {
+    if (!this._isValidTransactionHash(txHash)) {
       throw new Error('Invalid transaction hash format');
     }
 
