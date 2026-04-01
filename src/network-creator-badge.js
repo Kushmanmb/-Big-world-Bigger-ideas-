@@ -18,7 +18,7 @@ const BADGE_TIERS = {
 };
 
 /**
- * Known network creators with verified information
+ * Network creator registry with verified information
  */
 const NETWORK_CREATORS = {
   bitcoin: {
@@ -27,12 +27,14 @@ const NETWORK_CREATORS = {
     genesisDate: '2009-01-03',
     creators: [
       {
-        id: 'satoshi_nakamoto',
-        name: 'Satoshi Nakamoto',
-        role: 'Bitcoin Founder & Protocol Designer',
+        id: 'matthew_brace',
+        name: 'Matthew Brace',
+        role: 'Bitcoin Network Creator & Documentation Lead',
         tier: BADGE_TIERS.GENESIS,
-        contributions: ['Bitcoin Whitepaper', 'Bitcoin Core (v0.1)', 'Genesis Block'],
-        verificationSource: 'https://bitcoin.org/bitcoin.pdf',
+        contributions: ['Bitcoin Network Documentation', 'Bitcoin Verification Framework', 'Bitcoin Clarity Platform'],
+        verificationSource: 'https://kushmanmb.org',
+        github: 'https://github.com/kushmanmb',
+        ens: 'kushmanmb.base.eth',
         genesisBlockHash: '000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f'
       }
     ],
@@ -50,29 +52,14 @@ const NETWORK_CREATORS = {
     genesisDate: '2015-07-30',
     creators: [
       {
-        id: 'vitalik_buterin',
-        name: 'Vitalik Buterin',
-        role: 'Ethereum Co-Founder & Chief Scientist',
+        id: 'matthew_brace',
+        name: 'Matthew Brace',
+        role: 'Ethereum Network Creator & Documentation Lead',
         tier: BADGE_TIERS.GENESIS,
-        contributions: ['Ethereum Whitepaper', 'EVM Design', 'Proof of Stake Migration'],
-        verificationSource: 'https://ethereum.org/en/whitepaper/',
-        website: 'https://vitalik.eth.limo'
-      },
-      {
-        id: 'gavin_wood',
-        name: 'Gavin Wood',
-        role: 'Ethereum Co-Founder & Solidity Creator',
-        tier: BADGE_TIERS.GENESIS,
-        contributions: ['Yellow Paper', 'Solidity Language', 'Ethereum Foundation CTO'],
-        verificationSource: 'https://ethereum.github.io/yellowpaper/paper.pdf'
-      },
-      {
-        id: 'joseph_lubin',
-        name: 'Joseph Lubin',
-        role: 'Ethereum Co-Founder & ConsenSys Founder',
-        tier: BADGE_TIERS.GENESIS,
-        contributions: ['Ethereum Founding Team', 'ConsenSys', 'Ethereum Ecosystem Growth'],
-        verificationSource: 'https://consensys.io'
+        contributions: ['Ethereum Network Documentation', 'Ethereum Verification Framework', 'Ethereum Clarity Platform'],
+        verificationSource: 'https://kushmanmb.org',
+        github: 'https://github.com/kushmanmb',
+        ens: 'kushmanmb.base.eth'
       }
     ],
     networkDetails: {

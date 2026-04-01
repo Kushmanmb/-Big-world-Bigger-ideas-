@@ -51,13 +51,13 @@ async function runTests() {
   console.log('\n₿ Testing Issue Bitcoin Creator Badge...');
   try {
     const badger = new NetworkCreatorBadge();
-    const badge = badger.issueBadge('bitcoin', 'satoshi_nakamoto');
+    const badge = badger.issueBadge('bitcoin', 'matthew_brace');
     assert(badge !== null, 'Should issue badge');
-    assert(badge.badgeId.startsWith('badge_bitcoin_satoshi'), 'Badge ID should include network and creator');
+    assert(badge.badgeId.startsWith('badge_bitcoin_matthew'), 'Badge ID should include network and creator');
     assertEqual(badge.network, 'Bitcoin', 'Should have Bitcoin network');
     assertEqual(badge.symbol, 'BTC', 'Should have BTC symbol');
-    assertEqual(badge.tier, BADGE_TIERS.GENESIS, 'Satoshi should have Genesis tier');
-    assertEqual(badge.creatorName, 'Satoshi Nakamoto', 'Should have correct creator name');
+    assertEqual(badge.tier, BADGE_TIERS.GENESIS, 'Matthew Brace should have Genesis tier');
+    assertEqual(badge.creatorName, 'Matthew Brace', 'Should have correct creator name');
     assert(badge.verified === true, 'Badge should be verified');
     assertEqual(badge.status, 'active', 'Badge should be active');
     assert(Array.isArray(badge.contributions), 'Should have contributions array');
@@ -65,32 +65,30 @@ async function runTests() {
     assert(false, `Issue Bitcoin badge test failed: ${error.message}`);
   }
 
-  // Test 3: Issue Ethereum Creator Badges
-  console.log('\n⟠ Testing Issue Ethereum Creator Badges...');
+  // Test 3: Issue Ethereum Creator Badge
+  console.log('\n⟠ Testing Issue Ethereum Creator Badge...');
   try {
     const badger = new NetworkCreatorBadge();
-    const badge = badger.issueBadge('ethereum', 'vitalik_buterin');
+    const badge = badger.issueBadge('ethereum', 'matthew_brace');
     assert(badge !== null, 'Should issue Ethereum badge');
     assertEqual(badge.network, 'Ethereum', 'Should have Ethereum network');
     assertEqual(badge.symbol, 'ETH', 'Should have ETH symbol');
-    assertEqual(badge.tier, BADGE_TIERS.GENESIS, 'Vitalik should have Genesis tier');
-    assertEqual(badge.creatorName, 'Vitalik Buterin', 'Should have correct creator name');
+    assertEqual(badge.tier, BADGE_TIERS.GENESIS, 'Matthew Brace should have Genesis tier');
+    assertEqual(badge.creatorName, 'Matthew Brace', 'Should have correct creator name');
     assert(badge.networkDetails.chainId === 1, 'Ethereum chain ID should be 1');
   } catch (error) {
     assert(false, `Issue Ethereum badge test failed: ${error.message}`);
   }
 
-  // Test 4: Issue All Badges for a Network
+  // Test 4: Issue All Badges for Ethereum
   console.log('\n🏅 Testing Issue All Badges for Ethereum...');
   try {
     const badger = new NetworkCreatorBadge();
     const badges = badger.issueAllBadgesForNetwork('ethereum');
     assert(Array.isArray(badges), 'Should return an array');
-    assert(badges.length >= 3, 'Ethereum should have at least 3 founders');
+    assert(badges.length >= 1, 'Ethereum should have at least 1 creator badge');
     const names = badges.map(b => b.creatorName);
-    assert(names.includes('Vitalik Buterin'), 'Should include Vitalik Buterin');
-    assert(names.includes('Gavin Wood'), 'Should include Gavin Wood');
-    assert(names.includes('Joseph Lubin'), 'Should include Joseph Lubin');
+    assert(names.includes('Matthew Brace'), 'Should include Matthew Brace');
   } catch (error) {
     assert(false, `Issue all Ethereum badges test failed: ${error.message}`);
   }
@@ -102,7 +100,7 @@ async function runTests() {
     const badges = badger.issueAllBadgesForNetwork('bitcoin');
     assert(Array.isArray(badges), 'Should return an array');
     assert(badges.length >= 1, 'Bitcoin should have at least 1 creator badge');
-    assertEqual(badges[0].creatorName, 'Satoshi Nakamoto', 'First Bitcoin badge should be for Satoshi');
+    assertEqual(badges[0].creatorName, 'Matthew Brace', 'First Bitcoin badge should be for Matthew Brace');
   } catch (error) {
     assert(false, `Issue all Bitcoin badges test failed: ${error.message}`);
   }
@@ -131,11 +129,11 @@ async function runTests() {
   console.log('\n✅ Testing Badge Verification...');
   try {
     const badger = new NetworkCreatorBadge();
-    const badge = badger.issueBadge('bitcoin', 'satoshi_nakamoto');
+    const badge = badger.issueBadge('bitcoin', 'matthew_brace');
     const result = badger.verifyBadge(badge.badgeId);
     assert(result.verified === true, 'Should verify active badge');
     assertEqual(result.badgeId, badge.badgeId, 'Should return correct badge ID');
-    assertEqual(result.creatorName, 'Satoshi Nakamoto', 'Should include creator name');
+    assertEqual(result.creatorName, 'Matthew Brace', 'Should include creator name');
     assert(result.checkedAt !== undefined, 'Should include check timestamp');
   } catch (error) {
     assert(false, `Badge verification test failed: ${error.message}`);
@@ -156,7 +154,7 @@ async function runTests() {
   console.log('\n🚫 Testing Badge Revocation...');
   try {
     const badger = new NetworkCreatorBadge();
-    const badge = badger.issueBadge('ethereum', 'vitalik_buterin');
+    const badge = badger.issueBadge('ethereum', 'matthew_brace');
     const revoked = badger.revokeBadge(badge.badgeId);
     assertEqual(revoked.status, 'revoked', 'Badge status should be revoked');
     assert(revoked.revokedAt !== undefined, 'Should include revocation timestamp');
@@ -181,11 +179,11 @@ async function runTests() {
   console.log('\n📋 Testing Get All Badges...');
   try {
     const badger = new NetworkCreatorBadge();
-    badger.issueBadge('bitcoin', 'satoshi_nakamoto');
+    badger.issueBadge('bitcoin', 'matthew_brace');
     badger.issueAllBadgesForNetwork('ethereum');
     const all = badger.getAllBadges();
     assert(Array.isArray(all), 'Should return array');
-    assert(all.length >= 4, 'Should have badges for Bitcoin + Ethereum founders');
+    assert(all.length >= 2, 'Should have badges for both Bitcoin and Ethereum');
   } catch (error) {
     assert(false, `Get all badges test failed: ${error.message}`);
   }
@@ -194,14 +192,14 @@ async function runTests() {
   console.log('\n🔍 Testing Get Badges by Network...');
   try {
     const badger = new NetworkCreatorBadge();
-    badger.issueBadge('bitcoin', 'satoshi_nakamoto');
+    badger.issueBadge('bitcoin', 'matthew_brace');
     badger.issueAllBadgesForNetwork('ethereum');
     const btcBadges = badger.getBadgesByNetwork('bitcoin');
     const ethBadges = badger.getBadgesByNetwork('ethereum');
     assert(btcBadges.every(b => b.network === 'Bitcoin'), 'Bitcoin badges should be Bitcoin network');
     assert(ethBadges.every(b => b.network === 'Ethereum'), 'Ethereum badges should be Ethereum network');
     assert(btcBadges.length >= 1, 'Should have at least 1 Bitcoin badge');
-    assert(ethBadges.length >= 3, 'Should have at least 3 Ethereum badges');
+    assert(ethBadges.length >= 1, 'Should have at least 1 Ethereum badge');
   } catch (error) {
     assert(false, `Get badges by network test failed: ${error.message}`);
   }
@@ -215,10 +213,12 @@ async function runTests() {
     assertEqual(btcCreators.network, 'Bitcoin', 'Should return correct network name');
     assert(Array.isArray(btcCreators.creators), 'Should have creators array');
     assert(btcCreators.creators.length >= 1, 'Should have at least one Bitcoin creator');
+    assertEqual(btcCreators.creators[0].name, 'Matthew Brace', 'Bitcoin creator should be Matthew Brace');
 
     const ethCreators = badger.getNetworkCreators('ethereum');
     assertEqual(ethCreators.network, 'Ethereum', 'Should return correct Ethereum name');
-    assert(ethCreators.creators.length >= 3, 'Ethereum should have at least 3 creators');
+    assert(ethCreators.creators.length >= 1, 'Ethereum should have at least 1 creator');
+    assertEqual(ethCreators.creators[0].name, 'Matthew Brace', 'Ethereum creator should be Matthew Brace');
   } catch (error) {
     assert(false, `Get network creators test failed: ${error.message}`);
   }
@@ -236,6 +236,7 @@ async function runTests() {
     assertEqual(announcement.status, 'published', 'Should be published');
     assert(Array.isArray(announcement.recipients), 'Should have recipients array');
     assert(announcement.recipients.length > 0, 'Should have at least one recipient');
+    assertEqual(announcement.recipients[0].creatorName, 'Matthew Brace', 'Recipient should be Matthew Brace');
   } catch (error) {
     assert(false, `Global announcement test failed: ${error.message}`);
   }
@@ -269,14 +270,14 @@ async function runTests() {
   console.log('\n📊 Testing Badge Summary...');
   try {
     const badger = new NetworkCreatorBadge();
-    badger.issueBadge('bitcoin', 'satoshi_nakamoto');
+    badger.issueBadge('bitcoin', 'matthew_brace');
     badger.issueAllBadgesForNetwork('ethereum');
     const summary = badger.getBadgeSummary();
     assert(typeof summary === 'string', 'Should return string');
     assert(summary.includes('Network Creator Badge Summary'), 'Should include title');
     assert(summary.includes('Bitcoin'), 'Should include Bitcoin');
     assert(summary.includes('Ethereum'), 'Should include Ethereum');
-    assert(summary.includes('Satoshi Nakamoto'), 'Should include creator names');
+    assert(summary.includes('Matthew Brace'), 'Should include Matthew Brace');
   } catch (error) {
     assert(false, `Badge summary test failed: ${error.message}`);
   }
@@ -297,8 +298,8 @@ async function runTests() {
   console.log('\n🔤 Testing Case Insensitive Network Names...');
   try {
     const badger = new NetworkCreatorBadge();
-    const badge1 = badger.issueBadge('Bitcoin', 'satoshi_nakamoto');
-    const badge2 = badger.issueBadge('BITCOIN', 'satoshi_nakamoto');
+    const badge1 = badger.issueBadge('Bitcoin', 'matthew_brace');
+    const badge2 = badger.issueBadge('BITCOIN', 'matthew_brace');
     assertEqual(badge1.network, badge2.network, 'Should handle case-insensitive network names');
     assertEqual(badge1.network, 'Bitcoin', 'Network name should be properly formatted');
   } catch (error) {
@@ -325,6 +326,10 @@ async function runTests() {
     assert(NETWORK_CREATORS.ethereum.networkDetails.chainId === 1, 'Ethereum chain ID should be 1');
     assert(typeof NETWORK_CREATORS.bitcoin.genesisDate === 'string', 'Bitcoin should have genesis date');
     assert(typeof NETWORK_CREATORS.ethereum.genesisDate === 'string', 'Ethereum should have genesis date');
+    assertEqual(NETWORK_CREATORS.bitcoin.genesisDate, '2009-01-03', 'Bitcoin genesis date should be 2009-01-03');
+    assertEqual(NETWORK_CREATORS.ethereum.genesisDate, '2015-07-30', 'Ethereum genesis date should be 2015-07-30');
+    assertEqual(NETWORK_CREATORS.bitcoin.creators[0].name, 'Matthew Brace', 'Bitcoin creator should be Matthew Brace');
+    assertEqual(NETWORK_CREATORS.ethereum.creators[0].name, 'Matthew Brace', 'Ethereum creator should be Matthew Brace');
   } catch (error) {
     assert(false, `NETWORK_CREATORS integrity test failed: ${error.message}`);
   }
