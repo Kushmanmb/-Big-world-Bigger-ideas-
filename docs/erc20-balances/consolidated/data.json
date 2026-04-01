@@ -1,21 +1,21 @@
 {
   "addresses": [
-    "kushmanmb.base.eth",
+    "kushmanmb.eth",
     "yaketh.eth"
   ],
-  "timestamp": "2026-03-31T08:09:32.311Z",
+  "timestamp": "2026-04-01T08:16:34.532Z",
   "data": {
     "addresses": [
-      "kushmanmb.base.eth",
+      "kushmanmb.eth",
       "yaketh.eth"
     ],
     "uniqueTokens": 0,
     "totalAddresses": 2,
     "tokens": [],
     "byAddress": {
-      "kushmanmb.base.eth": [],
+      "kushmanmb.eth": [],
       "yaketh.eth": []
     },
-    "timestamp": 1774944572746
+    "timestamp": 1775031394928
   }
 }
