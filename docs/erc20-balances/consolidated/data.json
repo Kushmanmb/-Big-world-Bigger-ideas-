@@ -3,7 +3,7 @@
     "kushmanmb.eth",
     "yaketh.eth"
   ],
-  "timestamp": "2026-04-02T08:07:44.758Z",
+  "timestamp": "2026-04-03T08:02:57.389Z",
   "data": {
     "addresses": [
       "kushmanmb.eth",
@@ -16,6 +16,6 @@
       "kushmanmb.eth": [],
       "yaketh.eth": []
     },
-    "timestamp": 1775117265147
+    "timestamp": 1775203378035
   }
 }
