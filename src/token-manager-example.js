@@ -16,7 +16,7 @@ console.log(`   ✓ Created at: ${tokenManager.createdAt}\n`);
 // Set manager for USDC token (as requested)
 console.log('2. Setting manager for USDC token...');
 const usdcAddress = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48';
-const managerAddress = '0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253';
+const managerAddress = '0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17'; // yaketh.eth transfer address
 
 const usdcManager = tokenManager.setManager(
   usdcAddress,
