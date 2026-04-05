@@ -4,6 +4,41 @@ This directory contains Solidity smart contracts for the Big World Bigger Ideas 
 
 ## Contracts
 
+### WebAuthn.sol
+
+A library for verifying WebAuthn Authentication Assertions on-chain.
+
+**Features:**
+- WebAuthn signature verification using secp256r1 curve
+- RIP-7212 precompile support for gas-efficient verification
+- FreshCryptoLib fallback for network compatibility
+- Support for biometric authentication (Face ID, Touch ID, Windows Hello)
+- Hardware security key support (YubiKey, Titan, etc.)
+- Signature malleability protection
+- User presence (UP) and user verification (UV) flag checks
+- Challenge and client data JSON validation
+
+**Use Cases:**
+- Passwordless authentication for smart contracts
+- Account abstraction with biometric signatures
+- Multi-factor authentication for DeFi protocols
+- Secure transaction signing with hardware keys
+
+**Dependencies:**
+- `FreshCryptoLib/FCL_ecdsa.sol` - ECDSA signature verification
+- `FreshCryptoLib/FCL_elliptic.sol` - Elliptic curve math for secp256r1
+- `openzeppelin-contracts/contracts/utils/Base64.sol` - Base64URL encoding
+- `solady/utils/LibString.sol` - String manipulation utilities
+
+**Solidity Version:** ^0.8.0
+
+**License:** MIT
+
+**Documentation:** See [WebAuthn.md](./WebAuthn.md) for detailed usage examples and integration guide.
+
+**Authors:**
+- Coinbase ([base-org/webauthn-sol](https://github.com/base-org/webauthn-sol))
+- Daimo ([daimo-eth/p256-verifier](https://github.com/daimo-eth/p256-verifier))
 ### MultiOwnable.sol
 
 A multi-owner authentication contract allowing multiple owners identified as bytes.
@@ -191,6 +226,36 @@ If deploying this updated contract, ensure you test:
 - Gas savings will be realized on error conditions
 - Consider recompiling with Solidity 0.8.20 for full optimization benefits
 
+## Recent Updates (2026-02-24)
+
+**WebAuthn Library Added:**
+
+1. **New Library**: Added WebAuthn.sol for on-chain WebAuthn signature verification
+2. **Key Features**:
+   - Verify WebAuthn authentication assertions on-chain
+   - Support for biometric authentication (Face ID, Touch ID, Windows Hello)
+   - Hardware security key support (YubiKey, Titan, etc.)
+   - RIP-7212 precompile for gas-efficient verification (5K-10K gas)
+   - FreshCryptoLib fallback for compatibility (100K-150K gas)
+   - Signature malleability protection (secp256r1)
+   - User presence and verification flag validation
+3. **Use Cases**:
+   - Passwordless smart contract authentication
+   - Account abstraction with biometric signatures
+   - Multi-factor authentication for DeFi
+   - Secure hardware key transaction signing
+4. **Dependencies**:
+   - FreshCryptoLib (FCL_ecdsa, FCL_elliptic)
+   - OpenZeppelin Contracts (Base64 utilities)
+   - Solady (LibString utilities)
+5. **Documentation**: Complete usage guide in `WebAuthn.md`
+
+**Implementation Notes:**
+- The library follows W3C WebAuthn Level 2 specification
+- Supports both user presence (UP) and user verification (UV) modes
+- Automatically falls back to FreshCryptoLib if RIP-7212 is unavailable
+- Gas optimized for networks with RIP-7212 support (Base network)
+- Includes security considerations and threat model documentation
 ## Build Configuration
 
 This repository uses Foundry for smart contract development, testing, and deployment.

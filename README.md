@@ -307,6 +307,69 @@ For detailed build configuration, compilation settings, and deployment instructi
 
 ---
 
+## 📜 Smart Contracts
+
+This repository includes Solidity smart contracts for blockchain applications.
+
+### Contracts Directory
+
+The `contracts/` directory contains production-ready smart contracts:
+
+#### **WebAuthn.sol** - WebAuthn Authentication Library
+
+A library for verifying WebAuthn Authentication Assertions on-chain, enabling passwordless authentication for smart contracts.
+
+**Key Features:**
+- ✅ Verify WebAuthn signatures on-chain using secp256r1 curve
+- ✅ Support for biometric authentication (Face ID, Touch ID, Windows Hello)
+- ✅ Hardware security key support (YubiKey, Titan, etc.)
+- ✅ RIP-7212 precompile for gas-efficient verification (5K-10K gas)
+- ✅ FreshCryptoLib fallback for network compatibility (100K-150K gas)
+- ✅ Signature malleability protection
+- ✅ User presence and verification flag validation
+
+**Use Cases:**
+- Passwordless smart contract authentication
+- Account abstraction with biometric signatures
+- Multi-factor authentication for DeFi protocols
+- Secure hardware key transaction signing
+
+**Dependencies:**
+```solidity
+import {FCL_ecdsa} from "FreshCryptoLib/FCL_ecdsa.sol";
+import {FCL_Elliptic_ZZ} from "FreshCryptoLib/FCL_elliptic.sol";
+import {Base64} from "openzeppelin-contracts/contracts/utils/Base64.sol";
+import {LibString} from "solady/utils/LibString.sol";
+```
+
+**Documentation:** See [contracts/WebAuthn.md](./contracts/WebAuthn.md) for complete usage guide and examples.
+
+**Authors:**
+- Coinbase ([base-org/webauthn-sol](https://github.com/base-org/webauthn-sol))
+- Daimo ([daimo-eth/p256-verifier](https://github.com/daimo-eth/p256-verifier))
+
+#### **Proxy.sol** - EIP-1967 Transparent Proxy
+
+A transparent proxy contract following the EIP-1967 standard for upgradeable smart contracts.
+
+**Features:**
+- Transparent proxy pattern
+- EIP-1967 compliant storage slots
+- Admin-only upgrade functions
+- Delegatecall-based functionality
+
+**Verified Deployment:**
+- **Network:** Base Mainnet (Chain ID: 8453)
+- **Address:** `0xA9D1e08C7793af67e9d92fe308d5697FB81d3E43`
+- **Explorer:** [View on Basescan](https://basescan.org/address/0xA9D1e08C7793af67e9d92fe308d5697FB81d3E43)
+
+### Additional Resources
+
+- **Contracts README:** [contracts/README.md](./contracts/README.md)
+- **Verification Data:** [contracts/verification/](./contracts/verification/)
+
+---
+
 ## 🔐 Security & Branch Protection
 
 This repository implements comprehensive security measures to protect sensitive data and maintain code quality.
