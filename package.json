@@ -78,6 +78,7 @@
     "reverse-register:demo": "node src/reverse-register-example.js",
     "metadata": "node src/metadata.js",
     "metadata:demo": "node src/metadata-example.js",
+    "transfer:usdc": "node scripts/transfer-usdc.js",
     "prepublishOnly": "npm test",
     "version:patch": "npm version patch",
     "version:minor": "npm version minor",
