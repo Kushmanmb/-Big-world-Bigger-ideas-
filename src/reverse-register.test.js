@@ -4,7 +4,7 @@
  */
 
 const { ReverseRegister, RegisterEntry } = require('./reverse-register');
-const { test: helperTest, printSummary, getResults } = require('./test-helpers');
+const { test: helperTest, getResults } = require('./test-helpers');
 
 // Custom assert for this test file
 function assert(condition, message) {
