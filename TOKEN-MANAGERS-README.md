@@ -73,6 +73,24 @@ All active token manager assignments now point to **yaketh.eth** as the designat
 - **Network**: Ethereum Mainnet (Chain ID: 1)
 - **Type**: Token Contract
 
+### Zero Address
+- **Token Address**: `0x0000000000000000000000000000000000000000`
+- **Manager Address**: `0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb0` (kushmanmb.base.eth)
+- **Network**: Ethereum Mainnet (Chain ID: 1)
+- **Type**: Special Address
+- **Notes**: Immutable access permissions write for kushmanmb
+
+**Architectural Note:** While the zero address is not a valid token contract in standard Ethereum usage, it is used here as a special sentinel value for application-level access control. This allows the token manager system to grant kushmanmb immutable write permissions for system-level operations. This is an application-layer construct and does not interact with on-chain contracts.
+
+### Address One
+- **Token Address**: `0x0000000000000000000000000000000000000001`
+- **Manager Address**: `0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253`
+- **Network**: Ethereum Mainnet (Chain ID: 1)
+- **Type**: Special Address
+- **Notes**: Full permissions write for system operations
+
+**Architectural Note:** Similar to the zero address, address 1 is used as a sentinel value for application-level access control. This grants the manager address full write permissions for system-level operations without blockchain interaction.
+
 ## Deprecated Tokens
 
 The following tokens have been removed from active configuration:
@@ -80,7 +98,6 @@ The following tokens have been removed from active configuration:
 | Token Address | Reason |
 |---|---|
 | `0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B` | Unknown token with no valid symbol or name |
-| `0x0000000000000000000000000000000000000000` | Zero address is not a valid token contract |
 
 Deprecated entries are preserved in the `deprecated` array in `token-managers.json` for audit purposes but are not loaded into the active manager configuration.
 
@@ -183,8 +200,11 @@ npm run token-manager:demo
 - Keep this file in version control to track manager changes over time
 - Always verify addresses before adding them to the configuration
 - Deprecated entries are preserved in `token-managers.json` for audit history
+- **Sentinel Addresses**: Special addresses like `0x0000000000000000000000000000000000000000` (zero address) and `0x0000000000000000000000000000000000000001` (address one) are used as sentinel values for application-level access control, not as valid token contracts. This enables immutable and full permissions management at the application layer.
 
 ## Version History
 
+- **v1.3.0** (2026-04-06): Added address one (`0x0000000000000000000000000000000000000001`) with `0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253` as manager with full write permissions
+- **v1.2.0** (2026-04-06): Added zero address (`0x0000000000000000000000000000000000000000`) with kushmanmb (`0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb0`) as manager with immutable access permissions write
 - **v1.1.0** (2026-03-08): Updated all active token manager addresses to yaketh.eth (`0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17`); deprecated Unknown Token and Zero Address entries; added `transferAddress`, `transferAddressHex`, `deprecated`, and `updatedAt` fields
 - **v1.0.0** (2026-02-25): Initial configuration with USDC manager assignment
