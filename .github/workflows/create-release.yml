@@ -82,8 +82,8 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config user.name "kushmanmb"
-          git config user.email "193178375+Kushmanmb@users.noreply.github.com"
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
 
       - name: Get current version
         id: current_version
@@ -113,14 +113,14 @@ jobs:
           echo "## What's Changed" >> release_notes.md
           echo "" >> release_notes.md
 
-          # Get commits since last tag
-          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          # Get the previous version tag (before the version bump)
+          LAST_TAG=$(git describe --tags --abbrev=0 HEAD~1 2>/dev/null || echo "")
           if [ -n "$LAST_TAG" ]; then
             echo "### Commits since $LAST_TAG" >> release_notes.md
-            git log $LAST_TAG..HEAD --pretty=format:"* %s (%h)" --no-merges >> release_notes.md
+            git log $LAST_TAG..HEAD~1 --pretty=format:"* %s (%h)" --no-merges >> release_notes.md
           else
             echo "### Initial Release" >> release_notes.md
-            git log --pretty=format:"* %s (%h)" --no-merges --max-count=10 >> release_notes.md
+            git log HEAD~1 --pretty=format:"* %s (%h)" --no-merges --max-count=10 >> release_notes.md 2>/dev/null || echo "* Initial commit" >> release_notes.md
           fi
 
           echo "" >> release_notes.md
