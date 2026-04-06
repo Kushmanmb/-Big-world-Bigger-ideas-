@@ -73,7 +73,9 @@
         "chainId": 1,
         "type": "Special Address",
         "setBy": "kushmanmb.base.eth",
-        "notes": "Immutable access permissions write for kushmanmb"
+        "notes": "Immutable access permissions write for kushmanmb. Zero address used as sentinel value for application-level access control, not as token contract.",
+        "purpose": "System-level permissions management",
+        "securityNote": "Application-layer construct only, does not interact with on-chain contracts"
       },
       "setAt": "2026-04-06T04:01:56.577Z",
       "updatedAt": "2026-04-06T04:01:56.577Z"

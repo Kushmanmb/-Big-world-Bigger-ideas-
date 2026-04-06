@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Token Managers Configuration",
+  "description": "Configuration file for token manager address assignments. The zero address (0x0000000000000000000000000000000000000000) is used as a special sentinel value for application-level access control, not as a valid token contract address.",
+  "type": "object",
+  "properties": {
+    "managers": {
+      "type": "array",
+      "description": "Active token manager assignments",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tokenAddress": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Token contract address or special address (e.g., zero address for system-level permissions)"
+          },
+          "managerAddress": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Manager's Ethereum address"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Additional metadata about the token and manager"
+          },
+          "setAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 timestamp when the manager was set"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 timestamp when the manager was last updated"
+          }
+        },
+        "required": ["tokenAddress", "managerAddress"]
+      }
+    },
+    "deprecated": {
+      "type": "array",
+      "description": "Deprecated token manager entries preserved for audit purposes"
+    },
+    "transferAddress": {
+      "type": "string",
+      "description": "ENS name of the primary transfer address"
+    },
+    "transferAddressHex": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]{40}$",
+      "description": "Hex representation of the primary transfer address"
+    },
+    "lastUpdated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of last configuration update"
+    },
+    "version": {
+      "type": "string",
+      "description": "Semantic version of the configuration schema"
+    }
+  },
+  "required": ["managers", "version"]
+}

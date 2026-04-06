@@ -80,6 +80,8 @@ All active token manager assignments now point to **yaketh.eth** as the designat
 - **Type**: Special Address
 - **Notes**: Immutable access permissions write for kushmanmb
 
+**Architectural Note:** While the zero address is not a valid token contract in standard Ethereum usage, it is used here as a special sentinel value for application-level access control. This allows the token manager system to grant kushmanmb immutable write permissions for system-level operations. This is an application-layer construct and does not interact with on-chain contracts.
+
 ## Deprecated Tokens
 
 The following tokens have been removed from active configuration:
@@ -189,6 +191,7 @@ npm run token-manager:demo
 - Keep this file in version control to track manager changes over time
 - Always verify addresses before adding them to the configuration
 - Deprecated entries are preserved in `token-managers.json` for audit history
+- **Zero Address Special Case**: The zero address (`0x0000000000000000000000000000000000000000`) is used as a special sentinel value for application-level access control, not as a valid token contract. This enables immutable permissions management at the application layer.
 
 ## Version History
 
