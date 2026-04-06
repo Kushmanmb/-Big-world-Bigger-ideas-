@@ -137,6 +137,134 @@ function makePostRequest(options) {
 }
 
 /**
+ * Request queue with active acknowledgements and rate limiting.
+ * Queues incoming requests, immediately acknowledges each with a unique ID,
+ * and processes them at a controlled rate to allow the team adequate time to
+ * handle large volumes of incoming requests.
+ */
+class RequestQueue {
+  /**
+   * Creates a new request queue
+   * @param {Object} [options] - Queue options
+   * @param {number} [options.maxConcurrency=1] - Maximum number of concurrent requests
+   * @param {number} [options.delay=1000] - Delay in milliseconds between requests
+   */
+  constructor(options = {}) {
+    this.maxConcurrency = options.maxConcurrency || 1;
+    this.delay = options.delay !== undefined ? options.delay : 1000;
+    this._queue = [];
+    this._active = 0;
+    this._counter = 0;
+  }
+
+  /**
+   * Enqueues a request function and returns an immediate acknowledgement.
+   * The returned acknowledgement includes a unique queue ID and the promise
+   * that resolves (or rejects) when the request is eventually processed.
+   * @param {Function} fn - Async function representing the request to perform
+   * @returns {{ queueId: string, status: string, position: number, promise: Promise<any> }}
+   */
+  enqueue(fn) {
+    if (typeof fn !== 'function') {
+      throw new Error('Request must be a function');
+    }
+
+    this._counter++;
+    const queueId = `req_${Date.now()}_${this._counter}`;
+    const position = this._queue.length + 1;
+
+    let resolve, reject;
+    const promise = new Promise((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
+
+    this._queue.push({ fn, resolve, reject });
+    this._process();
+
+    return {
+      queueId,
+      status: 'queued',
+      position,
+      promise
+    };
+  }
+
+  /**
+   * Returns the current number of requests waiting in the queue
+   * @returns {number}
+   */
+  get size() {
+    return this._queue.length;
+  }
+
+  /**
+   * Returns the number of requests currently being processed
+   * @returns {number}
+   */
+  get active() {
+    return this._active;
+  }
+
+  /**
+   * Clears all pending (unstarted) requests from the queue.
+   * Active requests are not affected.
+   */
+  clear() {
+    const pending = this._queue.splice(0);
+    for (const item of pending) {
+      item.reject(new Error('Queue cleared'));
+    }
+  }
+
+  /**
+   * Internal: starts processing queued requests up to maxConcurrency
+   * @private
+   */
+  _process() {
+    while (this._active < this.maxConcurrency && this._queue.length > 0) {
+      const item = this._queue.shift();
+      this._active++;
+      this._run(item);
+    }
+  }
+
+  /**
+   * Internal: schedules the next processing cycle, respecting the delay setting
+   * @private
+   */
+  _scheduleNext() {
+    if (this.delay > 0) {
+      setTimeout(() => this._process(), this.delay);
+    } else {
+      this._process();
+    }
+  }
+
+  /**
+   * Internal: runs a single queued request then schedules the next
+   * @param {{ fn: Function, resolve: Function, reject: Function }} item
+   * @private
+   */
+  _run(item) {
+    Promise.resolve()
+      .then(() => item.fn())
+      .then(
+        (result) => {
+          item.resolve(result);
+          this._active--;
+          this._scheduleNext();
+        },
+        (error) => {
+          item.reject(error);
+          this._active--;
+          this._scheduleNext();
+        }
+      );
+  }
+}
+
+/**
  * Simple cache manager for API responses
  */
 class CacheManager {
@@ -206,5 +334,6 @@ class CacheManager {
 module.exports = {
   makeRequest,
   makePostRequest,
-  CacheManager
+  CacheManager,
+  RequestQueue
 };
