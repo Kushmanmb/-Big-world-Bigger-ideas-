@@ -99,7 +99,7 @@ jobs:
 
       - name: Push version changes
         run: |
-          git push origin main --follow-tags
+          git push origin HEAD --follow-tags
           echo "✅ Version bump pushed successfully"
 
       - name: Build CSS
@@ -114,7 +114,7 @@ jobs:
           echo "" >> release_notes.md
 
           # Get commits since last tag
-          LAST_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
           if [ -n "$LAST_TAG" ]; then
             echo "### Commits since $LAST_TAG" >> release_notes.md
             git log $LAST_TAG..HEAD --pretty=format:"* %s (%h)" --no-merges >> release_notes.md
@@ -141,15 +141,14 @@ jobs:
           cat release_notes.md
 
       - name: Create GitHub Release
-        uses: actions/create-release@v1
+        run: |
+          gh release create "${{ steps.version_bump.outputs.tag }}" \
+            --title "Release ${{ steps.version_bump.outputs.tag }}" \
+            --notes-file release_notes.md \
+            ${{ github.event.inputs.draft == 'true' && '--draft' || '' }} \
+            ${{ github.event.inputs.prerelease == 'true' && '--prerelease' || '' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.version_bump.outputs.tag }}
-          release_name: Release ${{ steps.version_bump.outputs.tag }}
-          body_path: release_notes.md
-          draft: ${{ github.event.inputs.draft }}
-          prerelease: ${{ github.event.inputs.prerelease }}
 
       - name: Release summary
         run: |
