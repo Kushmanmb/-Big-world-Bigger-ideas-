@@ -230,6 +230,18 @@ class RequestQueue {
   }
 
   /**
+   * Internal: schedules the next processing cycle, respecting the delay setting
+   * @private
+   */
+  _scheduleNext() {
+    if (this.delay > 0) {
+      setTimeout(() => this._process(), this.delay);
+    } else {
+      this._process();
+    }
+  }
+
+  /**
    * Internal: runs a single queued request then schedules the next
    * @param {{ fn: Function, resolve: Function, reject: Function }} item
    * @private
@@ -241,20 +253,12 @@ class RequestQueue {
         (result) => {
           item.resolve(result);
           this._active--;
-          if (this.delay > 0) {
-            setTimeout(() => this._process(), this.delay);
-          } else {
-            this._process();
-          }
+          this._scheduleNext();
         },
         (error) => {
           item.reject(error);
           this._active--;
-          if (this.delay > 0) {
-            setTimeout(() => this._process(), this.delay);
-          } else {
-            this._process();
-          }
+          this._scheduleNext();
         }
       );
   }
