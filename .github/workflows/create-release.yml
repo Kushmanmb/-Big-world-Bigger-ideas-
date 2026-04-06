@@ -1,0 +1,164 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_type:
+        description: 'Version bump type'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      prerelease:
+        description: 'Mark as pre-release'
+        required: false
+        type: boolean
+        default: false
+      draft:
+        description: 'Create as draft release'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    if: github.actor == 'kushmanmb'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Security audit
+        run: npm audit --audit-level=moderate
+
+      - name: Verify package structure
+        run: |
+          echo "Checking required files..."
+          test -f index.html || { echo "Missing index.html"; exit 1; }
+          test -f editor.html || { echo "Missing editor.html"; exit 1; }
+          test -f styles.css || { echo "Missing styles.css"; exit 1; }
+          test -f package.json || { echo "Missing package.json"; exit 1; }
+          echo "✅ All required files present"
+
+  create-release:
+    needs: validate
+    runs-on: ubuntu-latest
+    if: github.actor == 'kushmanmb'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Configure Git
+        run: |
+          git config user.name "kushmanmb"
+          git config user.email "193178375+Kushmanmb@users.noreply.github.com"
+
+      - name: Get current version
+        id: current_version
+        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Bump version
+        id: version_bump
+        run: |
+          npm version ${{ github.event.inputs.version_type }} -m "chore: release version %s"
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "tag=v$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Push version changes
+        run: |
+          git push origin main --follow-tags
+          echo "✅ Version bump pushed successfully"
+
+      - name: Build CSS
+        run: npm run build:css
+
+      - name: Generate release notes
+        id: release_notes
+        run: |
+          echo "# Release v${{ steps.version_bump.outputs.new_version }}" > release_notes.md
+          echo "" >> release_notes.md
+          echo "## What's Changed" >> release_notes.md
+          echo "" >> release_notes.md
+          
+          # Get commits since last tag
+          LAST_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          if [ -n "$LAST_TAG" ]; then
+            echo "### Commits since $LAST_TAG" >> release_notes.md
+            git log $LAST_TAG..HEAD --pretty=format:"* %s (%h)" --no-merges >> release_notes.md
+          else
+            echo "### Initial Release" >> release_notes.md
+            git log --pretty=format:"* %s (%h)" --no-merges --max-count=10 >> release_notes.md
+          fi
+          
+          echo "" >> release_notes.md
+          echo "" >> release_notes.md
+          echo "## Package Information" >> release_notes.md
+          echo "" >> release_notes.md
+          echo "**NPM Package:** \`big-world-bigger-ideas@${{ steps.version_bump.outputs.new_version }}\`" >> release_notes.md
+          echo "" >> release_notes.md
+          echo "### Installation" >> release_notes.md
+          echo "\`\`\`bash" >> release_notes.md
+          echo "npm install big-world-bigger-ideas@${{ steps.version_bump.outputs.new_version }}" >> release_notes.md
+          echo "\`\`\`" >> release_notes.md
+          echo "" >> release_notes.md
+          echo "---" >> release_notes.md
+          echo "" >> release_notes.md
+          echo "_Previous version: v${{ steps.current_version.outputs.version }}_" >> release_notes.md
+          
+          cat release_notes.md
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.version_bump.outputs.tag }}
+          release_name: Release ${{ steps.version_bump.outputs.tag }}
+          body_path: release_notes.md
+          draft: ${{ github.event.inputs.draft }}
+          prerelease: ${{ github.event.inputs.prerelease }}
+
+      - name: Release summary
+        run: |
+          echo "### ✅ Release Created Successfully" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** ${{ steps.version_bump.outputs.tag }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Previous:** v${{ steps.current_version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Type:** ${{ github.event.inputs.version_type }} bump" >> $GITHUB_STEP_SUMMARY
+          echo "**Draft:** ${{ github.event.inputs.draft }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Pre-release:** ${{ github.event.inputs.prerelease }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "[View Release](https://github.com/${{ github.repository }}/releases/tag/${{ steps.version_bump.outputs.tag }})" >> $GITHUB_STEP_SUMMARY
