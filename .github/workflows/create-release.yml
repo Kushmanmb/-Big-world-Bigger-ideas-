@@ -112,7 +112,7 @@ jobs:
           echo "" >> release_notes.md
           echo "## What's Changed" >> release_notes.md
           echo "" >> release_notes.md
-          
+
           # Get commits since last tag
           LAST_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
           if [ -n "$LAST_TAG" ]; then
@@ -122,7 +122,7 @@ jobs:
             echo "### Initial Release" >> release_notes.md
             git log --pretty=format:"* %s (%h)" --no-merges --max-count=10 >> release_notes.md
           fi
-          
+
           echo "" >> release_notes.md
           echo "" >> release_notes.md
           echo "## Package Information" >> release_notes.md
@@ -137,7 +137,7 @@ jobs:
           echo "---" >> release_notes.md
           echo "" >> release_notes.md
           echo "_Previous version: v${{ steps.current_version.outputs.version }}_" >> release_notes.md
-          
+
           cat release_notes.md
 
       - name: Create GitHub Release
