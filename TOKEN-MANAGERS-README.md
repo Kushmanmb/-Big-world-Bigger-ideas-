@@ -73,6 +73,13 @@ All active token manager assignments now point to **yaketh.eth** as the designat
 - **Network**: Ethereum Mainnet (Chain ID: 1)
 - **Type**: Token Contract
 
+### Zero Address
+- **Token Address**: `0x0000000000000000000000000000000000000000`
+- **Manager Address**: `0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb0` (kushmanmb.base.eth)
+- **Network**: Ethereum Mainnet (Chain ID: 1)
+- **Type**: Special Address
+- **Notes**: Immutable access permissions write for kushmanmb
+
 ## Deprecated Tokens
 
 The following tokens have been removed from active configuration:
@@ -80,7 +87,6 @@ The following tokens have been removed from active configuration:
 | Token Address | Reason |
 |---|---|
 | `0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B` | Unknown token with no valid symbol or name |
-| `0x0000000000000000000000000000000000000000` | Zero address is not a valid token contract |
 
 Deprecated entries are preserved in the `deprecated` array in `token-managers.json` for audit purposes but are not loaded into the active manager configuration.
 
@@ -186,5 +192,6 @@ npm run token-manager:demo
 
 ## Version History
 
+- **v1.2.0** (2026-04-06): Added zero address (`0x0000000000000000000000000000000000000000`) with kushmanmb (`0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb0`) as manager with immutable access permissions write
 - **v1.1.0** (2026-03-08): Updated all active token manager addresses to yaketh.eth (`0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17`); deprecated Unknown Token and Zero Address entries; added `transferAddress`, `transferAddressHex`, `deprecated`, and `updatedAt` fields
 - **v1.0.0** (2026-02-25): Initial configuration with USDC manager assignment
