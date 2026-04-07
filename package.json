@@ -4,7 +4,7 @@
   "description": "Blockchain network documentation and crypto clarity platform",
   "main": "index.js",
   "scripts": {
-    "test": "node src/wallet.test.js && node src/feature-flags.test.js && node src/erc721.test.js && node src/erc20.test.js && node src/token-history.test.js && node src/token-manager.test.js && node src/bitcoin-mining.test.js && node src/hello-bitcoin.test.js && node src/consensus-tracker.test.js && node src/address-tracker.test.js && node src/address-consolidator.test.js && node src/litecoin-blockchair.test.js && node src/ethereum-blockchair.test.js && node src/iso27001.test.js && node src/zkpdf.test.js && node src/contract-abi.test.js && node src/blockchain-council.test.js && node src/google-announcements.test.js && node src/microsoft-announcements.test.js && node src/ownership-announcements.test.js && node src/etherscan-verify.test.js && node src/blockchain-path-fetcher.test.js && node src/transaction-validator.test.js && node src/btck.test.js && node src/network-creator-badge.test.js && node src/calldata.test.js && node src/staked-eth.test.js && node src/reverse-register.test.js",
+    "test": "node src/wallet.test.js && node src/feature-flags.test.js && node src/erc721.test.js && node src/erc20.test.js && node src/token-history.test.js && node src/token-manager.test.js && node src/bitcoin-mining.test.js && node src/hello-bitcoin.test.js && node src/consensus-tracker.test.js && node src/address-tracker.test.js && node src/address-consolidator.test.js && node src/address-sanitizer.test.js && node src/litecoin-blockchair.test.js && node src/ethereum-blockchair.test.js && node src/iso27001.test.js && node src/zkpdf.test.js && node src/contract-abi.test.js && node src/blockchain-council.test.js && node src/google-announcements.test.js && node src/microsoft-announcements.test.js && node src/ownership-announcements.test.js && node src/etherscan-verify.test.js && node src/blockchain-path-fetcher.test.js && node src/transaction-validator.test.js && node src/btck.test.js && node src/network-creator-badge.test.js && node src/calldata.test.js && node src/staked-eth.test.js && node src/reverse-register.test.js",
     "test:wallet": "node src/wallet.test.js",
     "test:eth-call": "node src/eth-call.test.js",
     "test:feature-flags": "node src/feature-flags.test.js",
@@ -21,6 +21,7 @@
     "test:consensus-tracker": "node src/consensus-tracker.test.js",
     "test:address-tracker": "node src/address-tracker.test.js",
     "test:address-consolidator": "node src/address-consolidator.test.js",
+    "test:address-sanitizer": "node src/address-sanitizer.test.js",
     "test:litecoin-blockchair": "node src/litecoin-blockchair.test.js",
     "test:blockchair": "node src/blockchair.test.js",
     "test:zkpdf": "node src/zkpdf.test.js",
@@ -151,6 +152,7 @@
     "src/erc721.js",
     "src/erc20.js",
     "src/address-consolidator.js",
+    "src/address-sanitizer.js",
     "src/contract-abi.js",
     "src/token-history.js",
     "src/resolver.js",
@@ -184,7 +186,8 @@
     "src/staked-eth.js",
     "src/reverse-register.js",
     "src/*.md",
-    "README.md"
+    "README.md",
+    "SECURITY-CONFIG.md"
   ],
   "engines": {
     "node": ">=18.0.0"
