@@ -57,6 +57,7 @@
     "iso27001:demo": "node src/iso27001-example.js",
     "consensus-tracker:demo": "node src/consensus-tracker-example.js",
     "address-tracker:demo": "node src/address-tracker-example.js",
+    "address-sanitization:demo": "node src/address-sanitization-example.js",
     "litecoin-blockchair:demo": "node src/litecoin-blockchair-example.js",
     "blockchair:demo": "node src/blockchair-example.js",
     "zkpdf:demo": "node src/zkpdf-example.js",

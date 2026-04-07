@@ -363,13 +363,21 @@ const encrypted = wallet.encrypt(process.env.PASSWORD);
 
 - **[SECURITY.md](./SECURITY.md)** - Vulnerability disclosure policy and security guidelines
 - **[SECURITY-GUIDE.md](./SECURITY-GUIDE.md)** - Comprehensive security best practices for developers
-- **[SECURITY-AUDIT-2026-02-25.md](./SECURITY-AUDIT-2026-02-25.md)** - Latest security audit report (February 2026)
+- **[SECURITY-CONFIG.md](./SECURITY-CONFIG.md)** - Address sanitization configuration and settings
+- **[SECURITY-AUDIT-ADDRESS-LOCKDOWN.md](./SECURITY-AUDIT-ADDRESS-LOCKDOWN.md)** - Address leak prevention audit (April 2026)
+- **[SECURITY-AUDIT-2026-02-25.md](./SECURITY-AUDIT-2026-02-25.md)** - Comprehensive security audit report (February 2026)
+- **[docs/ADDRESS-SANITIZATION-BEST-PRACTICES.md](./docs/ADDRESS-SANITIZATION-BEST-PRACTICES.md)** - Developer guide for address sanitization
 - **[PRE-COMMIT-HOOKS-SETUP.md](./PRE-COMMIT-HOOKS-SETUP.md)** - Guide to prevent accidental secret commits
 - **[PACKAGE-MANAGER-SECURITY.md](./PACKAGE-MANAGER-SECURITY.md)** - Package manager credential security guide (npm, RubyGems, pip)
 - **[.env.example](./.env.example)** - Template for environment variables
 
 ### 🔍 Security Audit History
 
+- **2026-04-07**: Address leak prevention audit completed ✅
+  - ✅ **Address sanitization system implemented** - Automatic redaction of blockchain addresses in logs and errors
+  - ✅ **HTTP client secured** - All outgoing errors sanitized to prevent address leaks
+  - ✅ **20 test cases passing** - Comprehensive validation of sanitization features
+  - ✅ **Documentation complete** - Best practices and configuration guides created
 - **2026-02-25**: Comprehensive blockchain data leak audit completed ✅
   - ✅ **No sensitive data leaks detected** - Private keys, API keys, and passwords verified secure
   - ✅ **Git history clean** - No accidentally committed secrets found
