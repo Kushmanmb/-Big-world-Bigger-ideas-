@@ -201,11 +201,11 @@ test('Should handle mixed case addresses', () => {
 test('Should sanitize multiple addresses in text', () => {
   const text = 'From 0x1111111111111111111111111111111111111111 to 0x2222222222222222222222222222222222222222';
   const sanitized = sanitizeText(text);
-  const addressMatches = sanitized.match(/0x[0-9a-fA-F*]{40}/g) || [];
-  assert(addressMatches.length === 2, 'Should find both sanitized addresses');
-  addressMatches.forEach(addr => {
-    assert(addr.includes('***'), 'Each address should be sanitized');
-  });
+  // Check that both addresses were sanitized (contain asterisks)
+  assert(sanitized.includes('0x1111'), 'Should keep first address prefix');
+  assert(sanitized.includes('1111') && sanitized.match(/0x1111\*+1111/), 'First address should be sanitized');
+  assert(sanitized.includes('0x2222'), 'Should keep second address prefix');
+  assert(sanitized.includes('2222') && sanitized.match(/0x2222\*+2222/), 'Second address should be sanitized');
 });
 
 // Test 17: Request sanitization for logging

@@ -275,8 +275,16 @@ function setSanitizationEnabled(enabled) {
  * @param {string} address - Address to whitelist
  */
 function addToWhitelist(address) {
-  if (address && !defaultSanitizer.config.whitelist.includes(address.toLowerCase())) {
-    defaultSanitizer.config.whitelist.push(address.toLowerCase());
+  if (!address) return;
+  
+  const normalized = address.toLowerCase();
+  // Check if already whitelisted (case-insensitive)
+  const alreadyWhitelisted = defaultSanitizer.config.whitelist.some(
+    addr => addr.toLowerCase() === normalized
+  );
+  
+  if (!alreadyWhitelisted) {
+    defaultSanitizer.config.whitelist.push(normalized);
   }
 }
 

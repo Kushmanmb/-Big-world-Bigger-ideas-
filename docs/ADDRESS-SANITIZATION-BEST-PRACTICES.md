@@ -184,14 +184,24 @@ describe('Address Sanitization', () => {
 ```javascript
 const { safeConsole } = require('./address-sanitizer');
 
-// Mock console to test output
-const mockLog = jest.spyOn(console, 'log');
+// Mock console to test output (plain Node.js)
+const originalLog = console.log;
+let loggedArgs = [];
+console.log = (...args) => {
+  loggedArgs.push(args);
+  originalLog(...args);
+};
+
 safeConsole.log('Address:', '0x1234567890123456789012345678901234567890');
 
-expect(mockLog).toHaveBeenCalledWith(
-  'Address:',
-  expect.stringMatching(/0x1234\*+7890/)
-);
+// Verify the logged address is sanitized
+const loggedAddress = loggedArgs[0][1];
+if (!loggedAddress.includes('****')) {
+  throw new Error('Address was not sanitized');
+}
+
+// Restore original console.log
+console.log = originalLog;
 ```
 
 ## Whitelisting
