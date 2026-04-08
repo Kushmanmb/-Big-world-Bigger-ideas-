@@ -53,11 +53,14 @@ async function runTests() {
     const customFetcher = new BeaconchainRewardsFetcher({
       apiKey: 'test-key',
       baseUrl: 'custom.beaconcha.in',
-      network: 'goerli'
+      network: 'goerli',
+      userAgent: 'test-agent'
     });
-    assert(customFetcher.apiKey !== '', 'Should use custom API key');
+    // Verify API key is set without logging the actual value
+    assert(customFetcher.apiKey.length > 0, 'Should use custom API key');
     assertEqual(customFetcher.baseUrl, 'custom.beaconcha.in', 'Should use custom base URL');
     assertEqual(customFetcher.network, 'goerli', 'Should use custom network');
+    assertEqual(customFetcher.userAgent, 'test-agent', 'Should use custom user agent');
   } catch (error) {
     assert(false, `Custom options test failed: ${error.message}`);
   }
@@ -251,8 +254,9 @@ async function runTests() {
     const fetcher1 = new BeaconchainRewardsFetcher();
     const fetcher2 = new BeaconchainRewardsFetcher({ apiKey: 'different-key' });
     
-    // Check that instances have different API key states
-    assert((fetcher1.apiKey === '' && fetcher2.apiKey !== '') || (fetcher1.apiKey !== fetcher2.apiKey), 'Should create independent instances');
+    // Verify fetcher1 has no API key and fetcher2 has one
+    assertEqual(fetcher1.apiKey, '', 'Fetcher1 should have empty API key');
+    assert(fetcher2.apiKey.length > 0, 'Fetcher2 should have an API key');
     assert(fetcher1.cache !== fetcher2.cache, 'Should have separate caches');
   } catch (error) {
     assert(false, `Multiple instances test failed: ${error.message}`);

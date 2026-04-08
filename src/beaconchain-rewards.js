@@ -5,6 +5,7 @@
  * API Documentation: https://docs.beaconcha.in/
  */
 
+const https = require('https');
 const { makeRequest, makePostRequest, CacheManager } = require('./http-client');
 
 class BeaconchainRewardsFetcher {
@@ -14,11 +15,13 @@ class BeaconchainRewardsFetcher {
    * @param {string} options.apiKey - The beaconcha.in API key (required for most endpoints)
    * @param {string} options.baseUrl - The base API URL (default: beaconcha.in)
    * @param {string} options.network - The Ethereum network (default: mainnet)
+   * @param {string} options.userAgent - Custom User-Agent string (default: kushmanmb/yaketh)
    */
   constructor(options = {}) {
     this.apiKey = options.apiKey || '';
     this.baseUrl = options.baseUrl || 'beaconcha.in';
     this.network = options.network || 'mainnet';
+    this.userAgent = options.userAgent || 'kushmanmb/yaketh';
     this.cacheManager = new CacheManager(60000); // 1 minute cache
     // Backward compatibility - expose cache and cacheTimeout
     this.cache = this.cacheManager.cache;
@@ -33,7 +36,7 @@ class BeaconchainRewardsFetcher {
    */
   _makeRequest(endpoint) {
     const headers = {
-      'User-Agent': 'kushmanmb/yaketh'
+      'User-Agent': this.userAgent
     };
 
     if (this.apiKey) {
@@ -55,8 +58,6 @@ class BeaconchainRewardsFetcher {
    * @private
    */
   async _makePostRequest(endpoint, body) {
-    const https = require('https');
-    
     return new Promise((resolve, reject) => {
       const bodyString = JSON.stringify(body);
       
@@ -67,7 +68,7 @@ class BeaconchainRewardsFetcher {
         headers: {
           'Content-Type': 'application/json',
           'Content-Length': Buffer.byteLength(bodyString),
-          'User-Agent': 'kushmanmb/yaketh'
+          'User-Agent': this.userAgent
         }
       };
 
