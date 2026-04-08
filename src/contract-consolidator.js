@@ -59,7 +59,7 @@ class ContractConsolidator {
 
       if (totalBalance === 0) {
         analysis.zeroBalanceContracts.push(contractInfo);
-      } else if (this.minBalanceThreshold > 0 && totalBalance > 0 && totalBalance <= this.minBalanceThreshold) {
+      } else if (this.minBalanceThreshold > 0 && totalBalance <= this.minBalanceThreshold) {
         analysis.minimalBalanceContracts.push(contractInfo);
       } else if (totalBalance > 0) {
         analysis.activeContracts.push(contractInfo);

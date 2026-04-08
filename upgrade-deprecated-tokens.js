@@ -120,7 +120,7 @@ async function upgradeDeprecatedTokens() {
       const formattedResults = contractConsolidator.formatDeprecationResults(results);
       console.log(formattedResults);
       
-      // Reload config to get accurate final counts
+      // Note: applyDeprecations() saves the config file, so we reload to get accurate final counts
       const finalConfig = JSON.parse(fs.readFileSync(tokenManagersPath, 'utf8'));
       
       console.log('\n✅ Consolidation applied successfully!');

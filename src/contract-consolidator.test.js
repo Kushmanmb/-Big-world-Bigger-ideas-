@@ -107,8 +107,8 @@ try {
   const analysis = consolidator.analyzeContracts(mockConsolidatedData);
   
   assert(analysis.totalContracts === 4, 'Analysis counts total contracts correctly');
-  // With threshold 0, USDC (100.5) and WETH (0.000001) are both active (any balance > 0)
-  assert(analysis.activeContracts.length === 2, 'Analysis identifies active contracts (USDC, WETH)');
+  // With threshold 0, any balance > 0 is considered active (USDC: 100.5 and WETH: 0.000001)
+  assert(analysis.activeContracts.length === 2, 'Analysis identifies active contracts with any positive balance');
   assert(analysis.zeroBalanceContracts.length === 2, 'Analysis identifies zero balance contracts (USDT, TEST)');
   assert(analysis.minimalBalanceContracts.length === 0, 'Analysis identifies no minimal balance with threshold 0');
   assert(analysis.timestamp > 0, 'Analysis includes timestamp');
