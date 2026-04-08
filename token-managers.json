@@ -96,6 +96,25 @@
       },
       "setAt": "2026-04-06T04:14:30.669Z",
       "updatedAt": "2026-04-06T04:14:30.669Z"
+    },
+    {
+      "tokenAddress": "0x0000000000000000000000000000000000000002",
+      "managerAddress": "0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17",
+      "metadata": {
+        "tokenName": "Gavah Token",
+        "tokenSymbol": "GAVAH",
+        "network": "All Networks",
+        "chainId": 0,
+        "decimals": 18,
+        "type": "Governance Token",
+        "setBy": "yaketh.eth",
+        "notes": "Gavah Token manager for all contracts - Universal token manager managed by yaketh.eth",
+        "purpose": "Universal governance and contract management",
+        "scope": "All contracts in the repository",
+        "contractPath": "contracts/GavahToken.sol"
+      },
+      "setAt": "2026-04-08T14:26:00.000Z",
+      "updatedAt": "2026-04-08T14:26:00.000Z"
     }
   ],
   "deprecated": [
@@ -108,6 +127,6 @@
   ],
   "transferAddress": "yaketh.eth",
   "transferAddressHex": "0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17",
-  "lastUpdated": "2026-04-06T04:14:30.669Z",
-  "version": "1.3.0"
+  "lastUpdated": "2026-04-08T14:26:00.000Z",
+  "version": "1.4.0"
 }
