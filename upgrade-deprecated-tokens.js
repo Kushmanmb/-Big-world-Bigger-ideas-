@@ -25,6 +25,10 @@ async function upgradeDeprecatedTokens() {
   console.log(`  Deprecated tokens: ${config.deprecated ? config.deprecated.length : 0}`);
   console.log('');
   
+  // Store initial count for reporting later
+  const initialActiveCount = config.managers.length;
+  const deprecatedCount = config.deprecated ? config.deprecated.length : 0;
+  
   if (!config.deprecated || config.deprecated.length === 0) {
     console.log('✓ No deprecated tokens found. Nothing to upgrade.');
     return;
@@ -77,6 +81,8 @@ async function upgradeDeprecatedTokens() {
   fs.writeFileSync(tokenManagersPath, JSON.stringify(config, null, 2));
   console.log('✓ Configuration saved');
   
+  const upgradedCount = config.managers.length - (initialActiveCount || 0);
+  
   console.log('\n' + '='.repeat(70));
   console.log('Updated state:');
   console.log(`  Active managers: ${config.managers.length}`);
@@ -117,7 +123,7 @@ async function upgradeDeprecatedTokens() {
       console.log(formattedResults);
       
       console.log('\n✅ Consolidation applied successfully!');
-      console.log(`   - Upgraded ${config.managers.length} tokens to active`);
+      console.log(`   - Upgraded ${deprecatedCount} tokens to active`);
       console.log(`   - Deprecated ${results.deprecated.length} zero-balance contracts`);
       console.log(`   - Final active contracts: ${config.managers.length - results.deprecated.length}`);
     } else {

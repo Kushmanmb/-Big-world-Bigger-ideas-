@@ -145,8 +145,8 @@ console.log('='.repeat(70));
 console.log(`
 1. Integrate with Address Consolidator:
    const { AddressConsolidator } = require('./address-consolidator');
-   const consolidator = new AddressConsolidator();
-   const consolidated = await consolidator.fetchConsolidatedBalances();
+   const addressConsolidator = new AddressConsolidator();
+   const consolidated = await addressConsolidator.fetchConsolidatedBalances();
 
 2. Analyze contracts:
    const contractConsolidator = new ContractConsolidator();
