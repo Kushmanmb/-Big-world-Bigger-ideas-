@@ -4,7 +4,6 @@
  */
 
 const ContractConsolidator = require('./contract-consolidator');
-const fs = require('fs');
 const path = require('path');
 
 // Test utilities
