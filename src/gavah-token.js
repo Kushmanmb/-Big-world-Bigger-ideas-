@@ -3,8 +3,6 @@
  * Provides utilities for interacting with the Gavah Token (GAVAH) ERC20 contract
  */
 
-const { ethers } = require('ethers');
-
 /**
  * GavahToken class for interacting with the Gavah Token contract
  */
@@ -73,22 +71,176 @@ class GavahToken {
   }
 
   /**
-   * Gets a provider for read operations
-   * @returns {ethers.JsonRpcProvider} Provider instance
+   * Makes an RPC call to the blockchain
+   * @param {string} method - The RPC method to call
+   * @param {array} params - The parameters for the RPC call
+   * @returns {Promise<any>} The result of the RPC call
    * @private
    */
-  _getProvider() {
-    return new ethers.JsonRpcProvider(this.rpcUrl);
+  async _rpcCall(method, params) {
+    const response = await fetch(this.rpcUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 1,
+        method,
+        params,
+      }),
+    });
+
+    const data = await response.json();
+    
+    if (data.error) {
+      throw new Error(data.error.message || 'RPC call failed');
+    }
+
+    return data.result;
   }
 
   /**
-   * Gets a contract instance for read operations
-   * @returns {ethers.Contract} Contract instance
+   * Encodes function data for contract call
+   * @param {string} signature - Function signature
+   * @param {array} params - Function parameters
+   * @returns {string} Encoded function data
    * @private
    */
-  _getContract() {
-    const provider = this._getProvider();
-    return new ethers.Contract(this.contractAddress, this.abi, provider);
+  _encodeFunctionData(signature, params = []) {
+    // For read-only methods with simple signatures, we can use the signature hash directly
+    // This is a simplified implementation - for production, use a proper ABI encoder
+    const functionHash = this._getFunctionHash(signature);
+    
+    if (params.length === 0) {
+      return functionHash;
+    }
+    
+    // Encode parameters (simplified - supports only address type for now)
+    let encodedParams = '';
+    for (const param of params) {
+      if (typeof param === 'string' && param.startsWith('0x')) {
+        // Address parameter
+        encodedParams += param.slice(2).padStart(64, '0');
+      }
+    }
+    
+    return functionHash + encodedParams;
+  }
+
+  /**
+   * Gets function signature hash (first 4 bytes of keccak256)
+   * @param {string} signature - Function signature
+   * @returns {string} Function hash
+   * @private
+   */
+  _getFunctionHash(signature) {
+    // Simplified hashes for common ERC20 functions
+    const hashes = {
+      'name()': '0x06fdde03',
+      'symbol()': '0x95d89b41',
+      'decimals()': '0x313ce567',
+      'totalSupply()': '0x18160ddd',
+      'balanceOf(address)': '0x70a08231',
+      'owner()': '0x8da5cb5b',
+      'allowance(address,address)': '0xdd62ed3e',
+    };
+    
+    return hashes[signature] || '0x00000000';
+  }
+
+  /**
+   * Calls a view function on the contract
+   * @param {string} signature - Function signature
+   * @param {array} params - Function parameters
+   * @returns {Promise<string>} The result
+   * @private
+   */
+  async _callViewFunction(signature, params = []) {
+    const data = this._encodeFunctionData(signature, params);
+    
+    const result = await this._rpcCall('eth_call', [
+      {
+        to: this.contractAddress,
+        data,
+      },
+      'latest',
+    ]);
+
+    return result;
+  }
+
+  /**
+   * Decodes a string result from contract call
+   * @param {string} result - Hex result
+   * @returns {string} Decoded string
+   * @private
+   */
+  _decodeString(result) {
+    if (!result || result === '0x') {
+      return '';
+    }
+    
+    // Remove 0x prefix and decode
+    const hex = result.slice(2);
+    
+    // Skip first 64 bytes (offset) and next 64 bytes (length)
+    // Then decode the actual string content
+    const length = parseInt(hex.slice(64, 128), 16) * 2;
+    const stringHex = hex.slice(128, 128 + length);
+    
+    let str = '';
+    for (let i = 0; i < stringHex.length; i += 2) {
+      const charCode = parseInt(stringHex.slice(i, i + 2), 16);
+      if (charCode > 0) {
+        str += String.fromCharCode(charCode);
+      }
+    }
+    
+    return str;
+  }
+
+  /**
+   * Decodes a uint256 result from contract call
+   * @param {string} result - Hex result
+   * @returns {string} Decoded number as string
+   * @private
+   */
+  _decodeUint256(result) {
+    if (!result || result === '0x') {
+      return '0';
+    }
+    
+    return BigInt(result).toString();
+  }
+
+  /**
+   * Decodes a uint8 result from contract call
+   * @param {string} result - Hex result
+   * @returns {number} Decoded number
+   * @private
+   */
+  _decodeUint8(result) {
+    if (!result || result === '0x') {
+      return 0;
+    }
+    
+    return parseInt(result, 16);
+  }
+
+  /**
+   * Decodes an address result from contract call
+   * @param {string} result - Hex result
+   * @returns {string} Decoded address
+   * @private
+   */
+  _decodeAddress(result) {
+    if (!result || result === '0x') {
+      return '0x0000000000000000000000000000000000000000';
+    }
+    
+    // Address is in the last 40 characters (20 bytes)
+    return '0x' + result.slice(-40);
   }
 
   /**
@@ -96,8 +248,8 @@ class GavahToken {
    * @returns {Promise<string>} Token name
    */
   async getName() {
-    const contract = this._getContract();
-    return await contract.name();
+    const result = await this._callViewFunction('name()');
+    return this._decodeString(result);
   }
 
   /**
@@ -105,8 +257,8 @@ class GavahToken {
    * @returns {Promise<string>} Token symbol
    */
   async getSymbol() {
-    const contract = this._getContract();
-    return await contract.symbol();
+    const result = await this._callViewFunction('symbol()');
+    return this._decodeString(result);
   }
 
   /**
@@ -114,8 +266,8 @@ class GavahToken {
    * @returns {Promise<number>} Token decimals
    */
   async getDecimals() {
-    const contract = this._getContract();
-    return Number(await contract.decimals());
+    const result = await this._callViewFunction('decimals()');
+    return this._decodeUint8(result);
   }
 
   /**
@@ -123,9 +275,8 @@ class GavahToken {
    * @returns {Promise<string>} Total supply (in smallest unit)
    */
   async getTotalSupply() {
-    const contract = this._getContract();
-    const supply = await contract.totalSupply();
-    return supply.toString();
+    const result = await this._callViewFunction('totalSupply()');
+    return this._decodeUint256(result);
   }
 
   /**
@@ -135,9 +286,8 @@ class GavahToken {
    */
   async getBalance(address) {
     const validatedAddress = this._validateAddress(address);
-    const contract = this._getContract();
-    const balance = await contract.balanceOf(validatedAddress);
-    return balance.toString();
+    const result = await this._callViewFunction('balanceOf(address)', [validatedAddress]);
+    return this._decodeUint256(result);
   }
 
   /**
@@ -145,8 +295,8 @@ class GavahToken {
    * @returns {Promise<string>} Owner address
    */
   async getOwner() {
-    const contract = this._getContract();
-    return await contract.owner();
+    const result = await this._callViewFunction('owner()');
+    return this._decodeAddress(result);
   }
 
   /**
@@ -158,9 +308,8 @@ class GavahToken {
   async getAllowance(owner, spender) {
     const validatedOwner = this._validateAddress(owner);
     const validatedSpender = this._validateAddress(spender);
-    const contract = this._getContract();
-    const allowance = await contract.allowance(validatedOwner, validatedSpender);
-    return allowance.toString();
+    const result = await this._callViewFunction('allowance(address,address)', [validatedOwner, validatedSpender]);
+    return this._decodeUint256(result);
   }
 
   /**
@@ -170,7 +319,17 @@ class GavahToken {
    * @returns {string} Formatted amount
    */
   formatAmount(amount, decimals = 18) {
-    return ethers.formatUnits(amount, decimals);
+    const amountBigInt = BigInt(amount);
+    const divisor = BigInt(10 ** decimals);
+    const whole = amountBigInt / divisor;
+    const remainder = amountBigInt % divisor;
+    
+    if (remainder === 0n) {
+      return whole.toString() + '.0';
+    }
+    
+    const fractional = remainder.toString().padStart(decimals, '0');
+    return whole.toString() + '.' + fractional.replace(/0+$/, '');
   }
 
   /**
@@ -180,7 +339,12 @@ class GavahToken {
    * @returns {string} Amount in smallest unit
    */
   parseAmount(amount, decimals = 18) {
-    return ethers.parseUnits(amount, decimals).toString();
+    const parts = amount.toString().split('.');
+    const whole = parts[0] || '0';
+    const fractional = (parts[1] || '').padEnd(decimals, '0').slice(0, decimals);
+    
+    const amountStr = whole + fractional;
+    return BigInt(amountStr).toString();
   }
 
   /**

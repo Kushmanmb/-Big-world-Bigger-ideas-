@@ -32,25 +32,23 @@ console.log('Running Gavah Token Module Tests...\n');
 
 // Test: Constructor validates contract address
 test('Constructor requires contract address', () => {
-  assert(() => {
-    try {
-      new GavahToken();
-      return false;
-    } catch (error) {
-      return error.message.includes('Contract address must be a non-empty string');
-    }
-  }(), 'Should throw error for missing address');
+  let errorThrown = false;
+  try {
+    new GavahToken();
+  } catch (error) {
+    errorThrown = error.message.includes('Contract address must be a non-empty string');
+  }
+  assert(errorThrown, 'Should throw error for missing address');
 });
 
 test('Constructor validates address format', () => {
-  assert(() => {
-    try {
-      new GavahToken('invalid-address');
-      return false;
-    } catch (error) {
-      return error.message.includes('Invalid Ethereum address format');
-    }
-  }(), 'Should throw error for invalid address format');
+  let errorThrown = false;
+  try {
+    new GavahToken('invalid-address');
+  } catch (error) {
+    errorThrown = error.message.includes('Invalid Ethereum address format');
+  }
+  assert(errorThrown, 'Should throw error for invalid address format');
 });
 
 test('Constructor accepts valid address with 0x prefix', () => {
@@ -141,14 +139,14 @@ test('_validateAddress is private method', () => {
   assert(typeof gavah._validateAddress === 'function', '_validateAddress should be a function');
 });
 
-test('_getProvider is private method', () => {
+test('_rpcCall is private method', () => {
   const gavah = new GavahToken('0x1234567890123456789012345678901234567890');
-  assert(typeof gavah._getProvider === 'function', '_getProvider should be a function');
+  assert(typeof gavah._rpcCall === 'function', '_rpcCall should be a function');
 });
 
-test('_getContract is private method', () => {
+test('_encodeFunctionData is private method', () => {
   const gavah = new GavahToken('0x1234567890123456789012345678901234567890');
-  assert(typeof gavah._getContract === 'function', '_getContract should be a function');
+  assert(typeof gavah._encodeFunctionData === 'function', '_encodeFunctionData should be a function');
 });
 
 test('Public methods are defined', () => {
