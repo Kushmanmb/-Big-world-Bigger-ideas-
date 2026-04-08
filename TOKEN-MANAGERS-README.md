@@ -193,6 +193,101 @@ Run the demo:
 npm run token-manager:demo
 ```
 
+## Contract Consolidation
+
+The repository includes a Contract Consolidation system to automatically identify and deprecate token contracts with zero balances, reducing management overhead.
+
+### Overview
+
+The consolidation system:
+1. Analyzes token balances across all tracked addresses
+2. Identifies contracts with zero or minimal balances
+3. Generates recommendations for deprecation
+4. Automatically deprecates zero-balance contracts
+5. Maintains an audit trail in the `deprecated` array
+
+### Running Consolidation
+
+#### Upgrade Deprecated Tokens
+
+To restore deprecated tokens and run consolidation analysis:
+
+```bash
+npm run upgrade-tokens
+```
+
+This command will:
+1. Upgrade all deprecated tokens back to active status
+2. Fetch current token balances from blockchain
+3. Analyze contracts to identify zero-balance tokens
+4. Automatically deprecate contracts with no balances
+5. Update `token-managers.json` with the results
+
+#### Manual Consolidation Analysis
+
+To analyze contracts without making changes:
+
+```bash
+npm run contract-consolidator:demo
+```
+
+#### Using the Contract Consolidator API
+
+```javascript
+const ContractConsolidator = require('./src/contract-consolidator');
+const { AddressConsolidator } = require('./src/address-consolidator');
+
+// Fetch consolidated balances
+const addressConsolidator = new AddressConsolidator();
+const consolidated = await addressConsolidator.fetchConsolidatedBalances();
+
+// Analyze contracts
+const contractConsolidator = new ContractConsolidator({
+  minBalanceThreshold: 0.001  // Balances below this are considered minimal
+});
+
+const analysis = contractConsolidator.analyzeContracts(consolidated);
+
+// Generate report
+const report = contractConsolidator.generateReport(analysis);
+console.log(report);
+
+// Preview deprecations (dry run)
+const dryRun = contractConsolidator.applyDeprecations(null, true);
+console.log(contractConsolidator.formatDeprecationResults(dryRun));
+
+// Apply deprecations
+const results = contractConsolidator.applyDeprecations(null, false);
+console.log(contractConsolidator.formatDeprecationResults(results));
+```
+
+### Consolidation Workflow
+
+1. **Initial State**: Tokens may be in `managers` (active) or `deprecated` arrays
+2. **Upgrade**: Run `npm run upgrade-tokens` to restore all deprecated tokens
+3. **Analysis**: System fetches live balance data and analyzes each contract
+4. **Recommendations**: Generates action items:
+   - **Deprecate**: Zero-balance contracts (automatically applied)
+   - **Review**: Minimal-balance contracts (manual review recommended)
+   - **Active**: Contracts with balances above threshold (no action)
+5. **Application**: Zero-balance contracts automatically moved to `deprecated`
+6. **Audit Trail**: All deprecations tracked with timestamps and reasons
+
+### Configuration
+
+The `minBalanceThreshold` determines what's considered "minimal":
+- `0` (default): Only zero balances trigger deprecation
+- `0.001`: Balances below 0.001 are flagged for review
+- `0.01`: Balances below 0.01 are flagged for review
+
+### Testing
+
+Run the contract consolidator tests:
+
+```bash
+npm run test:contract-consolidator
+```
+
 ## Notes
 
 - This configuration is loaded at runtime and does not directly interact with the blockchain
@@ -201,9 +296,11 @@ npm run token-manager:demo
 - Always verify addresses before adding them to the configuration
 - Deprecated entries are preserved in `token-managers.json` for audit history
 - **Sentinel Addresses**: Special addresses like `0x0000000000000000000000000000000000000000` (zero address) and `0x0000000000000000000000000000000000000001` (address one) are used as sentinel values for application-level access control, not as valid token contracts. This enables immutable and full permissions management at the application layer.
+- **Consolidation**: Use `npm run upgrade-tokens` to restore deprecated tokens and automatically deprecate zero-balance contracts
 
 ## Version History
 
+- **v1.4.0** (2026-04-08): Upgraded deprecated tokens and added contract consolidation system; restored 1 previously deprecated token
 - **v1.3.0** (2026-04-06): Added address one (`0x0000000000000000000000000000000000000001`) with `0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253` as manager with full write permissions
 - **v1.2.0** (2026-04-06): Added zero address (`0x0000000000000000000000000000000000000000`) with kushmanmb (`0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb0`) as manager with immutable access permissions write
 - **v1.1.0** (2026-03-08): Updated all active token manager addresses to yaketh.eth (`0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17`); deprecated Unknown Token and Zero Address entries; added `transferAddress`, `transferAddressHex`, `deprecated`, and `updatedAt` fields
