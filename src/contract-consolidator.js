@@ -4,7 +4,6 @@
  * for consolidation and deprecation to reduce management overhead
  */
 
-const TokenManager = require('./token-manager');
 const fs = require('fs');
 const path = require('path');
 
