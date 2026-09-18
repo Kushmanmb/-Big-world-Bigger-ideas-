@@ -1932,6 +1932,57 @@ For questions, collaborations, or inquiries, please reach out via:
 - 🌐 Website: [kushmanmb.org](https://kushmanmb.org)
 - 🏷️ ENS: kushmanmb.base.eth
 
+## 🪝 Pre-commit Hook
+
+This repository includes a Git pre-commit hook that runs `node print-kushmanmb.js` before every commit. If the script exits with a nonzero status, the commit is aborted.
+
+### `print-kushmanmb.js`
+
+Located in the root directory, this script simply outputs the owner's handle to the console:
+
+```javascript
+console.log("kushmanmb");
+```
+
+Run it directly to verify:
+
+```bash
+node print-kushmanmb.js
+# Output: kushmanmb
+```
+
+### Setting Up the Hook Locally
+
+> **Note:** Git hooks are stored in `.git/hooks/` and are **not** versioned by default. Every developer who clones this repository must set up the hook manually.
+
+After cloning, copy the hook to your local `.git/hooks/` directory and make it executable:
+
+```bash
+cp .git/hooks/pre-commit .git/hooks/pre-commit.bak 2>/dev/null; \
+cat > .git/hooks/pre-commit << 'EOF'
+#!/bin/sh
+node print-kushmanmb.js
+EOF
+chmod +x .git/hooks/pre-commit
+```
+
+Or create it manually:
+
+1. Create `.git/hooks/pre-commit` with the following contents:
+
+   ```sh
+   #!/bin/sh
+   node print-kushmanmb.js
+   ```
+
+2. Make it executable:
+
+   ```bash
+   chmod +x .git/hooks/pre-commit
+   ```
+
+Once installed, every `git commit` will automatically run `node print-kushmanmb.js`. If the script fails, the commit is blocked until the issue is resolved.
+
 ---
 
 <div align="center">
