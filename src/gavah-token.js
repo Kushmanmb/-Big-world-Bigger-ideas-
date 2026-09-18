@@ -334,15 +334,29 @@ class GavahToken {
 
   /**
    * Parses a human-readable amount to smallest unit
-   * @param {string} amount - Human-readable amount
+   * @param {string|number} amount - Human-readable amount
    * @param {number} decimals - Token decimals (default: 18)
    * @returns {string} Amount in smallest unit
    */
   parseAmount(amount, decimals = 18) {
-    const parts = amount.toString().split('.');
+    if (!Number.isInteger(decimals) || decimals < 0) {
+      throw new Error('Decimals must be a non-negative integer');
+    }
+
+    const normalizedAmount = amount.toString().trim();
+    if (!/^(?:\d+\.?\d*|\.\d+)$/.test(normalizedAmount)) {
+      throw new Error('Amount must be a valid non-negative decimal number');
+    }
+
+    const parts = normalizedAmount.split('.');
     const whole = parts[0] || '0';
-    const fractional = (parts[1] || '').padEnd(decimals, '0').slice(0, decimals);
-    
+    const fractionalPart = parts[1] || '';
+
+    if (fractionalPart.length > decimals) {
+      throw new Error(`Amount has more than ${decimals} decimal places`);
+    }
+
+    const fractional = fractionalPart.padEnd(decimals, '0');
     const amountStr = whole + fractional;
     return BigInt(amountStr).toString();
   }
