@@ -26,7 +26,6 @@ async function upgradeDeprecatedTokens() {
   console.log('');
   
   // Store initial count for reporting later
-  const initialActiveCount = config.managers.length;
   const deprecatedCount = config.deprecated ? config.deprecated.length : 0;
   
   if (!config.deprecated || config.deprecated.length === 0) {
