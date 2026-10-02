@@ -9,3 +9,6 @@
 #
 # To install development dependencies:
 #   pip install -r requirements-dev.txt
+
+# GitHub AI Inference (required for github_ai_inference.py)
+azure-ai-inference
