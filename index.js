@@ -84,6 +84,9 @@ const Resolver = require('./src/resolver.js');
 // Token manager
 const TokenManager = require('./src/token-manager.js');
 
+// Gavah Token (Governance Token)
+const GavahToken = require('./src/gavah-token.js');
+
 // Google API announcements
 const GoogleAnnouncements = require('./src/google-announcements.js');
 
@@ -119,6 +122,7 @@ module.exports = {
   OwnershipEvent,
   TokenUUID,
   TokenManager,
+  GavahToken,
   Resolver,
   
   // Blockchain data fetchers

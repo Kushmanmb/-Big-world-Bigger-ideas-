@@ -363,13 +363,21 @@ const encrypted = wallet.encrypt(process.env.PASSWORD);
 
 - **[SECURITY.md](./SECURITY.md)** - Vulnerability disclosure policy and security guidelines
 - **[SECURITY-GUIDE.md](./SECURITY-GUIDE.md)** - Comprehensive security best practices for developers
-- **[SECURITY-AUDIT-2026-02-25.md](./SECURITY-AUDIT-2026-02-25.md)** - Latest security audit report (February 2026)
+- **[SECURITY-CONFIG.md](./SECURITY-CONFIG.md)** - Address sanitization configuration and settings
+- **[SECURITY-AUDIT-ADDRESS-LOCKDOWN.md](./SECURITY-AUDIT-ADDRESS-LOCKDOWN.md)** - Address leak prevention audit (April 2026)
+- **[SECURITY-AUDIT-2026-02-25.md](./SECURITY-AUDIT-2026-02-25.md)** - Comprehensive security audit report (February 2026)
+- **[docs/ADDRESS-SANITIZATION-BEST-PRACTICES.md](./docs/ADDRESS-SANITIZATION-BEST-PRACTICES.md)** - Developer guide for address sanitization
 - **[PRE-COMMIT-HOOKS-SETUP.md](./PRE-COMMIT-HOOKS-SETUP.md)** - Guide to prevent accidental secret commits
 - **[PACKAGE-MANAGER-SECURITY.md](./PACKAGE-MANAGER-SECURITY.md)** - Package manager credential security guide (npm, RubyGems, pip)
 - **[.env.example](./.env.example)** - Template for environment variables
 
 ### 🔍 Security Audit History
 
+- **2026-04-07**: Address leak prevention audit completed ✅
+  - ✅ **Address sanitization system implemented** - Automatic redaction of blockchain addresses in logs and errors
+  - ✅ **HTTP client secured** - All outgoing errors sanitized to prevent address leaks
+  - ✅ **20 test cases passing** - Comprehensive validation of sanitization features
+  - ✅ **Documentation complete** - Best practices and configuration guides created
 - **2026-02-25**: Comprehensive blockchain data leak audit completed ✅
   - ✅ **No sensitive data leaks detected** - Private keys, API keys, and passwords verified secure
   - ✅ **Git history clean** - No accidentally committed secrets found
@@ -1923,6 +1931,57 @@ For questions, collaborations, or inquiries, please reach out via:
 - 📧 Email: [mattbrace92@gmail.com](mailto:mattbrace92@gmail.com)
 - 🌐 Website: [kushmanmb.org](https://kushmanmb.org)
 - 🏷️ ENS: kushmanmb.base.eth
+
+## 🪝 Pre-commit Hook
+
+This repository includes a Git pre-commit hook that runs `node print-kushmanmb.js` before every commit. If the script exits with a nonzero status, the commit is aborted.
+
+### `print-kushmanmb.js`
+
+Located in the root directory, this script simply outputs the owner's handle to the console:
+
+```javascript
+console.log("kushmanmb");
+```
+
+Run it directly to verify:
+
+```bash
+node print-kushmanmb.js
+# Output: kushmanmb
+```
+
+### Setting Up the Hook Locally
+
+> **Note:** Git hooks are stored in `.git/hooks/` and are **not** versioned by default. Every developer who clones this repository must set up the hook manually.
+
+After cloning, copy the hook to your local `.git/hooks/` directory and make it executable:
+
+```bash
+cp .git/hooks/pre-commit .git/hooks/pre-commit.bak 2>/dev/null; \
+cat > .git/hooks/pre-commit << 'EOF'
+#!/bin/sh
+node print-kushmanmb.js
+EOF
+chmod +x .git/hooks/pre-commit
+```
+
+Or create it manually:
+
+1. Create `.git/hooks/pre-commit` with the following contents:
+
+   ```sh
+   #!/bin/sh
+   node print-kushmanmb.js
+   ```
+
+2. Make it executable:
+
+   ```bash
+   chmod +x .git/hooks/pre-commit
+   ```
+
+Once installed, every `git commit` will automatically run `node print-kushmanmb.js`. If the script fails, the commit is blocked until the issue is resolved.
 
 ---
 

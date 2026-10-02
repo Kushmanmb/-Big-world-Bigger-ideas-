@@ -3,10 +3,14 @@
  * 
  * This module provides common HTTP/HTTPS request functionality used across API modules
  * to reduce code duplication and maintain consistency.
+ * 
+ * SECURITY: All outgoing requests are monitored for address leaks.
+ * Addresses in URLs and request bodies are sanitized in error messages and logs.
  */
 
 const https = require('https');
 const http = require('http');
+const { sanitizeText, sanitizeObject } = require('./address-sanitizer');
 
 /**
  * Makes an HTTP/HTTPS GET request
@@ -48,16 +52,22 @@ function makeRequest(options) {
             const parsed = JSON.parse(data);
             resolve(parsed);
           } else {
-            reject(new Error(`HTTP ${res.statusCode}: ${data}`));
+            // Sanitize error response to prevent address leaks
+            const sanitizedData = sanitizeText(data);
+            reject(new Error(`HTTP ${res.statusCode}: ${sanitizedData}`));
           }
         } catch (error) {
-          reject(new Error(`Failed to parse response: ${error.message}`));
+          // Sanitize parse errors to prevent address leaks
+          const sanitizedMessage = sanitizeText(error.message);
+          reject(new Error(`Failed to parse response: ${sanitizedMessage}`));
         }
       });
     });
 
     req.on('error', (error) => {
-      reject(new Error(`Request failed: ${error.message}`));
+      // Sanitize error messages to prevent address leaks
+      const sanitizedMessage = sanitizeText(error.message);
+      reject(new Error(`Request failed: ${sanitizedMessage}`));
     });
 
     req.setTimeout(timeout, () => {
@@ -114,16 +124,22 @@ function makePostRequest(options) {
             const parsed = JSON.parse(data);
             resolve(parsed);
           } else {
-            reject(new Error(`HTTP ${res.statusCode}: ${data}`));
+            // Sanitize error response to prevent address leaks
+            const sanitizedData = sanitizeText(data);
+            reject(new Error(`HTTP ${res.statusCode}: ${sanitizedData}`));
           }
         } catch (error) {
-          reject(new Error(`Failed to parse response: ${error.message}`));
+          // Sanitize parse errors to prevent address leaks
+          const sanitizedMessage = sanitizeText(error.message);
+          reject(new Error(`Failed to parse response: ${sanitizedMessage}`));
         }
       });
     });
 
     req.on('error', (error) => {
-      reject(new Error(`Request failed: ${error.message}`));
+      // Sanitize error messages to prevent address leaks
+      const sanitizedMessage = sanitizeText(error.message);
+      reject(new Error(`Request failed: ${sanitizedMessage}`));
     });
 
     req.setTimeout(timeout, () => {
