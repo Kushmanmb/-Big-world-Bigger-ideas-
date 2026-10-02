@@ -25,8 +25,8 @@ function assertEqual(actual, expected, message) {
     testsPassed++;
   } else {
     console.error(`✗ ${message}`);
-    console.error(`  Expected: ${expected}`);
-    console.error(`  Actual: ${actual}`);
+    console.error(`  Expected: [redacted ${typeof expected}]`);
+    console.error(`  Actual: [redacted ${typeof actual}]`);
     testsFailed++;
   }
 }
