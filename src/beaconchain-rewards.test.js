@@ -39,7 +39,7 @@ async function runTests() {
   console.log('\n📦 Testing Constructor (Default)...');
   try {
     const fetcher = new BeaconchainRewardsFetcher();
-    assert(fetcher !== null, 'Should create fetcher instance');
+    assert(fetcher instanceof BeaconchainRewardsFetcher, 'Should create fetcher instance');
     assertEqual(fetcher.baseUrl, 'beaconcha.in', 'Should use default base URL');
     assertEqual(fetcher.network, 'mainnet', 'Should use default network');
     assert(fetcher.cache instanceof Map, 'Should initialize cache as Map');
