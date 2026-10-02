@@ -6,7 +6,7 @@
  */
 
 const https = require('https');
-const { makeRequest, makePostRequest, CacheManager } = require('./http-client');
+const { makeRequest, CacheManager } = require('./http-client');
 
 class BeaconchainRewardsFetcher {
   /**
