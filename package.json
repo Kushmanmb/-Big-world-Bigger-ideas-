@@ -4,7 +4,7 @@
   "description": "Blockchain network documentation and crypto clarity platform",
   "main": "index.js",
   "scripts": {
-    "test": "node src/wallet.test.js && node src/feature-flags.test.js && node src/erc721.test.js && node src/erc20.test.js && node src/token-history.test.js && node src/token-manager.test.js && node src/bitcoin-mining.test.js && node src/hello-bitcoin.test.js && node src/consensus-tracker.test.js && node src/address-tracker.test.js && node src/address-consolidator.test.js && node src/address-sanitizer.test.js && node src/litecoin-blockchair.test.js && node src/ethereum-blockchair.test.js && node src/iso27001.test.js && node src/zkpdf.test.js && node src/contract-abi.test.js && node src/blockchain-council.test.js && node src/google-announcements.test.js && node src/microsoft-announcements.test.js && node src/ownership-announcements.test.js && node src/etherscan-verify.test.js && node src/blockchain-path-fetcher.test.js && node src/transaction-validator.test.js && node src/btck.test.js && node src/network-creator-badge.test.js && node src/calldata.test.js && node src/staked-eth.test.js && node src/reverse-register.test.js && node src/beaconchain-rewards.test.js",
+    "test": "node src/wallet.test.js && node src/feature-flags.test.js && node src/erc721.test.js && node src/erc20.test.js && node src/token-history.test.js && node src/token-manager.test.js && node src/gavah-token.test.js && node src/bitcoin-mining.test.js && node src/hello-bitcoin.test.js && node src/consensus-tracker.test.js && node src/address-tracker.test.js && node src/address-consolidator.test.js && node src/address-sanitizer.test.js && node src/litecoin-blockchair.test.js && node src/ethereum-blockchair.test.js && node src/iso27001.test.js && node src/zkpdf.test.js && node src/contract-abi.test.js && node src/blockchain-council.test.js && node src/google-announcements.test.js && node src/microsoft-announcements.test.js && node src/ownership-announcements.test.js && node src/etherscan-verify.test.js && node src/blockchain-path-fetcher.test.js && node src/transaction-validator.test.js && node src/btck.test.js && node src/network-creator-badge.test.js && node src/calldata.test.js && node src/staked-eth.test.js && node src/reverse-register.test.js && node src/beaconchain-rewards.test.js",
     "test:wallet": "node src/wallet.test.js",
     "test:eth-call": "node src/eth-call.test.js",
     "test:feature-flags": "node src/feature-flags.test.js",
@@ -13,6 +13,7 @@
     "test:contract-abi": "node src/contract-abi.test.js",
     "test:token-history": "node src/token-history.test.js",
     "test:token-manager": "node src/token-manager.test.js",
+    "test:gavah-token": "node src/gavah-token.test.js",
     "test:resolver": "node src/resolver.test.js",
     "test:token-uuid": "node src/token-uuid.test.js",
     "test:bitcoin-mining": "node src/bitcoin-mining.test.js",
@@ -51,6 +52,7 @@
     "contract-abi:demo": "node src/contract-abi-example.js",
     "token-history:demo": "node src/token-history-example.js",
     "token-manager:demo": "node src/token-manager-example.js",
+    "gavah-token:demo": "node src/gavah-token-example.js",
     "resolver:demo": "node src/resolver-example.js",
     "token-uuid:demo": "node src/token-uuid-example.js",
     "bitcoin-mining:demo": "node src/bitcoin-mining-example.js",
@@ -91,7 +93,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-.git"
+    "url": "git+https://github.com/Kushmanmb/-Big-world-Bigger-ideas-.git"
   },
   "keywords": [
     "blockchain",
@@ -145,9 +147,9 @@
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues"
+    "url": "https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues"
   },
-  "homepage": "https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-#readme",
+  "homepage": "https://github.com/Kushmanmb/-Big-world-Bigger-ideas-#readme",
   "files": [
     "index.js",
     "src/wallet.js",
@@ -202,7 +204,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.24",
-    "postcss": "^8.5.6",
+    "postcss": "^8.5.28",
     "tailwindcss": "^3.4.17"
   },
   "overrides": {
