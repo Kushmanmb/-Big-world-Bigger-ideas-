@@ -91,7 +91,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-.git"
+    "url": "git+https://github.com/Kushmanmb/-Big-world-Bigger-ideas-.git"
   },
   "keywords": [
     "blockchain",
@@ -145,9 +145,9 @@
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues"
+    "url": "https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues"
   },
-  "homepage": "https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-#readme",
+  "homepage": "https://github.com/Kushmanmb/-Big-world-Bigger-ideas-#readme",
   "files": [
     "index.js",
     "src/wallet.js",
