@@ -134,6 +134,19 @@ test('parseAmount handles different decimal values', () => {
   assert(parsed === '1000000', 'Should parse 1.0 as 1e6 with 6 decimals');
 });
 
+test('parseAmount rejects invalid decimal values', () => {
+  const gavah = new GavahToken('0x1234567890123456789012345678901234567890');
+  let threw = false;
+
+  try {
+    gavah.parseAmount('99999999x');
+  } catch (error) {
+    threw = true;
+  }
+
+  assert(threw, 'Should reject invalid decimal values');
+});
+
 test('_validateAddress is private method', () => {
   const gavah = new GavahToken('0x1234567890123456789012345678901234567890');
   assert(typeof gavah._validateAddress === 'function', '_validateAddress should be a function');
