@@ -102,6 +102,9 @@ const EtherscanVerifier = require('./src/etherscan-verify.js');
 // Blockchain path fetcher
 const { BlockchainPathFetcher, DEFAULT_OWNER } = require('./src/blockchain-path-fetcher.js');
 
+// Multi-signature wallet
+const MultiSigWallet = require('./src/multi-sig-wallet.js');
+
 // BTCK (BtcTurk) exchange API
 const BTCKFetcher = require('./src/btck.js');
 
@@ -179,6 +182,9 @@ module.exports = {
   // Blockchain path fetcher
   BlockchainPathFetcher,
   DEFAULT_OWNER,
+
+  // Multi-signature wallet
+  MultiSigWallet,
 
   // BTCK (BtcTurk) exchange API
   BTCKFetcher,
