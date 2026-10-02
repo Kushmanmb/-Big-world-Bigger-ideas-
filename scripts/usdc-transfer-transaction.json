@@ -1,0 +1,13 @@
+{
+  "to": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+  "data": "0xa9059cbb000000000000000000000000a14373a2209fad5cdcc22841e9176e0ce4c50c170000000000000000000000000000000000000000000000000000000ba3a2dd80",
+  "value": "0",
+  "recipient": "0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17",
+  "recipientENS": "yaketh.eth",
+  "amount": 49990,
+  "rawAmount": "49990000000",
+  "symbol": "USDC",
+  "decimals": 6,
+  "estimatedGasCost": 10,
+  "timestamp": "2026-04-05T08:59:47.389Z"
+}

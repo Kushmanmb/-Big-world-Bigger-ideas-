@@ -21,7 +21,7 @@ console.log('\nExample 2: Configure withdrawal address');
 console.log('-'.repeat(60));
 const creds = new WithdrawalCredentials({
   owner: 'kushmanmb',
-  ensName: 'kushmanmb.eth',
+  ensName: 'kushmanmb.base.eth',
   network: 'ethereum'
 });
 
@@ -108,7 +108,7 @@ console.log('\nExample 9: ENS name configuration');
 console.log('-'.repeat(60));
 
 const ensExamples = [
-  'kushmanmb.eth',
+  'kushmanmb.base.eth',
   'test.eth',
   'invalid',
   'example.com'
@@ -131,7 +131,7 @@ console.log('Setting up withdrawal credentials for Ethereum staking...\n');
 
 const staking = new WithdrawalCredentials({
   owner: 'kushmanmb',
-  ensName: 'kushmanmb.eth',
+  ensName: 'kushmanmb.base.eth',
   network: 'ethereum'
 });
 

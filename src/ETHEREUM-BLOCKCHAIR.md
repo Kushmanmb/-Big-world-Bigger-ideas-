@@ -2,14 +2,14 @@
 
 ## Overview
 
-The Ethereum Blockchair module provides a comprehensive interface for fetching and analyzing Ethereum blockchain data from the Blockchair API. This module enables developers to access real-time and historical Ethereum blockchain statistics, including block information, address data, transactions, network statistics, and ERC-20 token balances. It fully supports ENS name resolution, including **kushmanmb.eth**.
+The Ethereum Blockchair module provides a comprehensive interface for fetching and analyzing Ethereum blockchain data from the Blockchair API. This module enables developers to access real-time and historical Ethereum blockchain statistics, including block information, address data, transactions, network statistics, and ERC-20 token balances. It fully supports ENS name resolution, including **kushmanmb.base.eth**.
 
 ## Features
 
 - 📊 **Blockchain Statistics**: Fetch comprehensive Ethereum blockchain stats
 - 🧱 **Block Information**: Get detailed information about specific blocks
 - 💼 **Address Data**: Query address balances, transactions, and history
-- 🏷️ **ENS Support**: Full support for ENS names like kushmanmb.eth, vitalik.eth
+- 🏷️ **ENS Support**: Full support for ENS names like kushmanmb.base.eth, vitalik.eth
 - 📝 **Transaction Details**: Access detailed transaction information
 - 🪙 **ERC-20 Tokens**: Fetch ERC-20 token balances for any address
 - 📚 **Recent Blocks**: Fetch the most recent blocks on the blockchain
@@ -34,12 +34,12 @@ const fetcher = new EthereumBlockchairFetcher();
 const stats = await fetcher.getStats();
 console.log(fetcher.formatStats(stats));
 
-// Fetch data for kushmanmb.eth (ENS name resolution)
-const addressData = await fetcher.getAddress('kushmanmb.eth');
+// Fetch data for kushmanmb.base.eth (ENS name resolution)
+const addressData = await fetcher.getAddress('kushmanmb.base.eth');
 console.log(fetcher.formatAddress(addressData));
 
 // Fetch ERC-20 token balances
-const tokens = await fetcher.getTokenBalances('kushmanmb.eth');
+const tokens = await fetcher.getTokenBalances('kushmanmb.base.eth');
 console.log(fetcher.formatTokenBalances(tokens));
 ```
 
@@ -110,7 +110,7 @@ console.log(block.data.transaction_count); // Number of transactions
 
 #### `getAddress(address)`
 
-Fetches information about a specific Ethereum address. **Fully supports ENS names** like kushmanmb.eth.
+Fetches information about a specific Ethereum address. **Fully supports ENS names** like kushmanmb.base.eth.
 
 **Parameters:**
 - `address` (string): Ethereum address (0x...) or ENS name (.eth)
@@ -120,7 +120,7 @@ Fetches information about a specific Ethereum address. **Fully supports ENS name
 **Example:**
 ```javascript
 // Using ENS name
-const kushmanmb = await fetcher.getAddress('kushmanmb.eth');
+const kushmanmb = await fetcher.getAddress('kushmanmb.base.eth');
 
 // Using regular address
 const address = await fetcher.getAddress('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045');
@@ -181,8 +181,8 @@ Fetches ERC-20 token balances for an Ethereum address. **Supports ENS names**.
 
 **Example:**
 ```javascript
-// Fetch token balances for kushmanmb.eth
-const tokens = await fetcher.getTokenBalances('kushmanmb.eth');
+// Fetch token balances for kushmanmb.base.eth
+const tokens = await fetcher.getTokenBalances('kushmanmb.base.eth');
 console.log(fetcher.formatTokenBalances(tokens));
 ```
 
@@ -237,7 +237,7 @@ Formats address information for display.
 
 **Example:**
 ```javascript
-const address = await fetcher.getAddress('kushmanmb.eth');
+const address = await fetcher.getAddress('kushmanmb.base.eth');
 const formatted = fetcher.formatAddress(address);
 console.log(formatted);
 ```
@@ -255,7 +255,7 @@ Formats ERC-20 token balance information for display.
 
 **Example:**
 ```javascript
-const tokens = await fetcher.getTokenBalances('kushmanmb.eth');
+const tokens = await fetcher.getTokenBalances('kushmanmb.base.eth');
 const formatted = fetcher.formatTokenBalances(tokens);
 console.log(formatted);
 ```
@@ -289,20 +289,20 @@ console.log(`Cached keys: ${stats.keys.join(', ')}`);
 
 ## ENS Name Support
 
-The module fully supports Ethereum Name Service (ENS) resolution. You can use ENS names like `kushmanmb.eth` anywhere a regular Ethereum address is accepted.
+The module fully supports Ethereum Name Service (ENS) resolution. You can use ENS names like `kushmanmb.base.eth` anywhere a regular Ethereum address is accepted.
 
 **Supported ENS names:**
-- kushmanmb.eth
+- kushmanmb.base.eth
 - vitalik.eth
 - Any valid .eth domain
 
 **Example:**
 ```javascript
 // Fetch address data using ENS
-const data = await fetcher.getAddress('kushmanmb.eth');
+const data = await fetcher.getAddress('kushmanmb.base.eth');
 
 // Fetch token balances using ENS
-const tokens = await fetcher.getTokenBalances('kushmanmb.eth');
+const tokens = await fetcher.getTokenBalances('kushmanmb.base.eth');
 ```
 
 The Blockchair API automatically resolves ENS names to their corresponding Ethereum addresses.
@@ -318,7 +318,7 @@ Valid character set for addresses: `[a-fA-F0-9]` (hexadecimal)
 **Examples:**
 - `0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` (Standard address)
 - `0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb0` (Standard address)
-- `kushmanmb.eth` (ENS name)
+- `kushmanmb.base.eth` (ENS name)
 - `vitalik.eth` (ENS name)
 
 ## Transaction Hash Format
@@ -482,7 +482,7 @@ npm run ethereum-blockchair:demo
 The demo demonstrates:
 - Creating a fetcher instance
 - Fetching blockchain statistics
-- Fetching address info for kushmanmb.eth
+- Fetching address info for kushmanmb.base.eth
 - Fetching ERC-20 token balances
 - Fetching specific block information
 - Fetching recent blocks
@@ -502,17 +502,17 @@ const stats = await fetcher.getStats();
 console.log(fetcher.formatStats(stats));
 ```
 
-### 2. Track kushmanmb.eth Activity
+### 2. Track kushmanmb.base.eth Activity
 
 ```javascript
 const fetcher = new EthereumBlockchairFetcher();
 
 // Get address information
-const address = await fetcher.getAddress('kushmanmb.eth');
+const address = await fetcher.getAddress('kushmanmb.base.eth');
 console.log(fetcher.formatAddress(address));
 
 // Get token balances
-const tokens = await fetcher.getTokenBalances('kushmanmb.eth');
+const tokens = await fetcher.getTokenBalances('kushmanmb.base.eth');
 console.log(fetcher.formatTokenBalances(tokens));
 ```
 
@@ -648,8 +648,8 @@ ISC License - See repository root for details
 **Matthew Brace (kushmanmb)**
 - GitHub: [@Kushmanmb](https://github.com/Kushmanmb)
 - Website: [kushmanmb.org](https://kushmanmb.org)
-- Email: kushmanmb@gmx.com
-- ENS: kushmanmb.eth
+- Email: mattbrace92@gmail.com
+- ENS: kushmanmb.base.eth
 
 ---
 

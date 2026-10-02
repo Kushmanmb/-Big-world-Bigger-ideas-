@@ -422,7 +422,7 @@ Need help with installation?
 
 - **Documentation**: Check the [Getting Started](Getting-Started) guide
 - **GitHub Issues**: [Report installation issues](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues)
-- **Email**: kushmanmb@gmx.com
+- **Email**: mattbrace92@gmail.com
 
 ---
 

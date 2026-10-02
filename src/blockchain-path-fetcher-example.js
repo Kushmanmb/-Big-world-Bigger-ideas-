@@ -1,6 +1,6 @@
 /**
  * Example usage of Blockchain Path Fetcher Module
- * Demonstrates fetching blockchain data for paths relevant to kushmanmb.eth
+ * Demonstrates fetching blockchain data for paths relevant to kushmanmb.base.eth
  */
 
 const { BlockchainPathFetcher, DEFAULT_OWNER } = require('./blockchain-path-fetcher');
@@ -13,7 +13,7 @@ async function runExamples() {
   const fetcher = new BlockchainPathFetcher();
 
   // Example 1: List all relevant paths
-  console.log('Example 1: Relevant API Paths for kushmanmb.eth');
+  console.log('Example 1: Relevant API Paths for kushmanmb.base.eth');
   console.log('-'.repeat(60));
   const paths = fetcher.getRelevantPaths();
   const keys = fetcher.getPathKeys();

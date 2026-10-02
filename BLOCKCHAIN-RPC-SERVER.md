@@ -490,8 +490,8 @@ ISC License - See repository LICENSE file for details.
 
 Matthew Brace (kushmanmb)
 - GitHub: [@kushmanmb](https://github.com/kushmanmb)
-- Email: kushmanmb@gmx.com
-- ENS: kushmanmb.eth
+- Email: mattbrace92@gmail.com
+- ENS: kushmanmb.base.eth
 
 ## Related Projects
 

@@ -165,9 +165,9 @@ If deployment causes issues:
 ## Emergency Contacts
 
 - **Repository Owner:** Matthew Brace (kushmanmb)
-- **Email:** kushmanmb@gmx.com
+- **Email:** mattbrace92@gmail.com
 - **GitHub:** [@kushmanmb](https://github.com/kushmanmb)
-- **ENS:** kushmanmb.eth
+- **ENS:** kushmanmb.base.eth
 
 ## Additional Resources
 

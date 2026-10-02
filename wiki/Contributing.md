@@ -436,7 +436,7 @@ When suggesting features:
 
 - **GitHub Issues** - For bugs and feature requests
 - **GitHub Discussions** - For questions and discussions
-- **Email** - kushmanmb@gmx.com for private inquiries
+- **Email** - mattbrace92@gmail.com for private inquiries
 
 ## 📜 License
 

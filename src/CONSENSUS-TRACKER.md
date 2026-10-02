@@ -393,9 +393,9 @@ ISC License - See repository root for details
 ## Author
 
 **Matthew Brace (kushmanmb)**  
-Email: kushmanmb@gmx.com  
+Email: mattbrace92@gmail.com  
 Website: [kushmanmb.org](https://kushmanmb.org)  
-ENS: kushmanmb.eth
+ENS: kushmanmb.base.eth
 
 ## Related Modules
 

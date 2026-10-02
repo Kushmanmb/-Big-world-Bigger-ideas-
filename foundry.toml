@@ -39,3 +39,9 @@ remappings = [
 [profile.default.optimizer_details]
 # Optimizer details can be configured here if needed
 # Currently using default settings with 999999 runs
+
+[rpc_endpoints]
+sepolia = "${SEPOLIA_RPC_URL}"
+
+[etherscan]
+sepolia = { key = "${ETHERSCAN_API_KEY}", chain = 11155111 }

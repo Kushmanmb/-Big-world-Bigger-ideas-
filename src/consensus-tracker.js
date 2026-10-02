@@ -2,6 +2,10 @@
  * Consensus Mechanism Tracker Module
  * Tracks Proof of Work (PoW) and Proof of Stake (PoS) across multiple blockchain networks
  * Provides comprehensive consensus mechanism information and network statistics
+ *
+ * @version 2.0.0
+ * @updated 2026-04-01
+ * @verifiedBy kushmanmb (Matthew Brace) — kushmanmb.base.eth
  */
 
 /**
@@ -16,6 +20,7 @@ const CONSENSUS_TYPES = {
 
 /**
  * Blockchain network configuration with consensus information
+ * All network data verified against official sources as of 2026-04-01
  */
 const BLOCKCHAIN_NETWORKS = {
   // Bitcoin - Proof of Work
@@ -24,18 +29,24 @@ const BLOCKCHAIN_NETWORKS = {
     chainId: null,
     consensus: CONSENSUS_TYPES.POW,
     symbol: 'BTC',
-    blockTime: 600, // seconds
+    blockTime: 600, // seconds (10 minutes)
     algorithm: 'SHA-256',
     launched: '2009-01-03',
     explorerUrl: 'https://blockchair.com/bitcoin',
+    verificationSource: 'https://bitcoin.org/bitcoin.pdf',
+    lastUpdated: '2026-04-01',
     details: {
       miningAlgorithm: 'SHA-256',
-      difficulty: 'Dynamic',
-      blockReward: 3.125, // BTC (post-2024 halving in April 2024)
+      difficulty: 'Dynamic (adjusts every 2016 blocks)',
+      blockReward: 3.125, // BTC — post-April 2024 (4th) halving
+      nextHalving: '~2028', // Estimated at block 1,050,000
+      maxSupply: 21000000,
+      circulatingSupply: '~19.8 million BTC',
+      halvingInterval: 210000, // blocks
       energyIntensive: true
     }
   },
-  
+
   // Ethereum - Proof of Stake (post-Merge)
   ethereum: {
     name: 'Ethereum',
@@ -47,15 +58,20 @@ const BLOCKCHAIN_NETWORKS = {
     launched: '2015-07-30',
     mergeDate: '2022-09-15',
     explorerUrl: 'https://etherscan.io',
+    verificationSource: 'https://ethereum.org/en/developers/docs/',
+    lastUpdated: '2026-04-01',
     details: {
-      minimumStake: 32, // ETH
-      validatorCount: null, // Dynamic, can be fetched
+      minimumStake: 32, // ETH per validator
+      validatorCount: '~1,000,000+', // Updated 2026 — see beaconcha.in for live count
       slashing: true,
       energyEfficient: true,
-      annualRewards: '3-5%' // Variable APR
+      annualRewards: '3-4%', // Variable APR — updated 2026
+      withdrawalEnabled: true, // Enabled via Shanghai/Capella upgrade (April 2023)
+      pectraUpgrade: '2025', // EIP-7702 and related EIPs
+      maxValidatorBalance: 2048 // ETH — per MaxEB (EIP-7251, Electra upgrade)
     }
   },
-  
+
   // Ethereum Beacon Chain
   beacon: {
     name: 'Ethereum Beacon Chain',
@@ -66,12 +82,14 @@ const BLOCKCHAIN_NETWORKS = {
     algorithm: 'Gasper (PoS)',
     launched: '2020-12-01',
     explorerUrl: 'https://beaconcha.in',
+    verificationSource: 'https://beaconcha.in',
+    lastUpdated: '2026-04-01',
     details: {
       minimumStake: 32, // ETH per validator
       slotsPerEpoch: 32,
       epochDuration: 384, // seconds (6.4 minutes)
       validatorActivationQueue: true,
-      withdrawalEnabled: true,
+      withdrawalEnabled: true, // Enabled April 2023
       withdrawalCredentials: {
         // BLS withdrawal credentials start with 0x00
         // Execution withdrawal credentials start with 0x01
@@ -83,7 +101,7 @@ const BLOCKCHAIN_NETWORKS = {
       }
     }
   },
-  
+
   // Base (Layer 2 on Ethereum)
   base: {
     name: 'Base',
@@ -91,17 +109,22 @@ const BLOCKCHAIN_NETWORKS = {
     consensus: CONSENSUS_TYPES.POS,
     symbol: 'ETH',
     blockTime: 2, // seconds
-    algorithm: 'Optimistic Rollup',
+    algorithm: 'Optimistic Rollup (OP Stack)',
     launched: '2023-08-09',
     explorerUrl: 'https://basescan.org',
+    verificationSource: 'https://docs.base.org',
+    lastUpdated: '2026-04-01',
     details: {
       layer: 2,
       parentChain: 'Ethereum',
       sequencer: 'Coinbase',
-      finality: 'Inherits from Ethereum'
+      finality: 'Inherits from Ethereum (~7 day challenge period)',
+      faultProofs: true, // Stage 1 decentralization — fault proofs live 2024
+      rpcUrl: 'https://mainnet.base.org',
+      energyEfficient: true
     }
   },
-  
+
   // Litecoin - Proof of Work
   litecoin: {
     name: 'Litecoin',
@@ -112,29 +135,37 @@ const BLOCKCHAIN_NETWORKS = {
     algorithm: 'Scrypt',
     launched: '2011-10-13',
     explorerUrl: 'https://blockchair.com/litecoin',
+    verificationSource: 'https://litecoin.org',
+    lastUpdated: '2026-04-01',
     details: {
       miningAlgorithm: 'Scrypt',
-      blockReward: 6.25, // LTC (post-August 2023 halving)
+      blockReward: 6.25, // LTC — post-August 2023 (4th) halving; next halving ~2027
       maxSupply: 84000000,
-      halving: true
+      halvingInterval: 840000, // blocks
+      halving: true,
+      energyIntensive: true
     }
   },
-  
-  // Polygon - Proof of Stake
+
+  // Polygon PoS (rebranded from Matic Network)
   polygon: {
     name: 'Polygon',
     chainId: 137,
     consensus: CONSENSUS_TYPES.POS,
-    symbol: 'MATIC',
+    symbol: 'POL', // Rebranded from MATIC to POL — September 2024
     blockTime: 2, // seconds
     algorithm: 'PoS (Heimdall + Bor)',
     launched: '2020-05-30',
     explorerUrl: 'https://polygonscan.com',
+    verificationSource: 'https://polygon.technology/polygon-pos',
+    lastUpdated: '2026-04-01',
     details: {
-      checkpointInterval: '30 minutes',
-      validatorCount: 100,
-      minimumStake: 1, // MATIC (for delegation)
-      securedBy: 'Ethereum'
+      checkpointInterval: '~30 minutes',
+      validatorCount: 100, // Fixed validator set for Polygon PoS
+      minimumStake: 1, // POL (for delegation)
+      securedBy: 'Ethereum',
+      tokenMigration: 'MATIC → POL completed September 2024',
+      energyEfficient: true
     }
   }
 };

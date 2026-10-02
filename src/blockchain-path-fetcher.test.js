@@ -24,17 +24,17 @@ async function runTests() {
   console.log('\nRunning Blockchain Path Fetcher Tests...\n');
 
   // ─── DEFAULT_OWNER ─────────────────────────────────────────────────────────
-  test('DEFAULT_OWNER is kushmanmb.eth', () => {
-    if (DEFAULT_OWNER !== 'kushmanmb.eth') {
-      throw new Error(`Expected 'kushmanmb.eth', got '${DEFAULT_OWNER}'`);
+  test('DEFAULT_OWNER is kushmanmb.base.eth', () => {
+    if (DEFAULT_OWNER !== 'kushmanmb.base.eth') {
+      throw new Error(`Expected 'kushmanmb.base.eth', got '${DEFAULT_OWNER}'`);
     }
   });
 
   // ─── Constructor ───────────────────────────────────────────────────────────
   test('Constructor creates instance with default owner', () => {
     const fetcher = new BlockchainPathFetcher();
-    if (fetcher.owner !== 'kushmanmb.eth') {
-      throw new Error(`Expected 'kushmanmb.eth', got '${fetcher.owner}'`);
+    if (fetcher.owner !== 'kushmanmb.base.eth') {
+      throw new Error(`Expected 'kushmanmb.base.eth', got '${fetcher.owner}'`);
     }
   });
 
@@ -68,7 +68,7 @@ async function runTests() {
   });
 
   test('Constructor sets custom baseUrl', () => {
-    const fetcher = new BlockchainPathFetcher('kushmanmb.eth', 'custom.api.com');
+    const fetcher = new BlockchainPathFetcher('kushmanmb.base.eth', 'custom.api.com');
     if (fetcher.baseUrl !== 'custom.api.com') {
       throw new Error(`Expected 'custom.api.com', got '${fetcher.baseUrl}'`);
     }

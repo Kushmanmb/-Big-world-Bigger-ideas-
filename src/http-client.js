@@ -3,10 +3,14 @@
  * 
  * This module provides common HTTP/HTTPS request functionality used across API modules
  * to reduce code duplication and maintain consistency.
+ * 
+ * SECURITY: All outgoing requests are monitored for address leaks.
+ * Addresses in URLs and request bodies are sanitized in error messages and logs.
  */
 
 const https = require('https');
 const http = require('http');
+const { sanitizeText, sanitizeObject } = require('./address-sanitizer');
 
 /**
  * Makes an HTTP/HTTPS GET request
@@ -48,16 +52,22 @@ function makeRequest(options) {
             const parsed = JSON.parse(data);
             resolve(parsed);
           } else {
-            reject(new Error(`HTTP ${res.statusCode}: ${data}`));
+            // Sanitize error response to prevent address leaks
+            const sanitizedData = sanitizeText(data);
+            reject(new Error(`HTTP ${res.statusCode}: ${sanitizedData}`));
           }
         } catch (error) {
-          reject(new Error(`Failed to parse response: ${error.message}`));
+          // Sanitize parse errors to prevent address leaks
+          const sanitizedMessage = sanitizeText(error.message);
+          reject(new Error(`Failed to parse response: ${sanitizedMessage}`));
         }
       });
     });
 
     req.on('error', (error) => {
-      reject(new Error(`Request failed: ${error.message}`));
+      // Sanitize error messages to prevent address leaks
+      const sanitizedMessage = sanitizeText(error.message);
+      reject(new Error(`Request failed: ${sanitizedMessage}`));
     });
 
     req.setTimeout(timeout, () => {
@@ -67,6 +77,207 @@ function makeRequest(options) {
 
     req.end();
   });
+}
+
+/**
+ * Makes an HTTP/HTTPS POST request with form-encoded body
+ * @param {Object} options - Request options
+ * @param {string} options.hostname - The hostname to request
+ * @param {number} [options.port] - The port (defaults to 443 for https, 80 for http)
+ * @param {string} options.path - The request path
+ * @param {string} [options.protocol='https'] - Protocol to use ('http' or 'https')
+ * @param {Object} [options.headers] - Additional headers
+ * @param {number} [options.timeout=10000] - Request timeout in milliseconds
+ * @param {Object} options.body - Request body as key-value pairs (form-encoded)
+ * @returns {Promise<any>} Parsed JSON response
+ */
+function makePostRequest(options) {
+  return new Promise((resolve, reject) => {
+    const protocol = options.protocol === 'http' ? http : https;
+    const port = options.port || (options.protocol === 'http' ? 80 : 443);
+    const timeout = options.timeout || 10000;
+
+    const bodyString = new URLSearchParams(options.body || {}).toString();
+
+    const requestOptions = {
+      hostname: options.hostname,
+      port: port,
+      path: options.path,
+      method: 'POST',
+      headers: Object.assign({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(bodyString),
+        'User-Agent': 'kushmanmb/yaketh'
+      }, options.headers || {})
+    };
+
+    const req = protocol.request(requestOptions, (res) => {
+      let data = '';
+
+      res.on('data', (chunk) => {
+        data += chunk;
+      });
+
+      res.on('end', () => {
+        try {
+          if (res.statusCode >= 200 && res.statusCode < 300) {
+            const parsed = JSON.parse(data);
+            resolve(parsed);
+          } else {
+            // Sanitize error response to prevent address leaks
+            const sanitizedData = sanitizeText(data);
+            reject(new Error(`HTTP ${res.statusCode}: ${sanitizedData}`));
+          }
+        } catch (error) {
+          // Sanitize parse errors to prevent address leaks
+          const sanitizedMessage = sanitizeText(error.message);
+          reject(new Error(`Failed to parse response: ${sanitizedMessage}`));
+        }
+      });
+    });
+
+    req.on('error', (error) => {
+      // Sanitize error messages to prevent address leaks
+      const sanitizedMessage = sanitizeText(error.message);
+      reject(new Error(`Request failed: ${sanitizedMessage}`));
+    });
+
+    req.setTimeout(timeout, () => {
+      req.destroy();
+      reject(new Error('Request timeout'));
+    });
+
+    req.write(bodyString);
+    req.end();
+  });
+}
+
+/**
+ * Request queue with active acknowledgements and rate limiting.
+ * Queues incoming requests, immediately acknowledges each with a unique ID,
+ * and processes them at a controlled rate to allow the team adequate time to
+ * handle large volumes of incoming requests.
+ */
+class RequestQueue {
+  /**
+   * Creates a new request queue
+   * @param {Object} [options] - Queue options
+   * @param {number} [options.maxConcurrency=1] - Maximum number of concurrent requests
+   * @param {number} [options.delay=1000] - Delay in milliseconds between requests
+   */
+  constructor(options = {}) {
+    this.maxConcurrency = options.maxConcurrency || 1;
+    this.delay = options.delay !== undefined ? options.delay : 1000;
+    this._queue = [];
+    this._active = 0;
+    this._counter = 0;
+  }
+
+  /**
+   * Enqueues a request function and returns an immediate acknowledgement.
+   * The returned acknowledgement includes a unique queue ID and the promise
+   * that resolves (or rejects) when the request is eventually processed.
+   * @param {Function} fn - Async function representing the request to perform
+   * @returns {{ queueId: string, status: string, position: number, promise: Promise<any> }}
+   */
+  enqueue(fn) {
+    if (typeof fn !== 'function') {
+      throw new Error('Request must be a function');
+    }
+
+    this._counter++;
+    const queueId = `req_${Date.now()}_${this._counter}`;
+    const position = this._queue.length + 1;
+
+    let resolve, reject;
+    const promise = new Promise((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
+
+    this._queue.push({ fn, resolve, reject });
+    this._process();
+
+    return {
+      queueId,
+      status: 'queued',
+      position,
+      promise
+    };
+  }
+
+  /**
+   * Returns the current number of requests waiting in the queue
+   * @returns {number}
+   */
+  get size() {
+    return this._queue.length;
+  }
+
+  /**
+   * Returns the number of requests currently being processed
+   * @returns {number}
+   */
+  get active() {
+    return this._active;
+  }
+
+  /**
+   * Clears all pending (unstarted) requests from the queue.
+   * Active requests are not affected.
+   */
+  clear() {
+    const pending = this._queue.splice(0);
+    for (const item of pending) {
+      item.reject(new Error('Queue cleared'));
+    }
+  }
+
+  /**
+   * Internal: starts processing queued requests up to maxConcurrency
+   * @private
+   */
+  _process() {
+    while (this._active < this.maxConcurrency && this._queue.length > 0) {
+      const item = this._queue.shift();
+      this._active++;
+      this._run(item);
+    }
+  }
+
+  /**
+   * Internal: schedules the next processing cycle, respecting the delay setting
+   * @private
+   */
+  _scheduleNext() {
+    if (this.delay > 0) {
+      setTimeout(() => this._process(), this.delay);
+    } else {
+      this._process();
+    }
+  }
+
+  /**
+   * Internal: runs a single queued request then schedules the next
+   * @param {{ fn: Function, resolve: Function, reject: Function }} item
+   * @private
+   */
+  _run(item) {
+    Promise.resolve()
+      .then(() => item.fn())
+      .then(
+        (result) => {
+          item.resolve(result);
+          this._active--;
+          this._scheduleNext();
+        },
+        (error) => {
+          item.reject(error);
+          this._active--;
+          this._scheduleNext();
+        }
+      );
+  }
 }
 
 /**
@@ -138,5 +349,7 @@ class CacheManager {
 
 module.exports = {
   makeRequest,
-  CacheManager
+  makePostRequest,
+  CacheManager,
+  RequestQueue
 };

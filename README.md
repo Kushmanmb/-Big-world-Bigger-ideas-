@@ -10,8 +10,9 @@
 
 [![npm version](https://img.shields.io/npm/v/big-world-bigger-ideas?style=flat-square)](https://www.npmjs.com/package/big-world-bigger-ideas)
 [![Profile](https://img.shields.io/badge/Profile-kushmanmb.org-informational?style=flat-square&logo=ethereum)](https://kushmanmb.org)
-[![ENS](https://img.shields.io/badge/ENS-kushmanmb.eth-9cf?style=flat-square&logo=ethereum)](https://app.ens.domains/name/kushmanmb.eth)
-[![Email](https://img.shields.io/badge/Contact-kushmanmb@gmx.com-red?style=flat-square&logo=gmail)](mailto:kushmanmb@gmx.com)
+[![ENS](https://img.shields.io/badge/ENS-kushmanmb.base.eth-9cf?style=flat-square&logo=ethereum)](https://www.base.org/name/kushmanmb)
+[![Coinbase ID](https://img.shields.io/badge/Coinbase%20ID-kushman.cb.id-0052FF?style=flat-square&logo=coinbase)](https://kushman.cb.id)
+[![Email](https://img.shields.io/badge/Contact-mattbrace92@gmail.com-red?style=flat-square&logo=gmail)](mailto:mattbrace92@gmail.com)
 
 [![Tests](https://img.shields.io/badge/Tests-Passing-success?style=flat-square&logo=github-actions)](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions)
 [![Security](https://img.shields.io/badge/Security-No%20Vulnerabilities-success?style=flat-square&logo=github)](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/security)
@@ -25,8 +26,9 @@
 
 **Created by:** [Matthew Brace (kushmanmb)](https://github.com/kushmanmb)  
 **Organization:** [kushmanmb-org](https://github.com/kushmanmb-org)  
-**Email:** kushmanmb@gmx.com  
-**ENS:** kushmanmb.eth  
+**Email:** mattbrace92@gmail.com  
+**ENS:** kushmanmb.base.eth  
+**Coinbase ID:** kushman.cb.id  
 
 This repository is the original work and intellectual property of Matthew Brace. All blockchain utilities, crypto clarity tools, and documentation contained herein were created, designed, and maintained by the owner.
 
@@ -37,6 +39,7 @@ This repository is the original work and intellectual property of Matthew Brace.
 - ✅ **Repository Ownership**: Confirmed and documented
 - ✅ **Commit History**: All contributions tracked and verified
 - ✅ **NPM Package**: Published and maintained by author
+- ✅ **Coinbase ID**: kushman.cb.id
 
 ---
 
@@ -360,13 +363,21 @@ const encrypted = wallet.encrypt(process.env.PASSWORD);
 
 - **[SECURITY.md](./SECURITY.md)** - Vulnerability disclosure policy and security guidelines
 - **[SECURITY-GUIDE.md](./SECURITY-GUIDE.md)** - Comprehensive security best practices for developers
-- **[SECURITY-AUDIT-2026-02-25.md](./SECURITY-AUDIT-2026-02-25.md)** - Latest security audit report (February 2026)
+- **[SECURITY-CONFIG.md](./SECURITY-CONFIG.md)** - Address sanitization configuration and settings
+- **[SECURITY-AUDIT-ADDRESS-LOCKDOWN.md](./SECURITY-AUDIT-ADDRESS-LOCKDOWN.md)** - Address leak prevention audit (April 2026)
+- **[SECURITY-AUDIT-2026-02-25.md](./SECURITY-AUDIT-2026-02-25.md)** - Comprehensive security audit report (February 2026)
+- **[docs/ADDRESS-SANITIZATION-BEST-PRACTICES.md](./docs/ADDRESS-SANITIZATION-BEST-PRACTICES.md)** - Developer guide for address sanitization
 - **[PRE-COMMIT-HOOKS-SETUP.md](./PRE-COMMIT-HOOKS-SETUP.md)** - Guide to prevent accidental secret commits
 - **[PACKAGE-MANAGER-SECURITY.md](./PACKAGE-MANAGER-SECURITY.md)** - Package manager credential security guide (npm, RubyGems, pip)
 - **[.env.example](./.env.example)** - Template for environment variables
 
 ### 🔍 Security Audit History
 
+- **2026-04-07**: Address leak prevention audit completed ✅
+  - ✅ **Address sanitization system implemented** - Automatic redaction of blockchain addresses in logs and errors
+  - ✅ **HTTP client secured** - All outgoing errors sanitized to prevent address leaks
+  - ✅ **20 test cases passing** - Comprehensive validation of sanitization features
+  - ✅ **Documentation complete** - Best practices and configuration guides created
 - **2026-02-25**: Comprehensive blockchain data leak audit completed ✅
   - ✅ **No sensitive data leaks detected** - Private keys, API keys, and passwords verified secure
   - ✅ **Git history clean** - No accidentally committed secrets found
@@ -505,6 +516,59 @@ npx eslint src/ --ext .js
 ```
 
 The full Super Linter runs automatically in CI — see the workflow badge at the top of this file.
+
+---
+
+## 🤖 GitHub Copilot Coding Agent
+
+This repository is configured to work with [GitHub Copilot coding agent](https://docs.github.com/en/enterprise-cloud@latest/copilot/concepts/agents/coding-agent/about-coding-agent), which can autonomously complete development tasks in a GitHub Actions-powered environment.
+
+### What Copilot Coding Agent Can Do
+
+Copilot coding agent can help with tasks such as:
+
+- 🐛 **Fix bugs** — resolve issues identified in bug reports
+- ✨ **Implement features** — add incremental new functionality
+- 🧪 **Improve test coverage** — write and expand tests across modules
+- 📝 **Update documentation** — keep README, wiki, and module docs current
+- 🧹 **Address technical debt** — refactor and clean up code
+- 🔀 **Resolve merge conflicts** — handle conflicting changes between branches
+
+### How to Use Copilot Coding Agent
+
+**Assign an issue to Copilot:**
+
+1. Open or create a GitHub Issue describing the task
+2. In the **Assignees** field, select **Copilot** as the assignee
+3. Copilot will evaluate the issue, make the required changes, and open a pull request for your review
+
+**Mention `@copilot` on an existing pull request:**
+
+1. Open a pull request comment
+2. Mention `@copilot` and describe the changes you want
+3. Copilot will make the changes and push new commits to the PR
+
+### How It Works
+
+Copilot coding agent operates in an ephemeral development environment powered by GitHub Actions. When assigned a task, it will:
+
+1. Clone the repository and read the `.github/copilot-instructions.md` file for context
+2. Explore the codebase to understand the relevant modules
+3. Make code changes, run `npm test` and linters to validate
+4. Open a pull request with a detailed description of the changes
+5. Request your review when done — you can leave comments to ask for further iteration
+
+### Copilot Instructions
+
+This repository includes a `.github/copilot-instructions.md` file that gives Copilot detailed context about:
+
+- Project structure and module layout
+- How to install dependencies (`npm ci`)
+- How to run tests (`npm test` or `npm run test:<module>`)
+- Coding conventions (CommonJS modules, error handling patterns, test format)
+- Available demo scripts and build commands
+
+Keeping this file up to date ensures Copilot coding agent can work effectively on tasks in this repository.
 
 ---
 
@@ -1698,8 +1762,8 @@ const baseFetcher = new ERC721Fetcher(
 ## 🔐 Ownership Status & Verification
 **Name:** Matthew Brace  
 **GitHub:** [@kushmanmb](https://github.com/kushmanmb)  
-**Verification:** kushmanmb.eth | [kushmanmb.org](https://kushmanmb.org)  
-**Contact:** [kushmanmb@gmx.com](mailto:kushmanmb@gmx.com)
+**Verification:** kushmanmb.base.eth | [kushmanmb.org](https://kushmanmb.org)  
+**Contact:** [mattbrace92@gmail.com](mailto:mattbrace92@gmail.com)
 
 **Mission Statement:** *Empowering crypto clarity, fueled by innovation and style—relaxing, investing and leveling up, one stat at a time*
 
@@ -1864,9 +1928,60 @@ All content, documentation, and blockchain information presented here represents
 - 📚 **Educational resources for the community**
 
 For questions, collaborations, or inquiries, please reach out via:
-- 📧 Email: [kushmanmb@gmx.com](mailto:kushmanmb@gmx.com)
+- 📧 Email: [mattbrace92@gmail.com](mailto:mattbrace92@gmail.com)
 - 🌐 Website: [kushmanmb.org](https://kushmanmb.org)
-- 🏷️ ENS: kushmanmb.eth
+- 🏷️ ENS: kushmanmb.base.eth
+
+## 🪝 Pre-commit Hook
+
+This repository includes a Git pre-commit hook that runs `node print-kushmanmb.js` before every commit. If the script exits with a nonzero status, the commit is aborted.
+
+### `print-kushmanmb.js`
+
+Located in the root directory, this script simply outputs the owner's handle to the console:
+
+```javascript
+console.log("kushmanmb");
+```
+
+Run it directly to verify:
+
+```bash
+node print-kushmanmb.js
+# Output: kushmanmb
+```
+
+### Setting Up the Hook Locally
+
+> **Note:** Git hooks are stored in `.git/hooks/` and are **not** versioned by default. Every developer who clones this repository must set up the hook manually.
+
+After cloning, copy the hook to your local `.git/hooks/` directory and make it executable:
+
+```bash
+cp .git/hooks/pre-commit .git/hooks/pre-commit.bak 2>/dev/null; \
+cat > .git/hooks/pre-commit << 'EOF'
+#!/bin/sh
+node print-kushmanmb.js
+EOF
+chmod +x .git/hooks/pre-commit
+```
+
+Or create it manually:
+
+1. Create `.git/hooks/pre-commit` with the following contents:
+
+   ```sh
+   #!/bin/sh
+   node print-kushmanmb.js
+   ```
+
+2. Make it executable:
+
+   ```bash
+   chmod +x .git/hooks/pre-commit
+   ```
+
+Once installed, every `git commit` will automatically run `node print-kushmanmb.js`. If the script fails, the commit is blocked until the issue is resolved.
 
 ---
 

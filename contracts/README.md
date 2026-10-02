@@ -4,6 +4,87 @@ This directory contains Solidity smart contracts for the Big World Bigger Ideas 
 
 ## Contracts
 
+### GavahToken.sol
+
+A governance ERC20 token with ownership capabilities, designed for universal contract management.
+
+**Features:**
+- Full ERC20 standard compliance (transfer, approve, allowance)
+- Ownable pattern with ownership transfer capabilities
+- Owner-controlled minting for flexible supply management
+- Owner-controlled burning from owner's balance
+- 18 decimals (standard ERC20)
+- Integrated with token manager system for permissions
+
+**Key Components:**
+- `name()`: Returns "Gavah Token"
+- `symbol()`: Returns "GAVAH"
+- `decimals()`: Returns 18
+- `totalSupply()`: View current total supply
+- `balanceOf(address)`: View balance of any address
+- `transfer(address, uint256)`: Transfer tokens
+- `approve(address, uint256)`: Approve spending allowance
+- `transferFrom(address, address, uint256)`: Transfer from approved address
+- `owner()`: View current contract owner
+- `mint(address, uint256)`: Mint new tokens (owner only)
+- `burn(uint256)`: Burn tokens from owner's balance (owner only)
+- `transferOwnership(address)`: Transfer contract ownership (owner only)
+- `renounceOwnership()`: Renounce ownership (owner only)
+
+**Token Manager Integration:**
+This token is designed to work with the repository's token manager system. The Gavah Token entry in `token-managers.json` uses a sentinel address (`0x0000000000000000000000000000000000000002`) for application-level management configuration. Once deployed, update the token manager configuration with the actual deployed address.
+
+**JavaScript Interface:**
+The repository includes a JavaScript module (`src/gavah-token.js`) for interacting with deployed Gavah Token contracts. See `src/GAVAH-TOKEN.md` for complete documentation.
+
+**Usage:**
+Deploy this contract with an initial supply parameter. The deployer becomes the owner and receives the initial supply.
+
+```solidity
+// Example deployment with 1,000,000 tokens (with 18 decimals)
+GavahToken token = new GavahToken(1000000 * 10**18);
+```
+
+**Solidity Version:** ^0.8.20
+
+**License:** MIT
+
+**Documentation:** See `src/GAVAH-TOKEN.md` for complete integration documentation
+
+### ERC20Token.sol
+
+An example ERC20 token contract demonstrating import resolution via remappings.
+
+**Features:**
+- Standard ERC20 implementation using OpenZeppelin
+- Initial supply minted to deployer
+- 18 decimals (default)
+- Demonstrates proper import remapping configuration
+
+**Key Components:**
+- Inherits from `@openzeppelin/contracts/token/ERC20/ERC20.sol`
+- Constructor accepts name, symbol, and initial supply
+- Mints initial supply to contract deployer
+
+**Import Resolution:**
+The import `@openzeppelin/contracts/token/ERC20/ERC20.sol` is resolved using the remapping defined in `remappings.txt`:
+```
+@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/
+```
+
+This resolves to: `lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol`
+
+**Usage:**
+This is a basic example contract. For production use, consider extending with additional functionality like:
+- Access control (Ownable, AccessControl)
+- Pausable transfers
+- Minting/burning capabilities
+- Supply caps
+
+**Solidity Version:** ^0.8.20
+
+**License:** MIT
+
 ### MultiOwnable.sol
 
 A multi-owner authentication contract allowing multiple owners identified as bytes.
@@ -33,9 +114,9 @@ A multi-owner authentication contract allowing multiple owners identified as byt
 - `ownerCount()`: Get current number of owners
 
 **Storage Transfers:**
-This contract supports transferring ownership and storage control. The contract is designed to work seamlessly with ENS addresses including `kushmanmb.eth`. To transfer ownership to kushmanmb.eth:
+This contract supports transferring ownership and storage control. The contract is designed to work seamlessly with ENS addresses including `kushmanmb.base.eth`. To transfer ownership to kushmanmb.base.eth:
 
-1. Resolve `kushmanmb.eth` to its Ethereum address
+1. Resolve `kushmanmb.base.eth` to its Ethereum address
 2. Use `addOwnerAddress()` to add the resolved address as an owner
 3. Optionally remove other owners if complete transfer is desired
 
@@ -161,7 +242,7 @@ This contract was submitted for verification at basescan.org on 2023-07-24.
 - **Verified:** 2023-07-24
 - **Compiler:** Solidity 0.8.20 with optimization (200 runs)
 - **Type:** Transparent Proxy (EIP-1967)
-- **Admin:** kushmanmb.eth
+- **Admin:** kushmanmb.base.eth
 
 For detailed verification metadata, see `contracts/verification/0xA9D1e08C7793af67e9d92fe308d5697FB81d3E43.json`
 

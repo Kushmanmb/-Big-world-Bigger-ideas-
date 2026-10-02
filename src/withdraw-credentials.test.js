@@ -12,7 +12,7 @@ let failed = 0;
 // Test 1: Create default instance
 try {
   const creds = new WithdrawalCredentials();
-  if (creds.owner === 'kushmanmb' && creds.ensName === 'kushmanmb.eth') {
+  if (creds.owner === 'kushmanmb' && creds.ensName === 'kushmanmb.base.eth') {
     console.log('✓ Test 1 passed: Default instance creation');
     passed++;
   } else {
@@ -209,7 +209,7 @@ try {
 try {
   const creds = WithdrawalCredentials.createKushmanmbConfig();
   if (creds.owner === 'kushmanmb' && 
-      creds.ensName === 'kushmanmb.eth' &&
+      creds.ensName === 'kushmanmb.base.eth' &&
       creds.network === 'ethereum') {
     console.log('✓ Test 12 passed: Create kushmanmb config');
     passed++;
@@ -269,13 +269,13 @@ try {
 try {
   const creds = new WithdrawalCredentials({
     owner: 'kushmanmb',
-    ensName: 'kushmanmb.eth',
+    ensName: 'kushmanmb.base.eth',
     withdrawalAddress: '0x1234567890123456789012345678901234567890'
   });
   const env = creds.toEnvFormat();
   
   if (env.includes('WITHDRAWAL_OWNER=kushmanmb') && 
-      env.includes('WITHDRAWAL_ENS=kushmanmb.eth') &&
+      env.includes('WITHDRAWAL_ENS=kushmanmb.base.eth') &&
       env.includes('WITHDRAWAL_ADDRESS=')) {
     console.log('✓ Test 14 passed: Export to ENV format');
     passed++;
@@ -292,13 +292,13 @@ try {
 try {
   const creds = new WithdrawalCredentials({
     owner: 'kushmanmb',
-    ensName: 'kushmanmb.eth',
+    ensName: 'kushmanmb.base.eth',
     withdrawalAddress: '0x1234567890123456789012345678901234567890'
   });
   const formatted = creds.formatConfiguration();
   
   if (formatted.includes('kushmanmb') && 
-      formatted.includes('kushmanmb.eth') &&
+      formatted.includes('kushmanmb.base.eth') &&
       formatted.includes('Withdrawal Address:')) {
     console.log('✓ Test 15 passed: Format configuration');
     passed++;

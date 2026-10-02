@@ -9,7 +9,7 @@
  * - Source code should be sanitized before submission
  */
 
-const { makeRequest, CacheManager } = require('./http-client');
+const { makeRequest, makePostRequest, CacheManager } = require('./http-client');
 
 class EtherscanVerifier {
   /**
@@ -39,19 +39,8 @@ class EtherscanVerifier {
    * @private
    */
   _getApiUrl(chainId) {
-    const urls = {
-      1: 'api.etherscan.io',           // Ethereum Mainnet
-      5: 'api-goerli.etherscan.io',    // Goerli Testnet
-      11155111: 'api-sepolia.etherscan.io', // Sepolia Testnet
-      10: 'api-optimistic.etherscan.io', // Optimism
-      137: 'api.polygonscan.com',      // Polygon
-      8453: 'api.basescan.org',        // Base
-      42161: 'api.arbiscan.io',        // Arbitrum One
-      56: 'api.bscscan.com',           // BSC
-      43114: 'api.snowtrace.io'        // Avalanche
-    };
-    
-    return urls[chainId] || 'api.etherscan.io';
+    // Etherscan API v2 uses a unified endpoint for all chains via chainid parameter
+    return 'api.etherscan.io';
   }
 
   /**
@@ -120,14 +109,14 @@ class EtherscanVerifier {
   }
 
   /**
-   * Makes an HTTPS request to the Etherscan API
+   * Makes an HTTPS GET request to the Etherscan API v2
    * @param {object} params - Query parameters
    * @returns {Promise<object>} API response
    * @private
    */
   async _makeRequest(params) {
     const queryParams = new URLSearchParams(params).toString();
-    const url = `/api?${queryParams}`;
+    const url = `/v2/api?${queryParams}`;
     
     return makeRequest({
       hostname: this.apiBaseUrl,
@@ -136,6 +125,20 @@ class EtherscanVerifier {
         'Content-Type': 'application/x-www-form-urlencoded',
         'User-Agent': 'kushmanmb/yaketh'
       }
+    });
+  }
+
+  /**
+   * Makes an HTTPS POST request to the Etherscan API v2
+   * @param {object} body - Form body parameters
+   * @returns {Promise<object>} API response
+   * @private
+   */
+  async _makePostRequest(body) {
+    return makePostRequest({
+      hostname: this.apiBaseUrl,
+      path: '/v2/api',
+      body: body
     });
   }
 
@@ -190,7 +193,8 @@ class EtherscanVerifier {
     }
 
     try {
-      const params = {
+      const body = {
+        chainid: this.chainId.toString(),
         module: 'contract',
         action: 'verifysourcecode',
         contractaddress: validatedAddress,
@@ -206,7 +210,7 @@ class EtherscanVerifier {
         apikey: this.apiKey
       };
 
-      const response = await this._makeRequest(params);
+      const response = await this._makePostRequest(body);
 
       // Check if the API returned an error
       if (response.status !== '1') {
@@ -241,6 +245,7 @@ class EtherscanVerifier {
     return await this.cacheManager.getWithCache(cacheKey, async () => {
       try {
         const params = {
+          chainid: this.chainId.toString(),
           module: 'contract',
           action: 'checkverifystatus',
           guid: guid,
@@ -276,6 +281,7 @@ class EtherscanVerifier {
     return await this.cacheManager.getWithCache(cacheKey, async () => {
       try {
         const params = {
+          chainid: this.chainId.toString(),
           module: 'contract',
           action: 'getsourcecode',
           address: validatedAddress,
@@ -329,6 +335,7 @@ class EtherscanVerifier {
     return await this.cacheManager.getWithCache(cacheKey, async () => {
       try {
         const params = {
+          chainid: this.chainId.toString(),
           module: 'contract',
           action: 'getabi',
           address: validatedAddress,
@@ -378,6 +385,7 @@ class EtherscanVerifier {
     return await this.cacheManager.getWithCache(cacheKey, async () => {
       try {
         const params = {
+          chainid: this.chainId.toString(),
           module: 'contract',
           action: 'getcontractcreation',
           contractaddresses: validatedAddress,

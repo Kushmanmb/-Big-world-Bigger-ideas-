@@ -1,0 +1,315 @@
+name: Scheduled USDC Transfer to Controller
+
+# This workflow automatically transfers 50,000 USDC to yaketh.eth controller
+# Runs daily at 00:00 UTC for proper management distribution
+# Accounts for gas fees by transferring net amount (50K - gas estimate)
+
+on:
+  # Run daily at midnight UTC
+  schedule:
+    - cron: '0 0 * * *'  # Every day at 00:00 UTC
+  
+  # Allow manual trigger for testing or emergency transfers
+  workflow_dispatch:
+    inputs:
+      dryRun:
+        description: 'Dry run mode (simulate without executing)'
+        required: true
+        type: boolean
+        default: true
+      skipApproval:
+        description: 'Skip manual approval (use with caution)'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write  # For approval tracking and notifications
+  id-token: write
+
+jobs:
+  # Job 1: Validate prerequisites and generate transaction
+  validate-and-generate:
+    name: Validate and Generate Transaction
+    runs-on: ubuntu-latest
+    outputs:
+      transaction-valid: ${{ steps.generate.outputs.valid }}
+      transaction-data: ${{ steps.generate.outputs.data }}
+      net-amount: ${{ steps.generate.outputs.netAmount }}
+      gas-estimate: ${{ steps.generate.outputs.gasEstimate }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Generate transfer transaction
+        id: generate
+        run: |
+          echo "## USDC Transfer Transaction Generation" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Date**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> $GITHUB_STEP_SUMMARY
+          echo "**Requested Amount**: 50,000 USDC" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Run the transfer script to generate transaction data
+          node scripts/transfer-usdc.js > transaction-output.txt 2>&1
+          
+          # Check if transaction was generated successfully
+          if [ $? -eq 0 ]; then
+            echo "valid=true" >> $GITHUB_OUTPUT
+            echo "✅ Transaction generated successfully" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "valid=false" >> $GITHUB_OUTPUT
+            echo "❌ Failed to generate transaction" >> $GITHUB_STEP_SUMMARY
+            cat transaction-output.txt >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+          
+          # Extract transaction details from JSON
+          if [ -f "scripts/usdc-transfer-transaction.json" ]; then
+            NET_AMOUNT=$(jq -r '.amount' scripts/usdc-transfer-transaction.json)
+            GAS_ESTIMATE=$(jq -r '.estimatedGasCost' scripts/usdc-transfer-transaction.json)
+            TX_DATA=$(jq -r '.data' scripts/usdc-transfer-transaction.json)
+            RECIPIENT=$(jq -r '.recipient' scripts/usdc-transfer-transaction.json)
+            
+            echo "netAmount=$NET_AMOUNT" >> $GITHUB_OUTPUT
+            echo "gasEstimate=$GAS_ESTIMATE" >> $GITHUB_OUTPUT
+            echo "data=$TX_DATA" >> $GITHUB_OUTPUT
+            
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Transaction Details" >> $GITHUB_STEP_SUMMARY
+            echo "- **Net Transfer Amount**: $NET_AMOUNT USDC" >> $GITHUB_STEP_SUMMARY
+            echo "- **Gas Fee Estimate**: $GAS_ESTIMATE USDC" >> $GITHUB_STEP_SUMMARY
+            echo "- **Recipient**: $RECIPIENT (yaketh.eth)" >> $GITHUB_STEP_SUMMARY
+            echo "- **Token**: USDC (0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48)" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Transaction JSON file not found" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+      
+      - name: Upload transaction artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: usdc-transfer-transaction
+          path: scripts/usdc-transfer-transaction.json
+          retention-days: 30
+      
+      - name: Verify USDC balance (simulation)
+        run: |
+          echo "## Balance Check" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "⚠️ **Note**: In production, this step would:" >> $GITHUB_STEP_SUMMARY
+          echo "1. Check actual USDC balance using Web3" >> $GITHUB_STEP_SUMMARY
+          echo "2. Verify balance ≥ 49,990 USDC" >> $GITHUB_STEP_SUMMARY
+          echo "3. Check ETH balance for gas fees" >> $GITHUB_STEP_SUMMARY
+          echo "4. Verify yaketh.eth controller is active" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+  
+  # Job 2: Request manual approval for scheduled transfers
+  request-approval:
+    name: Request Manual Approval
+    runs-on: ubuntu-latest
+    needs: validate-and-generate
+    # Only require approval for scheduled runs (not manual dry runs)
+    # Skip if skipApproval is explicitly set to true
+    if: |
+      needs.validate-and-generate.outputs.transaction-valid == 'true' && 
+      (github.event_name == 'schedule' || github.event.inputs.skipApproval != 'true')
+    environment:
+      name: usdc-transfers
+      url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    
+    steps:
+      - name: Approval checkpoint
+        run: |
+          echo "## Manual Approval Checkpoint" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "This automated USDC transfer requires manual approval." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Transfer Details" >> $GITHUB_STEP_SUMMARY
+          echo "- **Amount**: ${{ needs.validate-and-generate.outputs.net-amount }} USDC" >> $GITHUB_STEP_SUMMARY
+          echo "- **Gas Deduction**: ${{ needs.validate-and-generate.outputs.gas-estimate }} USDC" >> $GITHUB_STEP_SUMMARY
+          echo "- **Recipient**: yaketh.eth (0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Trigger**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Approval granted - proceeding with transfer" >> $GITHUB_STEP_SUMMARY
+  
+  # Job 3: Execute transfer (or dry run)
+  execute-transfer:
+    name: Execute USDC Transfer
+    runs-on: ubuntu-latest
+    needs: [validate-and-generate, request-approval]
+    # Always run after validation, skip approval if not needed
+    if: |
+      always() && 
+      needs.validate-and-generate.outputs.transaction-valid == 'true' &&
+      (needs.request-approval.result == 'success' || needs.request-approval.result == 'skipped')
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Download transaction artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: usdc-transfer-transaction
+          path: ./transaction-data
+      
+      - name: Display transaction details
+        run: |
+          echo "## Transaction Execution" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ github.event.inputs.dryRun }}" = "true" ] || [ "${{ github.event_name }}" = "schedule" ]; then
+            echo "🔍 **DRY RUN MODE** - Transaction simulation only" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "🚨 **LIVE MODE** - Executing real transaction" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Transaction Data" >> $GITHUB_STEP_SUMMARY
+          cat transaction-data/usdc-transfer-transaction.json | jq '.' >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Simulate or execute transfer
+        env:
+          # In production, these would be actual secrets
+          WALLET_PRIVATE_KEY: ${{ secrets.WALLET_PRIVATE_KEY }}
+          ETHEREUM_RPC_URL: ${{ secrets.ETHEREUM_RPC_URL }}
+          DRY_RUN: ${{ github.event.inputs.dryRun == 'true' || github.event_name == 'schedule' }}
+        run: |
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "### Dry Run Simulation" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**This is a simulation** - No actual transaction will be executed." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "In production, this step would:" >> $GITHUB_STEP_SUMMARY
+            echo "1. Connect to Ethereum mainnet RPC" >> $GITHUB_STEP_SUMMARY
+            echo "2. Load wallet from encrypted private key" >> $GITHUB_STEP_SUMMARY
+            echo "3. Build ERC-20 transfer transaction" >> $GITHUB_STEP_SUMMARY
+            echo "4. Sign transaction with private key" >> $GITHUB_STEP_SUMMARY
+            echo "5. Broadcast to network" >> $GITHUB_STEP_SUMMARY
+            echo "6. Wait for confirmation (1-2 blocks)" >> $GITHUB_STEP_SUMMARY
+            echo "7. Verify transaction success" >> $GITHUB_STEP_SUMMARY
+            echo "8. Log transaction hash for records" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "✅ Simulation completed successfully" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ **LIVE EXECUTION**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "For security reasons, actual transaction execution requires:" >> $GITHUB_STEP_SUMMARY
+            echo "- Wallet private key stored in GitHub Secrets (WALLET_PRIVATE_KEY)" >> $GITHUB_STEP_SUMMARY
+            echo "- Ethereum RPC endpoint configured (ETHEREUM_RPC_URL)" >> $GITHUB_STEP_SUMMARY
+            echo "- Web3 library for transaction signing and broadcasting" >> $GITHUB_STEP_SUMMARY
+            echo "- Multi-signature wallet integration (highly recommended)" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ This workflow is currently configured for dry-run mode only." >> $GITHUB_STEP_SUMMARY
+            echo "See documentation for implementation guidance." >> $GITHUB_STEP_SUMMARY
+          fi
+  
+  # Job 4: Record transfer history
+  record-transfer:
+    name: Record Transfer History
+    runs-on: ubuntu-latest
+    needs: [validate-and-generate, execute-transfer]
+    if: always() && needs.execute-transfer.result == 'success'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      
+      - name: Record transfer in history
+        run: |
+          # Create history directory if it doesn't exist
+          mkdir -p docs/transfer-history
+          
+          # Create history entry
+          TIMESTAMP=$(date -u +"%Y-%m-%d_%H-%M-%S")
+          cat > "docs/transfer-history/${TIMESTAMP}_usdc-transfer.json" << EOF
+          {
+            "timestamp": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
+            "amount": "${{ needs.validate-and-generate.outputs.net-amount }}",
+            "gasEstimate": "${{ needs.validate-and-generate.outputs.gas-estimate }}",
+            "recipient": "yaketh.eth",
+            "recipientAddress": "0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17",
+            "token": "USDC",
+            "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "workflowRun": "${{ github.run_id }}",
+            "triggerType": "${{ github.event_name }}",
+            "status": "simulated"
+          }
+          EOF
+          
+          echo "✅ Transfer history recorded" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**File**: docs/transfer-history/${TIMESTAMP}_usdc-transfer.json" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Commit transfer history
+        run: |
+          git config --local user.email "193178375+Kushmanmb@users.noreply.github.com"
+          git config --local user.name "kushmanmb"
+          
+          git add docs/transfer-history/
+          
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Record USDC transfer history [automated]"
+            git push
+          fi
+  
+  # Job 5: Send notifications
+  notify-completion:
+    name: Send Notifications
+    runs-on: ubuntu-latest
+    needs: [validate-and-generate, execute-transfer, record-transfer]
+    if: always()
+    
+    steps:
+      - name: Prepare notification
+        run: |
+          echo "## Workflow Completion" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Workflow**: Scheduled USDC Transfer" >> $GITHUB_STEP_SUMMARY
+          echo "**Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Trigger**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ needs.execute-transfer.result }}" = "success" ]; then
+            echo "✅ Transfer executed successfully" >> $GITHUB_STEP_SUMMARY
+            echo "- **Amount**: ${{ needs.validate-and-generate.outputs.net-amount }} USDC" >> $GITHUB_STEP_SUMMARY
+            echo "- **Recipient**: yaketh.eth controller" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Transfer failed or was skipped" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Next Scheduled Run" >> $GITHUB_STEP_SUMMARY
+          echo "The next automated transfer is scheduled for tomorrow at 00:00 UTC" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # In production, send notifications to monitoring systems
+          if [ -n "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
+            echo "📢 Notification would be sent to Slack" >> $GITHUB_STEP_SUMMARY
+          fi

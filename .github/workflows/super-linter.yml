@@ -46,7 +46,6 @@ jobs:
           # --- Language toggles ---
           # JavaScript / Node.js
           VALIDATE_JAVASCRIPT_ES:         true
-          VALIDATE_JAVASCRIPT_STANDARD:   false   # only run one JS linter
 
           # JSON (e.g. package.json, feature-flags.json)
           VALIDATE_JSON:                  true
@@ -65,27 +64,6 @@ jobs:
 
           # Bash / shell scripts
           VALIDATE_BASH:                  true
-
-          # Solidity smart contracts
-          VALIDATE_SOLIDITY:              false   # Foundry handles this separately
-
-          # Disable linters not relevant to this repo
-          VALIDATE_PYTHON_PYLINT:         false
-          VALIDATE_PYTHON_FLAKE8:         false
-          VALIDATE_PYTHON_BLACK:          false
-          VALIDATE_PYTHON_MYPY:           false
-          VALIDATE_PYTHON_ISORT:          false
-          VALIDATE_GO:                    false
-          VALIDATE_RUST_2015:             false
-          VALIDATE_RUST_2018:             false
-          VALIDATE_RUST_2021:             false
-          VALIDATE_RUBY:                  false
-          VALIDATE_PHP:                   false
-          VALIDATE_JAVA:                  false
-          VALIDATE_KOTLIN:                false
-          VALIDATE_SWIFT:                 false
-          VALIDATE_TYPESCRIPT_ES:         false
-          VALIDATE_TYPESCRIPT_STANDARD:   false
 
           # --- Paths to ignore ---
           # node_modules, dist, lib (vendored/generated code)

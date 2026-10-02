@@ -5,7 +5,7 @@
  * cryptocurrency data, and ISO 27001 certification management.
  * 
  * @module big-world-bigger-ideas
- * @author Matthew Brace <kushmanmb@gmx.com>
+ * @author Matthew Brace <mattbrace92@gmail.com>
  * @license ISC
  */
 
@@ -84,6 +84,9 @@ const Resolver = require('./src/resolver.js');
 // Token manager
 const TokenManager = require('./src/token-manager.js');
 
+// Gavah Token (Governance Token)
+const GavahToken = require('./src/gavah-token.js');
+
 // Google API announcements
 const GoogleAnnouncements = require('./src/google-announcements.js');
 
@@ -102,6 +105,9 @@ const { BlockchainPathFetcher, DEFAULT_OWNER } = require('./src/blockchain-path-
 // Multi-signature wallet
 const MultiSigWallet = require('./src/multi-sig-wallet.js');
 
+// BTCK (BtcTurk) exchange API
+const BTCKFetcher = require('./src/btck.js');
+
 /**
  * Main exports for the package
  */
@@ -119,6 +125,7 @@ module.exports = {
   OwnershipEvent,
   TokenUUID,
   TokenManager,
+  GavahToken,
   Resolver,
   
   // Blockchain data fetchers
@@ -178,6 +185,9 @@ module.exports = {
 
   // Multi-signature wallet
   MultiSigWallet,
+
+  // BTCK (BtcTurk) exchange API
+  BTCKFetcher,
 
   // Helper utilities
   HelloBitcoin

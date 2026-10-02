@@ -304,9 +304,9 @@ CI workflow performs:
 For deployment issues or questions:
 
 - **Creator:** Matthew Brace (kushmanmb)
-- **Email:** kushmanmb@gmx.com
+- **Email:** mattbrace92@gmail.com
 - **GitHub:** [@kushmanmb](https://github.com/kushmanmb)
-- **ENS:** kushmanmb.eth
+- **ENS:** kushmanmb.base.eth
 
 ## References
 

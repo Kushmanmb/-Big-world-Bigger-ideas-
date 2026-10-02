@@ -1,7 +1,7 @@
 /**
  * Ethereum eth_call Module
  * Provides functionality to perform eth_call RPC calls to Ethereum contracts
- * Supports ENS name resolution (e.g., kushmanmb.eth)
+ * Supports ENS name resolution (e.g., kushmanmb.base.eth)
  */
 
 const https = require('https');
@@ -121,7 +121,7 @@ class EthCallClient {
    * NOTE: This is a skeleton implementation that returns the zero address.
    * For production use, implement proper ENS resolution via the ENS registry contract.
    * 
-   * @param {string} ensName - The ENS name (e.g., kushmanmb.eth)
+   * @param {string} ensName - The ENS name (e.g., kushmanmb.base.eth)
    * @returns {Promise<string>} Resolved Ethereum address (currently returns zero address as placeholder)
    * @throws {Error} If resolution fails
    */

@@ -14,7 +14,7 @@ const path = require('path');
  * Main addresses for tracking
  */
 const TRACKED_ADDRESSES = {
-  kushmanmb: 'kushmanmb.eth',
+  kushmanmb: 'kushmanmb.base.eth',
   yaketh: 'yaketh.eth'
 };
 
@@ -45,14 +45,14 @@ class AddressConsolidator {
     // Get all current addresses
     const currentAddresses = this.tracker.getAllAddresses().map(info => info.address.toLowerCase());
     
-    // Add kushmanmb.eth - validate using ERC20Fetcher which supports ENS
+    // Add kushmanmb.base.eth - validate using ERC20Fetcher which supports ENS
     const kushmanmbValidated = this.fetcher.validateAddress(TRACKED_ADDRESSES.kushmanmb);
     if (!currentAddresses.includes(kushmanmbValidated.toLowerCase())) {
       try {
         this.tracker.addAddress(
           kushmanmbValidated,
           'ethereum',
-          'Primary address - kushmanmb.eth'
+          'Primary address - kushmanmb.base.eth'
         );
         console.log(`✓ Added ${TRACKED_ADDRESSES.kushmanmb}`);
       } catch (error) {

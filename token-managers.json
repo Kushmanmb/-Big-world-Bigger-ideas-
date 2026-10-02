@@ -62,6 +62,60 @@
       },
       "setAt": "2026-02-25T16:44:38.681Z",
       "updatedAt": "2026-03-08T21:52:56.156Z"
+    },
+    {
+      "tokenAddress": "0x0000000000000000000000000000000000000000",
+      "managerAddress": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb0",
+      "metadata": {
+        "tokenName": "Zero Address",
+        "tokenSymbol": "NULL",
+        "network": "Ethereum Mainnet",
+        "chainId": 1,
+        "type": "Special Address",
+        "setBy": "kushmanmb.base.eth",
+        "notes": "Immutable access permissions write for kushmanmb. Zero address used as sentinel value for application-level access control, not as token contract.",
+        "purpose": "System-level permissions management",
+        "securityNote": "Application-layer construct only, does not interact with on-chain contracts",
+        "tags": ["Ethereum Mainnet", "Kushmanmb", "Zero Address", "System Permissions", "Sentinel Value"]
+      },
+      "setAt": "2026-04-06T04:01:56.577Z",
+      "updatedAt": "2026-04-08T21:32:30.033Z"
+    },
+    {
+      "tokenAddress": "0x0000000000000000000000000000000000000001",
+      "managerAddress": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253",
+      "metadata": {
+        "tokenName": "Address One",
+        "tokenSymbol": "ONE",
+        "network": "Ethereum Mainnet",
+        "chainId": 1,
+        "type": "Special Address",
+        "setBy": "system",
+        "notes": "Full permissions write for 0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253. Address 1 used as sentinel value for application-level access control.",
+        "purpose": "System-level permissions management",
+        "securityNote": "Application-layer construct only, does not interact with on-chain contracts"
+      },
+      "setAt": "2026-04-06T04:14:30.669Z",
+      "updatedAt": "2026-04-06T04:14:30.669Z"
+    },
+    {
+      "tokenAddress": "0x0000000000000000000000000000000000000002",
+      "managerAddress": "0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17",
+      "metadata": {
+        "tokenName": "Gavah Token",
+        "tokenSymbol": "GAVAH",
+        "network": "All Networks",
+        "chainId": 0,
+        "decimals": 18,
+        "type": "Governance Token",
+        "setBy": "yaketh.eth",
+        "notes": "Gavah Token manager for all contracts - Universal token manager managed by yaketh.eth",
+        "purpose": "Universal governance and contract management",
+        "scope": "All contracts in the repository",
+        "contractPath": "contracts/GavahToken.sol"
+      },
+      "setAt": "2026-04-08T14:26:00.000Z",
+      "updatedAt": "2026-04-08T14:26:00.000Z"
     }
   ],
   "deprecated": [
@@ -70,16 +124,10 @@
       "managerAddress": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253",
       "deprecatedAt": "2026-03-08T21:52:56.156Z",
       "reason": "Unknown token with no valid symbol or name; removed from active configuration"
-    },
-    {
-      "tokenAddress": "0x0000000000000000000000000000000000000000",
-      "managerAddress": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253",
-      "deprecatedAt": "2026-03-08T21:52:56.156Z",
-      "reason": "Zero address is not a valid token contract; removed from active configuration"
     }
   ],
   "transferAddress": "yaketh.eth",
   "transferAddressHex": "0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17",
-  "lastUpdated": "2026-03-08T21:52:56.156Z",
-  "version": "1.1.0"
+  "lastUpdated": "2026-04-08T21:32:30.033Z",
+  "version": "1.4.1"
 }

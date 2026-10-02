@@ -1,6 +1,6 @@
 /**
  * Example usage of eth_call module
- * Demonstrates performing eth_call from kushmanmb.eth and other addresses
+ * Demonstrates performing eth_call from kushmanmb.base.eth and other addresses
  */
 
 const EthCallClient = require('./eth-call.js');
@@ -23,13 +23,13 @@ async function runExamples() {
   console.log('Example 1: Resolving ENS Names');
   console.log('-'.repeat(60));
   try {
-    console.log('Resolving kushmanmb.eth...');
+    console.log('Resolving kushmanmb.base.eth...');
     console.log('NOTE: This is a skeleton implementation that returns');
     console.log('      a placeholder zero address. For production use,');
     console.log('      implement proper ENS resolution via ENS contracts.');
     console.log();
-    const kushmanmbAddress = await client.resolveAddress('kushmanmb.eth');
-    console.log(`kushmanmb.eth -> ${kushmanmbAddress} (placeholder)`);
+    const kushmanmbAddress = await client.resolveAddress('kushmanmb.base.eth');
+    console.log(`kushmanmb.base.eth -> ${kushmanmbAddress} (placeholder)`);
     console.log();
   } catch (error) {
     console.log(`Note: ENS resolution failed: ${error.message}`);
@@ -66,16 +66,16 @@ async function runExamples() {
   console.log();
   
   try {
-    // Example: Check balance of kushmanmb.eth on a token contract
+    // Example: Check balance of kushmanmb.base.eth on a token contract
     const usdcContract = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'; // USDC on mainnet
-    console.log('Call structure for checking USDC balance of kushmanmb.eth:');
+    console.log('Call structure for checking USDC balance of kushmanmb.base.eth:');
     console.log(`  Contract: ${usdcContract} (USDC)`);
-    console.log(`  From: kushmanmb.eth`);
+    console.log(`  From: kushmanmb.base.eth`);
     console.log(`  Function: balanceOf(address)`);
     console.log();
     
     // In a real scenario with network access:
-    // const balance = await client.getERC20Balance(usdcContract, 'kushmanmb.eth');
+    // const balance = await client.getERC20Balance(usdcContract, 'kushmanmb.base.eth');
     // console.log(`Balance: ${balance.balance} (raw units)`);
   } catch (error) {
     console.log(`Error: ${error.message}`);
@@ -151,15 +151,15 @@ async function runExamples() {
     console.log();
   }
 
-  // Example 7: Using kushmanmb.eth as the caller
-  console.log('Example 7: Making Calls FROM kushmanmb.eth');
+  // Example 7: Using kushmanmb.base.eth as the caller
+  console.log('Example 7: Making Calls FROM kushmanmb.base.eth');
   console.log('-'.repeat(60));
   try {
     console.log('When making calls, you can specify "from" parameter:');
     console.log();
     console.log('Call structure:');
     console.log('  {');
-    console.log('    from: "kushmanmb.eth",  // Caller address (ENS supported)');
+    console.log('    from: "kushmanmb.base.eth",  // Caller address (ENS supported)');
     console.log('    to: "0x...",             // Contract address');
     console.log('    data: "0x...",           // Encoded function call');
     console.log('    block: "latest"          // Block number or tag');
@@ -228,7 +228,7 @@ async function runExamples() {
   console.log('Complete workflow for checking token balance:');
   console.log();
   console.log('Step 1: Resolve ENS name (if needed)');
-  console.log('  kushmanmb.eth -> 0x...');
+  console.log('  kushmanmb.base.eth -> 0x...');
   console.log();
   console.log('Step 2: Encode function call');
   console.log('  balanceOf(address) + parameters -> 0x70a08231...');
@@ -250,7 +250,7 @@ async function runExamples() {
   console.log();
   console.log('This module provides:');
   console.log('  ✓ eth_call support for reading contract state');
-  console.log('  ✓ ENS name resolution (kushmanmb.eth, etc.)');
+  console.log('  ✓ ENS name resolution (kushmanmb.base.eth, etc.)');
   console.log('  ✓ Function call encoding');
   console.log('  ✓ Response decoding (uint256, address, string)');
   console.log('  ✓ Convenience methods for ERC-20 and ERC-721');
@@ -260,7 +260,7 @@ async function runExamples() {
   console.log('Usage with real data:');
   console.log('  1. Ensure network connectivity to an Ethereum RPC endpoint');
   console.log('  2. Use default public nodes or provide your own RPC URL');
-  console.log('  3. ENS names like kushmanmb.eth are automatically resolved');
+  console.log('  3. ENS names like kushmanmb.base.eth are automatically resolved');
   console.log('  4. All read operations are performed via eth_call (no gas cost)');
   console.log();
   console.log('For production use:');

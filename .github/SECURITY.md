@@ -211,9 +211,9 @@ Consider integrating tools like:
 
 For questions about security configurations or to report security issues:
 
-- **Email**: [kushmanmb@gmx.com](mailto:kushmanmb@gmx.com)
+- **Email**: [mattbrace92@gmail.com](mailto:mattbrace92@gmail.com)
 - **Website**: [kushmanmb.org](https://kushmanmb.org)
-- **ENS**: kushmanmb.eth
+- **ENS**: kushmanmb.base.eth
 
 ## References
 

@@ -4,7 +4,7 @@
   "description": "Blockchain network documentation and crypto clarity platform",
   "main": "index.js",
   "scripts": {
-    "test": "node src/wallet.test.js && node src/feature-flags.test.js && node src/erc721.test.js && node src/erc20.test.js && node src/token-history.test.js && node src/token-manager.test.js && node src/bitcoin-mining.test.js && node src/hello-bitcoin.test.js && node src/consensus-tracker.test.js && node src/address-tracker.test.js && node src/address-consolidator.test.js && node src/litecoin-blockchair.test.js && node src/ethereum-blockchair.test.js && node src/iso27001.test.js && node src/zkpdf.test.js && node src/contract-abi.test.js && node src/blockchain-council.test.js && node src/google-announcements.test.js && node src/microsoft-announcements.test.js && node src/ownership-announcements.test.js && node src/etherscan-verify.test.js && node src/blockchain-path-fetcher.test.js && node src/transaction-validator.test.js",
+    "test": "node src/wallet.test.js && node src/feature-flags.test.js && node src/erc721.test.js && node src/erc20.test.js && node src/token-history.test.js && node src/token-manager.test.js && node src/gavah-token.test.js && node src/bitcoin-mining.test.js && node src/hello-bitcoin.test.js && node src/consensus-tracker.test.js && node src/address-tracker.test.js && node src/address-consolidator.test.js && node src/address-sanitizer.test.js && node src/litecoin-blockchair.test.js && node src/ethereum-blockchair.test.js && node src/iso27001.test.js && node src/zkpdf.test.js && node src/contract-abi.test.js && node src/blockchain-council.test.js && node src/google-announcements.test.js && node src/microsoft-announcements.test.js && node src/ownership-announcements.test.js && node src/etherscan-verify.test.js && node src/blockchain-path-fetcher.test.js && node src/transaction-validator.test.js && node src/btck.test.js && node src/network-creator-badge.test.js && node src/calldata.test.js && node src/staked-eth.test.js && node src/reverse-register.test.js && node src/beaconchain-rewards.test.js",
     "test:wallet": "node src/wallet.test.js",
     "test:eth-call": "node src/eth-call.test.js",
     "test:feature-flags": "node src/feature-flags.test.js",
@@ -13,6 +13,7 @@
     "test:contract-abi": "node src/contract-abi.test.js",
     "test:token-history": "node src/token-history.test.js",
     "test:token-manager": "node src/token-manager.test.js",
+    "test:gavah-token": "node src/gavah-token.test.js",
     "test:resolver": "node src/resolver.test.js",
     "test:token-uuid": "node src/token-uuid.test.js",
     "test:bitcoin-mining": "node src/bitcoin-mining.test.js",
@@ -21,6 +22,7 @@
     "test:consensus-tracker": "node src/consensus-tracker.test.js",
     "test:address-tracker": "node src/address-tracker.test.js",
     "test:address-consolidator": "node src/address-consolidator.test.js",
+    "test:address-sanitizer": "node src/address-sanitizer.test.js",
     "test:litecoin-blockchair": "node src/litecoin-blockchair.test.js",
     "test:blockchair": "node src/blockchair.test.js",
     "test:zkpdf": "node src/zkpdf.test.js",
@@ -36,6 +38,12 @@
     "test:blockchain-path-fetcher": "node src/blockchain-path-fetcher.test.js",
     "test:transaction-validator": "node src/transaction-validator.test.js",
     "test:multi-sig-wallet": "node src/multi-sig-wallet.test.js",
+    "test:btck": "node src/btck.test.js",
+    "test:network-creator-badge": "node src/network-creator-badge.test.js",
+    "test:calldata": "node src/calldata.test.js",
+    "test:staked-eth": "node src/staked-eth.test.js",
+    "test:reverse-register": "node src/reverse-register.test.js",
+    "test:beaconchain-rewards": "node src/beaconchain-rewards.test.js",
     "build:css": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
     "watch:css": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
     "wallet:demo": "node src/example.js",
@@ -45,6 +53,7 @@
     "contract-abi:demo": "node src/contract-abi-example.js",
     "token-history:demo": "node src/token-history-example.js",
     "token-manager:demo": "node src/token-manager-example.js",
+    "gavah-token:demo": "node src/gavah-token-example.js",
     "resolver:demo": "node src/resolver-example.js",
     "token-uuid:demo": "node src/token-uuid-example.js",
     "bitcoin-mining:demo": "node src/bitcoin-mining-example.js",
@@ -52,6 +61,7 @@
     "iso27001:demo": "node src/iso27001-example.js",
     "consensus-tracker:demo": "node src/consensus-tracker-example.js",
     "address-tracker:demo": "node src/address-tracker-example.js",
+    "address-sanitization:demo": "node src/address-sanitization-example.js",
     "litecoin-blockchair:demo": "node src/litecoin-blockchair-example.js",
     "blockchair:demo": "node src/blockchair-example.js",
     "zkpdf:demo": "node src/zkpdf-example.js",
@@ -68,8 +78,15 @@
     "blockchain-path-fetcher:demo": "node src/blockchain-path-fetcher-example.js",
     "transaction-validator:demo": "node src/transaction-validator-example.js",
     "multi-sig-wallet:demo": "node src/multi-sig-wallet-example.js",
+    "btck:demo": "node src/btck-example.js",
+    "badge:demo": "node src/network-creator-badge-example.js",
+    "calldata:demo": "node src/calldata-example.js",
+    "staked-eth:demo": "node src/staked-eth-example.js",
+    "reverse-register:demo": "node src/reverse-register-example.js",
+    "beaconchain-rewards:demo": "node src/beaconchain-rewards-example.js",
     "metadata": "node src/metadata.js",
     "metadata:demo": "node src/metadata-example.js",
+    "transfer:usdc": "node scripts/transfer-usdc.js",
     "prepublishOnly": "npm test",
     "version:patch": "npm version patch",
     "version:minor": "npm version minor",
@@ -78,7 +95,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-.git"
+    "url": "git+https://github.com/Kushmanmb/-Big-world-Bigger-ideas-.git"
   },
   "keywords": [
     "blockchain",
@@ -121,17 +138,20 @@
     "eth-call",
     "ens",
     "rpc",
-    "contract-interaction"
+    "contract-interaction",
+    "calldata",
+    "abi-encoding"
   ],
-  "author": "Matthew Brace <kushmanmb@gmx.com>",
-  "owner": "kushmanmb.eth",
+  "author": "Matthew Brace <mattbrace92@gmail.com>",
+  "owner": "kushmanmb.base.eth",
+  "coinbaseId": "kushman.cb.id",
   "controller": "yaketh.eth",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues"
+    "url": "https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues"
   },
-  "homepage": "https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-#readme",
+  "homepage": "https://github.com/Kushmanmb/-Big-world-Bigger-ideas-#readme",
   "files": [
     "index.js",
     "src/wallet.js",
@@ -139,6 +159,7 @@
     "src/erc721.js",
     "src/erc20.js",
     "src/address-consolidator.js",
+    "src/address-sanitizer.js",
     "src/contract-abi.js",
     "src/token-history.js",
     "src/resolver.js",
@@ -171,11 +192,17 @@
     "contracts/MultiSignatureWallet.sol",
     "contracts/multi_signature_wallet.json",
     "contracts/multi_signature_wallet_bytecode.json",
+    "src/btck.js",
+    "src/calldata.js",
+    "src/staked-eth.js",
+    "src/reverse-register.js",
+    "src/beaconchain-rewards.js",
     "src/*.md",
-    "README.md"
+    "README.md",
+    "SECURITY-CONFIG.md"
   ],
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0"
   },
   "dependencies": {
     "@discord/embedded-app-sdk": "^2.4.0",
@@ -183,7 +210,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.24",
-    "postcss": "^8.5.6",
+    "postcss": "^8.5.28",
     "tailwindcss": "^3.4.17"
   },
   "overrides": {

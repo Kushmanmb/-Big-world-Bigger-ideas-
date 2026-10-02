@@ -372,11 +372,11 @@ ISC
 ## Author
 
 Matthew Brace (kushmanmb)
-- Email: kushmanmb@gmx.com
+- Email: mattbrace92@gmail.com
 - Website: https://kushmanmb.org
 
 ## Support
 
 For issues and questions:
 - GitHub Issues: https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues
-- Email: kushmanmb@gmx.com
+- Email: mattbrace92@gmail.com
