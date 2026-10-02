@@ -344,7 +344,7 @@ class GavahToken {
     }
 
     const normalizedAmount = amount.toString().trim();
-    if (!/^(?:\d+\.?\d*|\.\d+)$/.test(normalizedAmount)) {
+    if (!/^(?:\d+(?:\.\d*)?|\.\d+)$/.test(normalizedAmount)) {
       throw new Error('Amount must be a valid non-negative decimal number');
     }
 
