@@ -16,7 +16,8 @@ This file contains the manager address assignments for token contracts.
         "network": "Network Name",
         "chainId": 1,
         "setBy": "yaketh.eth",
-        "notes": "Additional information"
+        "notes": "Additional information",
+        "tags": ["Tag1", "Tag2"]
       },
       "setAt": "ISO 8601 timestamp",
       "updatedAt": "ISO 8601 timestamp"
@@ -33,9 +34,19 @@ This file contains the manager address assignments for token contracts.
   "transferAddress": "yaketh.eth",
   "transferAddressHex": "0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17",
   "lastUpdated": "ISO 8601 timestamp",
-  "version": "1.1.0"
+  "version": "1.4.1"
 }
 ```
+
+### Metadata Fields
+
+- **tokenName**: Human-readable name of the token
+- **tokenSymbol**: Token ticker symbol
+- **network**: Blockchain network name (e.g., "Ethereum Mainnet", "Base")
+- **chainId**: Numeric chain ID (1 for Ethereum Mainnet)
+- **setBy**: ENS name or identifier of who set the manager
+- **notes**: Additional context or information
+- **tags** (optional): Array of searchable tags for categorization and filtering
 
 ## Transfer Address
 
@@ -79,6 +90,7 @@ All active token manager assignments now point to **yaketh.eth** as the designat
 - **Network**: Ethereum Mainnet (Chain ID: 1)
 - **Type**: Special Address
 - **Notes**: Immutable access permissions write for kushmanmb
+- **Tags**: Ethereum Mainnet, Kushmanmb, Zero Address, System Permissions, Sentinel Value
 
 **Architectural Note:** While the zero address is not a valid token contract in standard Ethereum usage, it is used here as a special sentinel value for application-level access control. This allows the token manager system to grant kushmanmb immutable write permissions for system-level operations. This is an application-layer construct and does not interact with on-chain contracts.
 
@@ -90,6 +102,19 @@ All active token manager assignments now point to **yaketh.eth** as the designat
 - **Notes**: Full permissions write for system operations
 
 **Architectural Note:** Similar to the zero address, address 1 is used as a sentinel value for application-level access control. This grants the manager address full write permissions for system-level operations without blockchain interaction.
+
+### Gavah Token
+- **Token Address**: `0x0000000000000000000000000000000000000002` (Placeholder - will be updated upon deployment)
+- **Manager Address**: `0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17` (yaketh.eth)
+- **Network**: All Networks (Universal)
+- **Type**: Governance Token
+- **Decimals**: 18
+- **Contract**: `contracts/GavahToken.sol`
+- **Purpose**: Universal governance and contract management
+- **Scope**: All contracts in the repository
+- **Notes**: Gavah Token manager for all contracts
+
+**Description:** Gavah Token (GAVAH) is an ERC20 governance token with ownership capabilities designed to serve as a universal token manager for all contracts in the repository. It provides flexible management of token operations and permissions across all deployable contracts. See [GAVAH-TOKEN.md](./src/GAVAH-TOKEN.md) for detailed documentation.
 
 ## Deprecated Tokens
 
@@ -300,7 +325,8 @@ npm run test:contract-consolidator
 
 ## Version History
 
-- **v1.4.0** (2026-04-08): Upgraded deprecated tokens and added contract consolidation system; restored 1 previously deprecated token
+- **v1.4.1** (2026-04-08): Added tags to zero address (`0x0000000000000000000000000000000000000000`) including "Ethereum Mainnet" and "Kushmanmb" tags for improved categorization and searchability
+- **v1.4.0** (2026-04-08): Added Gavah Token (`0x0000000000000000000000000000000000000002`) as universal governance token manager for all contracts with yaketh.eth (`0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17`) as manager; added contract consolidation and restored 1 previously deprecated token
 - **v1.3.0** (2026-04-06): Added address one (`0x0000000000000000000000000000000000000001`) with `0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253` as manager with full write permissions
 - **v1.2.0** (2026-04-06): Added zero address (`0x0000000000000000000000000000000000000000`) with kushmanmb (`0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb0`) as manager with immutable access permissions write
 - **v1.1.0** (2026-03-08): Updated all active token manager addresses to yaketh.eth (`0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17`); deprecated Unknown Token and Zero Address entries; added `transferAddress`, `transferAddressHex`, `deprecated`, and `updatedAt` fields

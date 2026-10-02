@@ -75,10 +75,11 @@
         "setBy": "kushmanmb.base.eth",
         "notes": "Immutable access permissions write for kushmanmb. Zero address used as sentinel value for application-level access control, not as token contract.",
         "purpose": "System-level permissions management",
-        "securityNote": "Application-layer construct only, does not interact with on-chain contracts"
+        "securityNote": "Application-layer construct only, does not interact with on-chain contracts",
+        "tags": ["Ethereum Mainnet", "Kushmanmb", "Zero Address", "System Permissions", "Sentinel Value"]
       },
       "setAt": "2026-04-06T04:01:56.577Z",
-      "updatedAt": "2026-04-06T04:01:56.577Z"
+      "updatedAt": "2026-04-08T21:32:30.033Z"
     },
     {
       "tokenAddress": "0x0000000000000000000000000000000000000001",
@@ -98,6 +99,25 @@
       "updatedAt": "2026-04-06T04:14:30.669Z"
     },
     {
+      "tokenAddress": "0x0000000000000000000000000000000000000002",
+      "managerAddress": "0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17",
+      "metadata": {
+        "tokenName": "Gavah Token",
+        "tokenSymbol": "GAVAH",
+        "network": "All Networks",
+        "chainId": 0,
+        "decimals": 18,
+        "type": "Governance Token",
+        "setBy": "yaketh.eth",
+        "notes": "Gavah Token manager for all contracts - Universal token manager managed by yaketh.eth",
+        "purpose": "Universal governance and contract management",
+        "scope": "All contracts in the repository",
+        "contractPath": "contracts/GavahToken.sol"
+      },
+      "setAt": "2026-04-08T14:26:00.000Z",
+      "updatedAt": "2026-04-08T14:26:00.000Z"
+    },
+    {
       "tokenAddress": "0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
       "managerAddress": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253",
       "metadata": {
@@ -115,6 +135,6 @@
   "deprecated": [],
   "transferAddress": "yaketh.eth",
   "transferAddressHex": "0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17",
-  "lastUpdated": "2026-04-08T14:11:19.018Z",
-  "version": "1.4.0"
+  "lastUpdated": "2026-04-08T21:32:30.033Z",
+  "version": "1.4.1"
 }
