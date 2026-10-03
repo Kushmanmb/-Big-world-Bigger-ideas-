@@ -46,7 +46,7 @@ console.log(hello.greetWithMessage('Welcome to decentralization!'));
 Creates a new Hello Bitcoin instance.
 
 **Parameters:**
-- `name` (string, optional): The name to use in greetings. Default: `'World'`
+- `name` (string, optional): The name to use in greetings. Default: `'kushmanmb'`
 
 **Example:**
 ```javascript
