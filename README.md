@@ -7,6 +7,7 @@
 ![Maintained](https://img.shields.io/badge/Maintained-Yes-green?style=for-the-badge)
 ![Focus](https://img.shields.io/badge/Focus-Blockchain-orange?style=for-the-badge&logo=ethereum)
 [![Deploy](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml/badge.svg)](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/de522400-618c-4f68-bacd-c544724922da/deploy-status)](https://app.netlify.com/projects/kushmanmb/deploys)
 
 [![npm version](https://img.shields.io/npm/v/big-world-bigger-ideas?style=flat-square)](https://www.npmjs.com/package/big-world-bigger-ideas)
 [![Profile](https://img.shields.io/badge/Profile-kushmanmb.org-informational?style=flat-square&logo=ethereum)](https://kushmanmb.org)
