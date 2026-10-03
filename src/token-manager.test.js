@@ -310,6 +310,76 @@ try {
   assert(error.message.includes('Invalid JSON data'), 'fromJSON validates data parameter');
 }
 
+// Test: fromJSON duplicate tokenAddress detection
+console.log('\n=== fromJSON Duplicate Detection Tests ===');
+try {
+  const dupManager = new TokenManager('Duplicate Test');
+  const dupData = {
+    managers: [
+      {
+        tokenAddress: usdcAddress,
+        managerAddress: managerAddr,
+        metadata: { version: 'v1' }
+      },
+      {
+        tokenAddress: usdcAddress,
+        managerAddress: managerAddr,
+        metadata: { version: 'v2' }
+      }
+    ]
+  };
+  dupManager.fromJSON(dupData);
+  console.log('✗ Should throw error for duplicate token address');
+  failCount++;
+} catch (error) {
+  assert(error.message.includes('Duplicate token address'), 'fromJSON throws error for duplicate token address');
+}
+
+// Test: fromJSON duplicate detection is case-insensitive
+try {
+  const dupManager2 = new TokenManager('Duplicate Case Test');
+  const dupData2 = {
+    managers: [
+      {
+        tokenAddress: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+        managerAddress: managerAddr
+      },
+      {
+        tokenAddress: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+        managerAddress: managerAddr
+      }
+    ]
+  };
+  dupManager2.fromJSON(dupData2);
+  console.log('✗ Should throw error for case-insensitive duplicate token address');
+  failCount++;
+} catch (error) {
+  assert(error.message.includes('Duplicate token address'), 'fromJSON duplicate detection is case-insensitive');
+}
+
+// Test: fromJSON preserves setAt timestamp
+console.log('\n=== fromJSON setAt Preservation Tests ===');
+try {
+  const tsManager = new TokenManager('Timestamp Test');
+  const originalSetAt = '2026-01-15T10:00:00.000Z';
+  const tsData = {
+    managers: [
+      {
+        tokenAddress: usdcAddress,
+        managerAddress: managerAddr,
+        metadata: {},
+        setAt: originalSetAt
+      }
+    ]
+  };
+  tsManager.fromJSON(tsData);
+  const imported = tsManager.getManager(usdcAddress);
+  assert(imported.setAt === originalSetAt, 'fromJSON preserves original setAt timestamp');
+} catch (error) {
+  console.log(`✗ fromJSON setAt preservation failed: ${error.message}`);
+  failCount++;
+}
+
 // Test: Case insensitivity
 console.log('\n=== Case Insensitivity Tests ===');
 const caseManager = new TokenManager('Case Test');

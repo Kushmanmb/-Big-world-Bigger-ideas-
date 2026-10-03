@@ -187,6 +187,7 @@ class TokenManager {
    * Imports manager data from JSON
    * @param {object} data - JSON data to import
    * @returns {void}
+   * @throws {Error} If data is invalid or contains duplicate token addresses
    */
   fromJSON(data) {
     if (!data || typeof data !== 'object') {
@@ -194,14 +195,29 @@ class TokenManager {
     }
 
     if (data.managers && Array.isArray(data.managers)) {
+      const seenAddresses = new Set();
+      data.managers.forEach(manager => {
+        if (manager.tokenAddress && manager.managerAddress) {
+          const normalizedAddress = this._validateAddress(manager.tokenAddress);
+          if (seenAddresses.has(normalizedAddress)) {
+            throw new Error(`Duplicate token address in import data: ${normalizedAddress}`);
+          }
+          seenAddresses.add(normalizedAddress);
+        }
+      });
+
       this.managers.clear();
       data.managers.forEach(manager => {
         if (manager.tokenAddress && manager.managerAddress) {
-          this.setManager(
+          const managerInfo = this.setManager(
             manager.tokenAddress,
             manager.managerAddress,
             manager.metadata || {}
           );
+          if (manager.setAt) {
+            managerInfo.setAt = manager.setAt;
+            this.managers.set(managerInfo.tokenAddress, managerInfo);
+          }
         }
       });
     }
