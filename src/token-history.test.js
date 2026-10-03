@@ -276,6 +276,64 @@ test('TokenHistoryTracker - Limited log output', () => {
   assert(logLines.length === 2, 'Limited git log returns only 2 commits');
 });
 
+// Test 16: resetHard - resets history to a specific event
+test('TokenHistoryTracker - resetHard() resets to specific event', () => {
+  const tracker = new TokenHistoryTracker(
+    '0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D',
+    'kushmanmb'
+  );
+
+  const event1 = tracker.recordTransfer('2300', '0xaaaa', '0xbbbb', 1609459200, '0x111', 11565019);
+  const event2 = tracker.recordTransfer('2400', '0xcccc', '0xdddd', 1609459300, '0x222', 11565020);
+  tracker.recordTransfer('2500', '0xeeee', '0xffff', 1609459400, '0x333', 11565021);
+
+  assert(tracker.history.length === 3, 'History has 3 events before reset');
+
+  tracker.resetHard(event2.id);
+
+  assert(tracker.history.length === 2, 'History has 2 events after resetHard to event2');
+  assert(tracker.history[0].id === event1.id, 'First event is preserved');
+  assert(tracker.history[1].id === event2.id, 'Second event is preserved');
+  assert(tracker.getCurrentOwner('2300') === '0x000000000000000000000000000000000000bbbb', 'Token 2300 owner is correct after reset');
+  assert(tracker.getCurrentOwner('2400') === '0x000000000000000000000000000000000000dddd', 'Token 2400 owner is correct after reset');
+  assert(tracker.getCurrentOwner('2500') === null, 'Token 2500 owner is removed after reset');
+});
+
+// Test 17: resetHard - resets to first event
+test('TokenHistoryTracker - resetHard() resets to first event', () => {
+  const tracker = new TokenHistoryTracker(
+    '0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D',
+    'kushmanmb'
+  );
+
+  const event1 = tracker.recordTransfer('2600', '0xaaaa', '0xbbbb', 1609459200, '0x444', 11565019);
+  tracker.recordTransfer('2700', '0xcccc', '0xdddd', 1609459300, '0x555', 11565020);
+  tracker.recordTransfer('2800', '0xeeee', '0xffff', 1609459400, '0x666', 11565021);
+
+  tracker.resetHard(event1.id);
+
+  assert(tracker.history.length === 1, 'History has 1 event after resetHard to first event');
+  assert(tracker.history[0].id === event1.id, 'Only the first event remains');
+  assert(tracker.tokenOwners.size === 1, 'Only one token owner remains');
+});
+
+// Test 18: resetHard - throws for unknown event ID
+test('TokenHistoryTracker - resetHard() throws for unknown event ID', () => {
+  const tracker = new TokenHistoryTracker(
+    '0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D',
+    'kushmanmb'
+  );
+
+  tracker.recordTransfer('2900', '0xaaaa', '0xbbbb', 1609459200, '0x777', 11565019);
+
+  try {
+    tracker.resetHard('nonexistentid000');
+    assert(false, 'Should throw error for unknown event ID');
+  } catch (error) {
+    assert(error.message.includes('Event ID not found'), 'Throws error for unknown event ID');
+  }
+});
+
 // Summary
 const results = getResults();
 console.log('\n' + '='.repeat(70));
