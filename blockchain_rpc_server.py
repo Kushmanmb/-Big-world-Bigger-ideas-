@@ -20,6 +20,8 @@ Example:
 import json
 import argparse
 import logging
+import re
+import ipaddress
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse, parse_qs
 from urllib.request import Request, urlopen
@@ -41,6 +43,171 @@ class BlockchainRPCHandler(BaseHTTPRequestHandler):
     DEFAULT_ETH_RPC = "https://ethereum.publicnode.com"
     DEFAULT_BITCOIN_API = "https://mempool.space/api"
     DEFAULT_BLOCKCHAIR_API = "https://api.blockchair.com"
+
+    # Allowlist of supported Blockchair blockchain identifiers
+    ALLOWED_BLOCKCHAINS = frozenset([
+        'bitcoin', 'bitcoin-cash', 'ethereum', 'litecoin', 'bitcoin-sv',
+        'dogecoin', 'dash', 'ripple', 'stellar', 'monero', 'cardano',
+        'zcash', 'mixin', 'groestlcoin', 'tezos', 'eos', 'bitcoin/testnet'
+    ])
+
+    # Allowlist of supported Bitcoin mining time periods
+    ALLOWED_PERIODS = frozenset(['1d', '3d', '1w', '1m', '3m', '6m', '1y', '2y', '3y', 'all'])
+
+    # Allowlist of trusted ETH RPC hostnames
+    ALLOWED_ETH_RPC_HOSTS = frozenset([
+        'ethereum.publicnode.com',
+        'mainnet.infura.io',
+        'eth-mainnet.alchemyapi.io',
+        'eth-mainnet.g.alchemy.com',
+        'rpc.ankr.com',
+        'cloudflare-eth.com',
+        'api.mycryptoapi.com',
+        'eth.llamarpc.com',
+        'rpc.flashbots.net',
+        'eth-goerli.g.alchemy.com',
+        'goerli.infura.io',
+        'eth-sepolia.g.alchemy.com',
+        'sepolia.infura.io',
+        'mainnet.base.org',
+        'base-mainnet.g.alchemy.com',
+        'mainnet.optimism.io',
+        'opt-mainnet.g.alchemy.com',
+        'polygon-rpc.com',
+        'polygon-mainnet.g.alchemy.com',
+    ])
+
+    @classmethod
+    def _validate_rpc_url(cls, url):
+        """Validate that an RPC URL is safe to use (HTTPS, trusted host).
+
+        Args:
+            url: The URL string to validate.
+
+        Returns:
+            The validated URL string.
+
+        Raises:
+            ValueError: If the URL is not allowed.
+        """
+        try:
+            parsed = urlparse(url)
+        except Exception:
+            raise ValueError("Invalid RPC URL format")
+
+        if parsed.scheme != 'https':
+            raise ValueError("RPC URL must use HTTPS")
+
+        hostname = parsed.hostname or ''
+
+        # Block private / loopback addresses
+        is_ip = True
+        try:
+            addr = ipaddress.ip_address(hostname)
+        except ValueError:
+            is_ip = False
+
+        if is_ip:
+            if addr.is_private or addr.is_loopback or addr.is_link_local or addr.is_reserved:
+                raise ValueError("RPC URL must not target a private or reserved IP address")
+        else:
+            # Not an IP address – check against the hostname allowlist
+            if hostname not in cls.ALLOWED_ETH_RPC_HOSTS:
+                raise ValueError(
+                    f"RPC host '{hostname}' is not in the list of trusted endpoints"
+                )
+
+        return url
+
+    @classmethod
+    def _validate_blockchain(cls, blockchain):
+        """Validate a Blockchair blockchain identifier.
+
+        Args:
+            blockchain: The blockchain name provided by the caller.
+
+        Returns:
+            The validated blockchain string.
+
+        Raises:
+            ValueError: If the blockchain name is not in the allowlist.
+        """
+        if blockchain not in cls.ALLOWED_BLOCKCHAINS:
+            raise ValueError(
+                f"Unsupported blockchain '{blockchain}'. "
+                f"Allowed values: {sorted(cls.ALLOWED_BLOCKCHAINS)}"
+            )
+        return blockchain
+
+    @classmethod
+    def _validate_period(cls, period):
+        """Validate a Bitcoin mining time period identifier.
+
+        Args:
+            period: The period string provided by the caller.
+
+        Returns:
+            The validated period string.
+
+        Raises:
+            ValueError: If the period is not in the allowlist.
+        """
+        if period not in cls.ALLOWED_PERIODS:
+            raise ValueError(
+                f"Unsupported period '{period}'. "
+                f"Allowed values: {sorted(cls.ALLOWED_PERIODS)}"
+            )
+        return period
+
+    @staticmethod
+    def _validate_block_id(block_id):
+        """Validate a block height or hash parameter.
+
+        Only digits (block height) or 64 hex characters (block hash) are accepted.
+
+        Args:
+            block_id: The block identifier provided by the caller.
+
+        Returns:
+            The validated block_id string.
+
+        Raises:
+            ValueError: If the block_id contains unexpected characters.
+        """
+        block_id_str = str(block_id)
+        # Accept either a pure decimal block height or an exactly 64-character hex block hash
+        if not (re.fullmatch(r'\d+', block_id_str) or re.fullmatch(r'[0-9a-fA-F]{64}', block_id_str)):
+            raise ValueError(
+                "block_id must be a decimal block height or a 64-character hex block hash"
+            )
+        return block_id_str
+
+    @staticmethod
+    def _validate_chain_address(address):
+        """Validate a blockchain address parameter used in Blockchair queries.
+
+        Accepts standard alphanumeric addresses (Bitcoin, Ethereum, etc.) and
+        rejects values that contain path separators or other unexpected characters.
+
+        Args:
+            address: The address string provided by the caller.
+
+        Returns:
+            The validated address string.
+
+        Raises:
+            ValueError: If the address contains unexpected characters.
+        """
+        # Allow alphanumeric characters plus common address prefixes/separators:
+        # - '0x' prefix for Ethereum addresses
+        # - Bech32 Bitcoin addresses use lowercase alphanumeric plus '1' (already covered)
+        # - Some address formats include hyphens (e.g., Tezos KT1-style) – excluded intentionally
+        #   because Blockchair addresses never contain path-significant characters like '/', '.', '?'
+        if not re.fullmatch(r'[0-9a-zA-Z]{1,130}', address):
+            raise ValueError(
+                "Address must contain only alphanumeric characters (max 130 chars)"
+            )
+        return address
     
     def do_POST(self):
         """Handle POST requests for JSON-RPC calls"""
@@ -140,7 +307,10 @@ class BlockchainRPCHandler(BaseHTTPRequestHandler):
         
         tx_data = params[0]
         block = params[1] if len(params) > 1 else "latest"
-        rpc_url = params[2] if len(params) > 2 else self.DEFAULT_ETH_RPC
+        raw_rpc_url = params[2] if len(params) > 2 else self.DEFAULT_ETH_RPC
+
+        # Validate user-supplied RPC URL to prevent SSRF
+        rpc_url = self._validate_rpc_url(raw_rpc_url)
         
         # Make eth_call request to Ethereum node
         rpc_request = {
@@ -161,7 +331,9 @@ class BlockchainRPCHandler(BaseHTTPRequestHandler):
             raise ValueError(f"{method} requires contract address as first parameter")
         
         contract_address = params[0]
-        rpc_url = params[-1] if len(params) > 1 and params[-1].startswith('http') else self.DEFAULT_ETH_RPC
+        raw_rpc_url = params[-1] if len(params) > 1 and params[-1].startswith('http') else self.DEFAULT_ETH_RPC
+        # Validate user-supplied RPC URL to prevent SSRF
+        rpc_url = self._validate_rpc_url(raw_rpc_url)
         
         # ERC-721 function signatures
         signatures = {
@@ -214,7 +386,9 @@ class BlockchainRPCHandler(BaseHTTPRequestHandler):
             raise ValueError(f"{method} requires contract address as first parameter")
         
         contract_address = params[0]
-        rpc_url = params[-1] if len(params) > 1 and params[-1].startswith('http') else self.DEFAULT_ETH_RPC
+        raw_rpc_url = params[-1] if len(params) > 1 and params[-1].startswith('http') else self.DEFAULT_ETH_RPC
+        # Validate user-supplied RPC URL to prevent SSRF
+        rpc_url = self._validate_rpc_url(raw_rpc_url)
         
         # ERC-20 function signatures
         signatures = {
@@ -253,7 +427,9 @@ class BlockchainRPCHandler(BaseHTTPRequestHandler):
         method_name = method.replace('bitcoin_', '')
         
         if method_name == 'hashrate':
-            period = params[0] if params else '1w'
+            raw_period = params[0] if params else '1w'
+            # Validate period against allowlist to prevent URL injection
+            period = self._validate_period(raw_period)
             url = f"{self.DEFAULT_BITCOIN_API}/v1/mining/hashrate/{period}"
             response = self.make_http_get(url)
             return response
@@ -274,11 +450,13 @@ class BlockchainRPCHandler(BaseHTTPRequestHandler):
             raise ValueError(f"{method} requires blockchain parameter")
         
         blockchain = params[0]  # e.g., 'bitcoin', 'ethereum', 'litecoin'
+        # Validate blockchain name against allowlist to prevent URL path injection
+        self._validate_blockchain(blockchain)
         
         if method_name == 'getBlock':
             if len(params) < 2:
                 raise ValueError("getBlock requires block height or hash")
-            block_id = params[1]
+            block_id = self._validate_block_id(params[1])
             url = f"{self.DEFAULT_BLOCKCHAIR_API}/{blockchain}/dashboards/block/{block_id}"
             response = self.make_http_get(url)
             return response
@@ -286,7 +464,7 @@ class BlockchainRPCHandler(BaseHTTPRequestHandler):
         elif method_name == 'getAddress':
             if len(params) < 2:
                 raise ValueError("getAddress requires address")
-            address = params[1]
+            address = self._validate_chain_address(params[1])
             url = f"{self.DEFAULT_BLOCKCHAIR_API}/{blockchain}/dashboards/address/{address}"
             response = self.make_http_get(url)
             return response
