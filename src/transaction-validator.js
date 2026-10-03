@@ -56,7 +56,7 @@ class TransactionValidator {
   /**
    * Validates an Ethereum transaction hash
    * @param {string} txHash - Transaction hash (0x + 64 hex chars)
-   * @returns {string} Normalised transaction hash
+   * @returns {string} Normalized transaction hash
    * @throws {Error} If the hash is invalid
    */
   validateEthereumTxHash(txHash) {
