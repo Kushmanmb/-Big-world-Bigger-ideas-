@@ -270,11 +270,16 @@ class Wallet {
       throw new Error('Amount must be a positive number');
     }
 
+    const timestamp = Date.now();
+    const txData = JSON.stringify({ from: this.address, to, amount: numericAmount, timestamp });
+    const signature = crypto.createHmac('sha256', this.privateKey).update(txData).digest('hex');
+
     return {
       from: this.address,
       to,
       amount: numericAmount,
-      timestamp: Date.now()
+      timestamp,
+      signature
     };
   }
 }

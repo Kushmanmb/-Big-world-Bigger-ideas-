@@ -140,15 +140,12 @@ test('should fail to decrypt without encrypted data', () => {
 
 // Test 13: Different passwords produce different encrypted data
 test('should produce different encrypted data with different passwords', () => {
-  const wallet1 = new Wallet();
-  const wallet2 = new Wallet();
+  const wallet = new Wallet();
   
-  const data = wallet1.generate();
-  wallet2.address = data.address;
-  wallet2.privateKey = data.privateKey;
+  wallet.generate();
   
-  const encrypted1 = wallet1.encrypt('Password1');
-  const encrypted2 = wallet2.encrypt('Password2');
+  const encrypted1 = wallet.encrypt('Password1');
+  const encrypted2 = wallet.encrypt('Password2');
   
   if (encrypted1.data === encrypted2.data) {
     throw new Error('Different passwords should produce different encrypted data');
@@ -158,15 +155,10 @@ test('should produce different encrypted data with different passwords', () => {
 // Test 14: Same wallet encrypted twice produces different encrypted data (due to random salt/IV)
 test('should produce different encrypted data on repeated encryption', () => {
   const wallet = new Wallet();
-  const data = wallet.generate();
+  wallet.generate();
   const password = 'SamePassword123';
   
   const encrypted1 = wallet.encrypt(password);
-  
-  // Reset wallet to same state
-  wallet.address = data.address;
-  wallet.privateKey = data.privateKey;
-  
   const encrypted2 = wallet.encrypt(password);
   
   if (encrypted1.data === encrypted2.data) {
@@ -260,6 +252,12 @@ test('should allow send when wallet is unlocked', () => {
   assertEqual(tx.to, '0xRecipient1234567890123456789012345678', 'Recipient should match');
   assertEqual(tx.amount, 0.5, 'Amount should match');
   assertEqual(tx.from, wallet.address, 'From address should match wallet address');
+
+  // Ensure the transaction includes cryptographic proof of authorization
+  assertNotNull(tx.signature, 'Transaction should include a signature field');
+  if (typeof tx.signature !== 'string' || tx.signature.length === 0) {
+    throw new Error('Transaction signature should be a non-empty string');
+  }
 });
 
 // Test 23: Send validates recipient address
