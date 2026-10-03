@@ -883,16 +883,13 @@ The editor will automatically load and apply the flags when the page loads. Acti
 4. Download your work or copy to clipboard
 
 **Background Image Configuration:**
-The web interface is configured with a custom background image located at:
-`C:\Users\mattb\iCloudPhotos\Photos\IMG_0032.HEIC`
+The web interface background image is configured in `styles.css` using a relative path:
+`./background.jpg`
 
-**Important Notes:**
-- The configured path is an absolute Windows file path that only works on the local machine
-- HEIC format has limited browser support (primarily Safari)
-- For production deployment, consider:
-  - Converting the image to JPEG, PNG, or WebP format
-  - Using a relative path (e.g., `./images/background.jpg`)
-  - Hosting the image on a web server or CDN
+**To add a background image:**
+1. Place an image file named `background.jpg` in the project root directory
+2. Recommended formats: JPEG, PNG, or WebP for best browser compatibility
+3. The `background-image` property in `styles.css` can be uncommented to enable it
 
 **To view the web interface:**
 1. Open `index.html` in a web browser to see documentation
