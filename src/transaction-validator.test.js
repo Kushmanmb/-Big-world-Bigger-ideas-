@@ -81,6 +81,7 @@ async function runTests() {
     assert(validator.etherscanApiKey === null, 'etherscanApiKey should default to null');
     assertEqual(validator.mempoolBaseUrl, 'mempool.space', 'mempoolBaseUrl should default to mempool.space');
     assertEqual(validator.blockchairBaseUrl, 'api.blockchair.com', 'blockchairBaseUrl should default to api.blockchair.com');
+    assertEqual(validator.cacheTimeout, 60000, 'cacheTimeout should default to 60000');
     assert(validator.cache instanceof Map, 'Should expose cache as a Map');
   } catch (error) {
     assert(false, `Constructor test failed: ${error.message}`);
@@ -127,6 +128,17 @@ async function runTests() {
   }
 
   try {
+    // Uppercase hex characters should be normalized to lowercase
+    const upperCaseHash = '0x' + 'A'.repeat(64);
+    const result = validator.validateEthereumTxHash(upperCaseHash);
+    assert(result.startsWith('0x'), 'Uppercase hash should keep 0x prefix');
+    assertEqual(result.length, 66, 'Uppercase hash should still be 66 characters (0x + 64)');
+    assertEqual(result, result.toLowerCase(), 'Uppercase hash should be normalized to lowercase');
+  } catch (error) {
+    assert(false, `Uppercase Ethereum hash normalization test failed: ${error.message}`);
+  }
+
+  try {
     validator.validateEthereumTxHash('');
     assert(false, 'Should throw for empty string');
   } catch (error) {
@@ -147,6 +159,18 @@ async function runTests() {
     assert(error.message.includes('Invalid Ethereum transaction hash'), 'Should throw for short hash');
   }
 
+  try {
+    const invalidHexHash = '0x' + 'z'.repeat(64);
+    validator.validateEthereumTxHash(invalidHexHash);
+    assert(false, 'Should throw for non-hex characters');
+  } catch (error) {
+    const msg = String(error.message || '').toLowerCase();
+    assert(
+      msg.includes('invalid ethereum transaction hash') || msg.includes('non-hex'),
+      'Should throw for non-hex characters'
+    );
+  }
+
   // ------------------------------------------------------------------
   // Bitcoin hash validation
   // ------------------------------------------------------------------
@@ -162,6 +186,17 @@ async function runTests() {
   }
 
   try {
+    const rawHash = 'b'.repeat(64);
+    const prefixedHash = '0x' + rawHash;
+    const result = validator.validateBitcoinTxHash(prefixedHash);
+    assertEqual(result.length, 64, 'Prefixed hash should normalize to 64 characters');
+    assert(!result.startsWith('0x'), 'Normalized Bitcoin hash should not keep 0x prefix');
+    assertEqual(result, rawHash, 'Normalized Bitcoin hash should match original hash without prefix');
+  } catch (error) {
+    assert(false, `0x-prefixed Bitcoin hash normalization test failed: ${error.message}`);
+  }
+
+  try {
     validator.validateBitcoinTxHash('');
     assert(false, 'Should throw for empty string');
   } catch (error) {
@@ -173,6 +208,17 @@ async function runTests() {
     assert(false, 'Should throw for too-short Bitcoin hash');
   } catch (error) {
     assert(error.message.includes('Invalid Bitcoin transaction hash'), 'Should throw for short hash');
+  }
+
+  try {
+    const nonHexBtcHash = 'z'.repeat(64);
+    validator.validateBitcoinTxHash(nonHexBtcHash);
+    assert(false, 'Should throw for non-hexadecimal Bitcoin hash');
+  } catch (error) {
+    assert(
+      error.message.includes('Invalid Bitcoin transaction hash') || error.message.toLowerCase().includes('hex'),
+      'Should throw for non-hexadecimal Bitcoin hash'
+    );
   }
 
   // ------------------------------------------------------------------
