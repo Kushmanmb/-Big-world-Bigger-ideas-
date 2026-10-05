@@ -155,7 +155,30 @@ const myHistory = tracker.getHistoryForOwner();
 const otherHistory = tracker.getHistoryForOwner('0x1234...');
 ```
 
-### Formatting Output
+### Resetting History
+
+#### resetHard(eventId)
+
+Resets the history to a specific event, discarding all events recorded after it. This is analogous to `git reset --hard <commit>` — the ownership state is rewound to exactly what it was at the specified event.
+
+**Parameters:**
+- `eventId` (string) - The event ID to reset to (the event itself is kept; all subsequent events are discarded)
+
+**Throws:** `Error` if the event ID is not found in the history
+
+**Example:**
+```javascript
+const event1 = tracker.recordTransfer('1', '0x0000...', '0xAlice...', t1, tx1, b1);
+const event2 = tracker.recordTransfer('2', '0x0000...', '0xBob...', t2, tx2, b2);
+const event3 = tracker.recordTransfer('1', '0xAlice...', '0xCarol...', t3, tx3, b3);
+
+// Undo the last transfer — go back to the state at event2
+tracker.resetHard(event2.id);
+
+console.log(tracker.history.length);          // 2
+console.log(tracker.getCurrentOwner('1'));     // 0xAlice... (restored)
+console.log(tracker.getCurrentOwner('2'));     // 0xBob...
+```
 
 #### toGitLog(limit = null)
 

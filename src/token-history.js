@@ -256,6 +256,29 @@ class TokenHistoryTracker {
   }
 
   /**
+   * Performs a hard reset to a specific event, discarding all events after it
+   * Similar to git reset --hard <commit>
+   * @param {string} eventId - The event ID to reset to (keeps this event and all before it)
+   * @throws {Error} If event ID is not found in history
+   */
+  resetHard(eventId) {
+    const eventIndex = this.history.findIndex(event => event.id === eventId);
+
+    if (eventIndex === -1) {
+      throw new Error(`Event ID not found: ${eventId}`);
+    }
+
+    // Truncate history to this event (inclusive)
+    this.history = this.history.slice(0, eventIndex + 1);
+
+    // Rebuild tokenOwners from remaining history
+    this.tokenOwners.clear();
+    for (const event of this.history) {
+      this.tokenOwners.set(event.tokenId, event.to);
+    }
+  }
+
+  /**
    * Imports history from JSON
    * @param {object} data - JSON data to import
    */
