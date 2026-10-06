@@ -211,8 +211,8 @@ async function runTests() {
   try {
     const gfr = new GitFetchRewards();
     const mockData = [
-      { timestamp: 1609459200, blockHeight: 665000, avgRewards: 625000000, blockCount: 144 },
-      { timestamp: 1609372800, blockHeight: 664856, avgRewards: 625000000, blockCount: 143 }
+      { timestamp: 1609459200, blockHeight: 665000, avgRewards: 6.25, blockCount: 144 },
+      { timestamp: 1609372800, blockHeight: 664856, avgRewards: 6.25, blockCount: 143 }
     ];
     const commits = gfr._parseBitcoinRewards(mockData);
     assertEqual(commits.length, 2, 'Returns 2 commits for 2 entries');
