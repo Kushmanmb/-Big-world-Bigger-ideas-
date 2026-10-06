@@ -223,25 +223,21 @@ class GitFetchRewards {
 
   /**
    * Placeholder fetch for Ethereum staking rewards.
-   * Returns sample/mock data because a full beacon-chain API integration
-   * would require additional credentials outside this module's scope.
+   *
+   * A full beacon-chain API integration would require additional credentials
+   * outside this module's scope. To avoid returning synthetic data that could
+   * be mistaken for real rewards, this placeholder currently returns an empty
+   * array. Callers should interpret an empty result as "Ethereum rewards not
+   * implemented" and render any placeholder UI as needed.
+   *
    * Replace the body of this method to plug in a real data source.
+   *
    * @returns {Promise<RewardCommit[]>}
    * @private
    */
   async _fetchEthereumRewards(/* period */) {
-    // Return a representative sample to demonstrate the interface
-    const now = Math.floor(Date.now() / 1000);
-    return [
-      new RewardCommit({
-        source: 'ethereum',
-        timestamp: now,
-        blockHeight: 0,
-        amount: '0',
-        unit: 'ETH',
-        extra: { note: 'Ethereum staking rewards require a beacon-chain API key.' }
-      })
-    ];
+    // Not implemented: return no rewards rather than synthetic placeholder data.
+    return [];
   }
 
   // ---------------------------------------------------------------------------
