@@ -116,16 +116,23 @@
       },
       "setAt": "2026-04-08T14:26:00.000Z",
       "updatedAt": "2026-04-08T14:26:00.000Z"
-    }
-  ],
-  "deprecated": [
+    },
     {
       "tokenAddress": "0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
       "managerAddress": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253",
-      "deprecatedAt": "2026-03-08T21:52:56.156Z",
-      "reason": "Unknown token with no valid symbol or name; removed from active configuration"
+      "metadata": {
+        "tokenName": "Unknown Token",
+        "tokenSymbol": "UNKNOWN",
+        "network": "Ethereum Mainnet",
+        "chainId": 1,
+        "setBy": "yaketh.eth",
+        "notes": "Upgraded from deprecated on 2026-04-08T14:11:19.018Z. Previous deprecation reason: Unknown token with no valid symbol or name; removed from active configuration"
+      },
+      "setAt": "2026-03-08T21:52:56.156Z",
+      "updatedAt": "2026-04-08T14:11:19.018Z"
     }
   ],
+  "deprecated": [],
   "transferAddress": "yaketh.eth",
   "transferAddressHex": "0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17",
   "lastUpdated": "2026-04-08T21:32:30.033Z",
