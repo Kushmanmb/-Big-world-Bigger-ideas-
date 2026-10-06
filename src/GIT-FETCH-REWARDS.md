@@ -60,6 +60,19 @@ Fetches block rewards from the specified source and appends them to the local hi
 
 **Valid periods (Bitcoin):** `'1d'`, `'3d'`, `'1w'`, `'1m'`, `'3m'`, `'6m'`, `'1y'`, `'2y'`, `'3y'`, `'all'`
 
+**Bitcoin response shape:** The mempool.space rewards endpoint returns an array of entries such as:
+
+```json
+{
+  "timestamp": 1609459200,
+  "avgRewards": 6.25,
+  "totalRewards": 625,
+  "blockCount": 100
+}
+```
+
+`avgRewards` and `totalRewards` are BTC values, not satoshis. The parser uses `avgRewards` for the commit amount (falling back to `totalRewards`) and preserves `totalRewards` as metadata; large integer-like values are also accepted as satoshis and converted to BTC. The API response does not include a block height; if `blockHeight` or `avgHeight` is present it is used, otherwise the commit's block height is `0`.
+
 **Example:**
 
 ```js
