@@ -244,7 +244,7 @@ test('should format ownership content correctly', () => {
     timestamp: '2026-02-25T00:00:00.000Z'
   });
   
-  if (!content.includes('ethereum.org')) {
+  if (!content.split('\n').includes('Domain: ethereum.org')) {
     throw new Error('Domain not in content');
   }
   
