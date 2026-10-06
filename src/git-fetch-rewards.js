@@ -204,21 +204,45 @@ class GitFetchRewards {
    */
   _parseBitcoinRewards(data) {
     if (!Array.isArray(data)) return [];
-    return data.map(entry => new RewardCommit({
-      source: 'bitcoin',
-      timestamp: entry.timestamp || 0,
-      blockHeight: entry.blockHeight || entry.avgHeight || 0,
-      amount: entry.avgRewards != null
-        ? (entry.avgRewards / 1e8).toFixed(8)    // satoshis → BTC
-        : (entry.totalRewards != null
-            ? (entry.totalRewards / 1e8).toFixed(8)
-            : '0'),
-      unit: 'BTC',
-      extra: {
-        blockCount: entry.blockCount,
-        totalRewards: entry.totalRewards
+
+    /**
+     * Normalize a Bitcoin reward amount that may be provided either in BTC
+     * (e.g. 6.25) or in satoshis (e.g. 625000000).
+     * Returns a Number in BTC, or null if the value is not usable.
+     */
+    function normalizeBtcAmount(value) {
+      if (value == null) return null;
+      const num = Number(value);
+      if (!Number.isFinite(num)) return null;
+
+      // Heuristic: large integer-like values are treated as satoshis.
+      const isIntegerLike = Math.abs(num % 1) < 1e-8;
+      if (isIntegerLike && Math.abs(num) >= 1e4) {
+        return num / 1e8;
       }
-    }));
+
+      // Otherwise assume the value is already in BTC.
+      return num;
+    }
+
+    return data.map(entry => {
+      const avg = normalizeBtcAmount(entry.avgRewards);
+      const total = normalizeBtcAmount(entry.totalRewards);
+      const amountBtc = avg != null ? avg : (total != null ? total : 0);
+
+      return new RewardCommit({
+        source: 'bitcoin',
+        timestamp: entry.timestamp || 0,
+        blockHeight: entry.blockHeight || entry.avgHeight || 0,
+        amount: amountBtc.toFixed(8),
+        unit: 'BTC',
+        extra: {
+          blockCount: entry.blockCount,
+          // Expose totalRewards in BTC with 8 decimal places when available
+          totalRewards: total != null ? total.toFixed(8) : undefined
+        }
+      });
+    });
   }
 
   /**
