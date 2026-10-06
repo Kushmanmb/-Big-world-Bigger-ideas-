@@ -1,7 +1,8 @@
 /**
  * Git Fetch Rewards Module
  * Fetches blockchain block rewards using git-style commands and log formatting.
- * Supports Bitcoin (via mempool.space) and Ethereum (via public RPC / etherscan-stats).
+ * Currently implements Bitcoin rewards via mempool.space; Ethereum support is
+ * experimental/placeholder and does not yet fetch real on-chain data.
  *
  * Inspired by `git fetch`: retrieves reward data from remote blockchain sources
  * and stores them locally as "commits" in a reward history log.
