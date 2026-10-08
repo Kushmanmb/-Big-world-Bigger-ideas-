@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
  *
  * The import `@openzeppelin/contracts/token/ERC20/ERC20.sol` is resolved using
  * the remapping defined in remappings.txt:
- *   @openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/
+ *   Remapping: @openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/
  *
  * This resolves to:
  *   lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol
