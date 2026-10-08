@@ -200,13 +200,7 @@ npm run feature-flags:demo
 
 ### Production Dependencies
 
-The package has minimal dependencies:
-
-```json
-{
-  "@discord/embedded-app-sdk": "^2.4.0"
-}
-```
+The package currently has no direct production dependencies.
 
 ### Development Dependencies
 

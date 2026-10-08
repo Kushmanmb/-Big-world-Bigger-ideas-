@@ -146,17 +146,15 @@ python3 -m http.server 8000 --directory _site
 ## Requirements
 
 ### Node.js Environment
-- **Node.js Version:** >=14.0.0 (CI uses 18.x)
+- **Node.js Version:** >=18.0.0 (CI uses 24.x)
 - **Package Manager:** npm
 
 ### Dependencies
-- **Production:**
-  - `@discord/embedded-app-sdk` ^2.4.0
-  - `braces` ^3.0.3
+- **Production:** None
   
 - **Development:**
-  - `tailwindcss` ^3.4.17
-  - `postcss` ^8.5.6
+  - `tailwindcss` ^4.3.3
+  - `postcss` ^8.5.28
   - `autoprefixer` ^10.4.24
 
 ## Custom Domain Configuration
