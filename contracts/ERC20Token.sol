@@ -3,13 +3,13 @@ pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-/**
+/*
  * @title ERC20Token
  * @dev Example ERC20 token contract demonstrating import resolution via remappings.
  *
  * The import `@openzeppelin/contracts/token/ERC20/ERC20.sol` is resolved using
  * the remapping defined in remappings.txt:
- *   @openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/
+ *   Remapping: @openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/
  *
  * This resolves to:
  *   lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol

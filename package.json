@@ -204,14 +204,11 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "dependencies": {
-    "@discord/embedded-app-sdk": "^2.4.0",
-    "braces": "^3.0.3"
-  },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
     "autoprefixer": "^10.4.24",
     "postcss": "^8.5.28",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^4.3.3"
   },
   "overrides": {
     "axios": "^1.13.5",
@@ -228,6 +225,7 @@
     "socket.io": "^4.8.2",
     "tar": "^7.5.11",
     "yauzl": "^3.2.1",
-    "zod": "^3.24.1"
+    "zod": "^3.24.1",
+    "@parcel/watcher": "2.6.0"
   }
 }

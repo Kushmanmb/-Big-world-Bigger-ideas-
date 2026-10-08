@@ -5,7 +5,7 @@ Detailed instructions for installing Big World Bigger Ideas.
 ## 📋 System Requirements
 
 ### Minimum Requirements
-- **Node.js**: 14.0.0 or higher
+- **Node.js**: 18.0.0 or higher
 - **npm**: 6.0.0 or higher (comes with Node.js)
 - **Operating System**: Windows, macOS, or Linux
 - **Memory**: 512 MB RAM minimum
@@ -27,7 +27,7 @@ Install the package from npm registry:
 npm install big-world-bigger-ideas
 ```
 
-#### Verify Installation
+#### Verify NPM Installation
 
 ```javascript
 const bigWorld = require('big-world-bigger-ideas');
@@ -40,7 +40,7 @@ Clone the repository for development:
 
 ```bash
 # Clone repository
-git clone https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-.git
+git clone https://github.com/Kushmanmb/-Big-world-Bigger-ideas-.git
 
 # Navigate to directory
 cd -Big-world-Bigger-ideas-
@@ -49,7 +49,7 @@ cd -Big-world-Bigger-ideas-
 npm install
 ```
 
-#### Verify Installation
+#### Verify Repository Installation
 
 ```bash
 # Run tests
@@ -175,7 +175,7 @@ npm run test:feature-flags
 ```
 
 Expected output:
-```
+```text
 ✓ Constructor accepts valid address
 ✓ getOwner returns correct owner
 ✓ getBalance validates address
@@ -200,13 +200,7 @@ npm run feature-flags:demo
 
 ### Production Dependencies
 
-The package has minimal dependencies:
-
-```json
-{
-  "@discord/embedded-app-sdk": "^2.4.0"
-}
-```
+The package currently has no direct production dependencies.
 
 ### Development Dependencies
 
@@ -421,8 +415,8 @@ After installation:
 Need help with installation?
 
 - **Documentation**: Check the [Getting Started](Getting-Started) guide
-- **GitHub Issues**: [Report installation issues](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues)
-- **Email**: mattbrace92@gmail.com
+- **GitHub Issues**: [Report installation issues](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues)
+- **Email**: [mattbrace92@gmail.com](mailto:mattbrace92@gmail.com)
 
 ---
 

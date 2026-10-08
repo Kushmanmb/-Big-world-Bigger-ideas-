@@ -18,7 +18,7 @@ Big World Bigger Ideas is deployed as a static website to GitHub Pages with a cu
 - **Domain:** kushmanmb.org (custom domain via CNAME)
 - **Build System:** Node.js 18 + Tailwind CSS
 - **Deployment Method:** GitHub Actions (automated on push to main)
-- **Repository:** https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-
+- **Repository:** [GitHub repository](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-)
 
 ## Automated Deployment
 
@@ -94,7 +94,7 @@ The following files are copied to the `_site` directory for deployment:
 
 If you need to trigger a deployment manually:
 
-1. Go to the [Actions tab](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml)
+1. Go to the [Actions tab](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml)
 2. Click "Run workflow"
 3. Select the `main` branch
 4. Click "Run workflow"
@@ -146,17 +146,15 @@ python3 -m http.server 8000 --directory _site
 ## Requirements
 
 ### Node.js Environment
-- **Node.js Version:** >=14.0.0 (CI uses 18.x)
+- **Node.js Version:** >=18.0.0 (CI uses 24.x)
 - **Package Manager:** npm
 
 ### Dependencies
-- **Production:**
-  - `@discord/embedded-app-sdk` ^2.4.0
-  - `braces` ^3.0.3
+- **Production:** None
   
 - **Development:**
-  - `tailwindcss` ^3.4.17
-  - `postcss` ^8.5.6
+  - `tailwindcss` ^4.3.3
+  - `postcss` ^8.5.28
   - `autoprefixer` ^10.4.24
 
 ## Custom Domain Configuration
@@ -170,7 +168,7 @@ The repository uses a custom domain (kushmanmb.org) configured via CNAME file:
 
 For the custom domain to work, the following DNS records must be configured:
 
-```
+```dns
 kushmanmb.org. IN A 185.199.108.153
 kushmanmb.org. IN A 185.199.109.153
 kushmanmb.org. IN A 185.199.110.153
@@ -178,7 +176,7 @@ kushmanmb.org. IN A 185.199.111.153
 ```
 
 Or use a CNAME record:
-```
+```dns
 kushmanmb.org. IN CNAME kushmanmb-org.github.io.
 ```
 
@@ -196,7 +194,7 @@ Required repository settings for GitHub Pages:
 After deployment, verify the following:
 
 1. **Website Accessibility:**
-   - Visit https://kushmanmb.org
+   - Visit [kushmanmb.org](https://kushmanmb.org)
    - Verify the main page loads correctly
    - Check that styles are applied (Tailwind CSS)
 
@@ -304,7 +302,7 @@ CI workflow performs:
 For deployment issues or questions:
 
 - **Creator:** Matthew Brace (kushmanmb)
-- **Email:** mattbrace92@gmail.com
+- **Email:** [mattbrace92@gmail.com](mailto:mattbrace92@gmail.com)
 - **GitHub:** [@kushmanmb](https://github.com/kushmanmb)
 - **ENS:** kushmanmb.base.eth
 
