@@ -17,11 +17,6 @@
     "eqeqeq": ["error", "always"],
     "no-var": "warn",
     "prefer-const": "warn"
-  }
-    "quotes": ["error", "single", { "avoidEscape": true }],
-    "eqeqeq": ["error", "always"],
-    "no-var": "error",
-    "prefer-const": "warn"
   },
   "ignorePatterns": [
     "node_modules/",
