@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-10-08T00:42:09Z",
+  "amount": "49990",
+  "gasEstimate": "10",
+  "recipient": "yaketh.eth",
+  "recipientAddress": "0xa14373a2209fAd5cDCc22841e9176E0ce4C50c17",
+  "token": "USDC",
+  "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+  "workflowRun": "37709027929",
+  "triggerType": "schedule",
+  "status": "simulated"
+}
