@@ -205,7 +205,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@discord/embedded-app-sdk": "^2.4.0"
+    "@discord/embedded-app-sdk": "2.5.0"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.3",
