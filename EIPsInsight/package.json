@@ -8,10 +8,15 @@
     "build": "vite build",
     "preview": "vite preview"
   },
-  "keywords": ["ethereum", "eips", "blockchain", "documentation"],
+  "keywords": [
+    "ethereum",
+    "eips",
+    "blockchain",
+    "documentation"
+  ],
   "author": "Matthew Brace <mattbrace92@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "vite": "^5.0.0"
+    "vite": "^6.4.4"
   }
 }
