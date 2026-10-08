@@ -72,7 +72,7 @@ jobs:
           cp dist/output.css _site/dist/
 
           # Copy configuration files
-          cp CNAME _site/
+          if [ -f CNAME ]; then cp CNAME _site/; fi
           cp feature-flags.json _site/
 
           # Copy source code
@@ -127,5 +127,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-
