@@ -1,13 +1,13 @@
 # ERC-20 Token Balance Report
 
 **Address:** yaketh.eth
-**Generated:** 2026-10-14T06:05:01.583Z
+**Generated:** 2026-10-15T06:05:32.740Z
 
 ---
 
 ## Error
 
-Failed to fetch token balances: Error fetching token balances: HTTP 430: {"data":null,"context":{"code":430,"error":"Your IP address is temporary blacklisted due to exceeding usage of API resources. Please apply for an API key by contacting us at info@blockchair.com","market_price_usd":2505.86,"cache":{"live":true,"duration":180,"since":"2026-10-14 06:05:02","until":"2026-10-14 06:08:02","time":null},"api":{"version":"2.0.95-ie","last_major_update":"2022-11-07 02:00:00","next_major_update":"2023-11-12 02:00:00","documentation":"https:\/\/blockchair.com\/api\/docs","notice":"Try out our new API v.3: https:\/\/3xpl.com\/data"},"servers":"API4","time":null,"render_time":0.002184152603149414,"full_time":0.002184152603149414,"request_cost":1}}
+Failed to fetch token balances: Error fetching token balances: HTTP 430: {"data":null,"context":{"code":430,"error":"Your IP address is temporary blacklisted due to exceeding usage of API resources. Please apply for an API key by contacting us at info@blockchair.com","market_price_usd":2349.19,"cache":{"live":true,"duration":180,"since":"2026-10-15 06:05:33","until":"2026-10-15 06:08:33","time":null},"api":{"version":"2.0.95-ie","last_major_update":"2022-11-07 02:00:00","next_major_update":"2023-11-12 02:00:00","documentation":"https:\/\/blockchair.com\/api\/docs","notice":"Try out our new API v.3: https:\/\/3xpl.com\/data"},"servers":"API4","time":null,"render_time":0.0013659000396728516,"full_time":0.0013659000396728516,"request_cost":1}}
 
 ---
 
