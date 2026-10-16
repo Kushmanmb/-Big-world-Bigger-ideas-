@@ -61,9 +61,9 @@ The workflow automatically:
 ## Post-Deployment Verification
 
 ### Website Accessibility
-- [ ] Main site loads: https://kushmanmb.org
-- [ ] Editor page works: https://kushmanmb.org/editor.html
-- [ ] BeyondGlobal page: https://kushmanmb.org/BeyondGlobal.html
+- [ ] Main site loads: <https://kushmanmb.org>
+- [ ] Editor page works: <https://kushmanmb.org/editor.html>
+- [ ] BeyondGlobal page: <https://kushmanmb.org/BeyondGlobal.html>
 - [ ] HTTPS is enforced (no mixed content warnings)
 
 ### Content Verification
@@ -165,7 +165,7 @@ If deployment causes issues:
 ## Emergency Contacts
 
 - **Repository Owner:** Matthew Brace (kushmanmb)
-- **Email:** mattbrace92@gmail.com
+- **Email:** <mattbrace92@gmail.com>
 - **GitHub:** [@kushmanmb](https://github.com/kushmanmb)
 - **ENS:** kushmanmb.base.eth
 

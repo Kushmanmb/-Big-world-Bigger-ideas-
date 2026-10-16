@@ -110,11 +110,11 @@ Publish a custom ownership announcement to all platforms.
   - `description` (string, optional): Description
 
 **Returns:** Promise<Object> - Publication results with:
-  - `announcementId` (string): Unique announcement ID
-  - `success` (boolean): Publication success status
-  - `totalPlatforms` (number): Number of platforms published to
-  - `platforms` (Object): Platform-specific results
-  - `summary` (Object): Publication summary
+- `announcementId` (string): Unique announcement ID
+- `success` (boolean): Publication success status
+- `totalPlatforms` (number): Number of platforms published to
+- `platforms` (Object): Platform-specific results
+- `summary` (Object): Publication summary
 
 **Example:**
 ```javascript
@@ -174,13 +174,13 @@ Get all announcements by a specific owner.
 Get statistics about published announcements.
 
 **Returns:** Object - Statistics including:
-  - `totalAnnouncements` (number)
-  - `uniqueDomains` (number)
-  - `uniqueOwners` (number)
-  - `googlePublications` (number)
-  - `microsoftPublications` (number)
-  - `domains` (Array<string>)
-  - `owners` (Array<string>)
+- `totalAnnouncements` (number)
+- `uniqueDomains` (number)
+- `uniqueOwners` (number)
+- `googlePublications` (number)
+- `microsoftPublications` (number)
+- `domains` (Array<string>)
+- `owners` (Array<string>)
 
 ##### `isValidEthereumAddress(address)`
 
@@ -372,11 +372,11 @@ ISC
 ## Author
 
 Matthew Brace (kushmanmb)
-- Email: mattbrace92@gmail.com
-- Website: https://kushmanmb.org
+- Email: <mattbrace92@gmail.com>
+- Website: <https://kushmanmb.org>
 
 ## Support
 
 For issues and questions:
-- GitHub Issues: https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues
-- Email: mattbrace92@gmail.com
+- GitHub Issues: <https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues>
+- Email: <mattbrace92@gmail.com>

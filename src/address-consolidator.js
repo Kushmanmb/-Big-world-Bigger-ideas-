@@ -413,7 +413,7 @@ class AddressConsolidator {
     let amountHex;
     try {
       amountHex = BigInt(amount).toString(16).padStart(64, '0');
-    } catch (e) {
+    } catch {
       amountHex = '0'.padStart(64, '0');
     }
 
@@ -450,7 +450,7 @@ class AddressConsolidator {
         let hasBalance = false;
         try {
           hasBalance = BigInt(rawBalance) > 0n;
-        } catch (e) {
+        } catch {
           hasBalance = parseFloat(rawBalance) > 0;
         }
 

@@ -368,7 +368,7 @@ This will:
 
 For issues, questions, or contributions:
 - **GitHub**: [kushmanmb-org/-Big-world-Bigger-ideas-](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-)
-- **Email**: mattbrace92@gmail.com
+- **Email**: <mattbrace92@gmail.com>
 - **ENS**: kushmanmb.base.eth
 
 ## License

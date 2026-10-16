@@ -48,7 +48,7 @@ Welcome to the **Big World Bigger Ideas** documentation wiki! This comprehensive
 
 **Created by**: [Matthew Brace (kushmanmb)](https://github.com/kushmanmb)  
 **Organization**: [kushmanmb-org](https://github.com/kushmanmb-org)  
-**Email**: mattbrace92@gmail.com
+**Email**: <mattbrace92@gmail.com>
 
 This repository provides comprehensive blockchain utilities, crypto clarity tools, and documentation for interacting with multiple blockchain networks including Ethereum, Bitcoin, Litecoin, and other EVM-compatible chains.
 

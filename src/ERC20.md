@@ -435,7 +435,7 @@ fetcher.clearCache();
 ### Function Signatures
 
 | Function | Signature | Description |
-|----------|-----------|-------------|
+| ---------- | ----------- | ------------- |
 | `balanceOf(address)` | `0x70a08231` | Returns token balance of an address |
 | `totalSupply()` | `0x18160ddd` | Returns total token supply |
 | `name()` | `0x06fdde03` | Returns token name |
@@ -482,8 +482,8 @@ ISC
 ## Author
 
 **Matthew Brace (kushmanmb)**
-- Email: mattbrace92@gmail.com
-- Website: https://kushmanmb.org
+- Email: <mattbrace92@gmail.com>
+- Website: <https://kushmanmb.org>
 - ENS: kushmanmb.base.eth
 
 ---

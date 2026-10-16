@@ -332,7 +332,7 @@ This sanitization system helps comply with:
 
 For questions or issues:
 - GitHub Issues: [Report a bug](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues)
-- Email: mattbrace92@gmail.com
+- Email: <mattbrace92@gmail.com>
 
 ## Updates
 

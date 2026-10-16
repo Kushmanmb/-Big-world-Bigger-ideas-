@@ -161,7 +161,7 @@ Now that you have the basics, explore more:
 ## 🆘 Getting Help
 
 - **Issues**: [GitHub Issues](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues)
-- **Email**: mattbrace92@gmail.com
+- **Email**: <mattbrace92@gmail.com>
 - **Documentation**: [Wiki Home](Home)
 
 ## 💡 Tips

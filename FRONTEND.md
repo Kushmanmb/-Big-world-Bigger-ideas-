@@ -1,6 +1,6 @@
 # Frontend Build & Deployment
 
-This document describes the frontend build configuration and deployment setup for https://kushmanmb.org/.
+This document describes the frontend build configuration and deployment setup for <https://kushmanmb.org/>.
 
 ## Overview
 
@@ -38,7 +38,7 @@ dist/
 
 ## Custom Domain Configuration
 
-The site is configured to deploy to **https://kushmanmb.org/** using GitHub Pages custom domain feature.
+The site is configured to deploy to **<https://kushmanmb.org/>** using GitHub Pages custom domain feature.
 
 ### CNAME File
 
@@ -240,7 +240,7 @@ When changes are pushed to `main`:
 1. CI workflow runs tests
 2. Deploy workflow builds CSS
 3. Site is deployed to GitHub Pages
-4. Available at https://kushmanmb.org/ within minutes
+4. Available at <https://kushmanmb.org/> within minutes
 
 ### Manual Deployment
 
@@ -258,7 +258,7 @@ To trigger deployment manually:
 2. Click on latest "Deploy to GitHub Pages" run
 3. Monitor build and deploy steps
 4. Check for any errors in logs
-5. Once complete, verify site at https://kushmanmb.org/
+5. Once complete, verify site at <https://kushmanmb.org/>
 
 ## GitHub Pages Settings
 
@@ -314,7 +314,7 @@ npm run build:css
 
 **Problem:** Tailwind utility classes not working
 
-**Current state:** 
+**Current state:**
 - `index.html` uses custom styles only (no Tailwind utilities)
 - `editor.html` uses Tailwind CDN
 
@@ -384,5 +384,5 @@ npm run build:css
 
 For issues or questions:
 - **Repository Issues:** Open an issue on GitHub
-- **Email:** mattbrace92@gmail.com
+- **Email:** <mattbrace92@gmail.com>
 - **Owner:** Matthew Brace (@kushmanmb)

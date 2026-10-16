@@ -26,7 +26,7 @@
 
 **Created by:** [Matthew Brace (kushmanmb)](https://github.com/kushmanmb)  
 **Organization:** [kushmanmb-org](https://github.com/kushmanmb-org)  
-**Email:** mattbrace92@gmail.com  
+**Email:** <mattbrace92@gmail.com><br>
 **ENS:** kushmanmb.base.eth  
 **Coinbase ID:** kushman.cb.id  
 
@@ -407,7 +407,7 @@ Branch protection rulesets are configured for:
 ### Enhanced .gitignore
 
 The `.gitignore` file includes comprehensive patterns to prevent accidental commits of:
-- 🔑 Private keys and certificates (*.key, *.pem, *.p12, *.pfx)
+- 🔑 Private keys and certificates (`*.key`, `*.pem`, `*.p12`, `*.pfx`)
 - 🔐 SSH keys (id_rsa, id_ed25519, authorized_keys)
 - 🔒 Environment variables and secrets (.env, .env.*, secrets.*)
 - 💰 Blockchain wallet files (keystore, UTC--, *.wallet)
@@ -491,7 +491,7 @@ This repository uses [GitHub Super Linter](https://github.com/super-linter/super
 ### What's Linted
 
 | Language / Format | Tool |
-|-------------------|------|
+| ------------------- | ------ |
 | JavaScript | ESLint (recommended rules) |
 | JSON | jsonlint |
 | YAML | yamllint |
@@ -503,7 +503,7 @@ This repository uses [GitHub Super Linter](https://github.com/super-linter/super
 ### Configuration
 
 | File | Purpose |
-|------|---------|
+| ------ | --------- |
 | `.github/workflows/super-linter.yml` | Super Linter workflow |
 | `.github/super-linter.env` | Environment variable overrides |
 | `.github/linters/.eslintrc.json` | ESLint rules for JavaScript |
@@ -753,7 +753,7 @@ console.log(report);
 Current compliance areas for this repository:
 
 | Area | Status | Description |
-|------|--------|-------------|
+| ------ | -------- | ------------- |
 | ✓ Cryptography | Compliant | Wallet encryption/decryption utilities implemented |
 | ✓ Access Control | Compliant | Branch protection rules and secure authentication |
 | ✓ Operations Security | Compliant | Secure development practices and code review |

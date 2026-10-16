@@ -127,7 +127,7 @@ const proposalId = dao.createProposal(proposer, title, description);
 
 **Cause**: Blockchain address is not in correct format
 
-**Solution**: 
+**Solution**:
 - Ethereum addresses must start with `0x` and be 42 characters total
 - Use checksummed addresses when possible
 - Verify the address is valid
@@ -342,7 +342,7 @@ Check the [Security tab](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/s
 
 - **Documentation**: Start with [Getting Started](Getting-Started)
 - **GitHub Issues**: [Report issues or ask questions](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues)
-- **Email**: mattbrace92@gmail.com
+- **Email**: <mattbrace92@gmail.com>
 
 ### Is there a community?
 
@@ -350,4 +350,4 @@ Join the discussion on GitHub! Open issues, participate in discussions, and conn
 
 ---
 
-**Still have questions?** Open an [issue on GitHub](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues) or email mattbrace92@gmail.com.
+**Still have questions?** Open an [issue on GitHub](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues) or email <mattbrace92@gmail.com>.

@@ -114,7 +114,7 @@ See [Contributing Guide](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/w
 ## 🎯 Quick Links
 
 | Resource | Description |
-|----------|-------------|
+| ---------- | ------------- |
 | [Wiki Home](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki) | Start here |
 | [Getting Started](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/Getting-Started) | Installation & quick start |
 | [API Reference](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/API-Reference) | Complete API docs |
@@ -125,7 +125,7 @@ See [Contributing Guide](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/w
 
 ### Accessing the Wiki
 
-- **URL**: https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki
+- **URL**: <https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki>
 - **Tab**: Click "Wiki" tab in repository navigation
 - **Mobile**: Accessible via mobile browsers
 
@@ -183,7 +183,7 @@ When contributing to wiki documentation:
 For wiki-related questions:
 
 - **Issues**: [GitHub Issues](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues)
-- **Email**: mattbrace92@gmail.com
+- **Email**: <mattbrace92@gmail.com>
 - **Wiki**: [Browse the wiki](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki)
 
 ---
