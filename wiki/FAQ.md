@@ -14,7 +14,7 @@ Created by [Matthew Brace (kushmanmb)](https://github.com/kushmanmb). All blockc
 
 ### Is this project open source?
 
-Yes, the project is open source under the ISC license. You can find the repository at [github.com/kushmanmb-org/-Big-world-Bigger-ideas-](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-).
+Yes, the project is open source under the ISC license. You can find the repository at [github.com/Kushmanmb/-Big-world-Bigger-ideas-](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-).
 
 ### How do I install it?
 
@@ -127,7 +127,7 @@ const proposalId = dao.createProposal(proposer, title, description);
 
 **Cause**: Blockchain address is not in correct format
 
-**Solution**: 
+**Solution**:
 - Ethereum addresses must start with `0x` and be 42 characters total
 - Use checksummed addresses when possible
 - Verify the address is valid
@@ -294,7 +294,7 @@ See the [Contributing](Contributing) guide for details on:
 
 ### I found a bug, what should I do?
 
-1. Check if the bug is already reported in [GitHub Issues](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues)
+1. Check if the bug is already reported in [GitHub Issues](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues)
 2. If not, create a new issue with:
    - Clear description of the bug
    - Steps to reproduce
@@ -334,15 +334,15 @@ const encrypted = encryptWallet(privateKey, password);
 
 ### Are there known vulnerabilities?
 
-Check the [Security tab](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/security) on GitHub for current security status.
+Check the [Security tab](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/security) on GitHub for current security status.
 
 ## Support
 
 ### Where can I get help?
 
 - **Documentation**: Start with [Getting Started](Getting-Started)
-- **GitHub Issues**: [Report issues or ask questions](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues)
-- **Email**: mattbrace92@gmail.com
+- **GitHub Issues**: [Report issues or ask questions](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues)
+- **Email**: <mattbrace92@gmail.com>
 
 ### Is there a community?
 
@@ -350,4 +350,4 @@ Join the discussion on GitHub! Open issues, participate in discussions, and conn
 
 ---
 
-**Still have questions?** Open an [issue on GitHub](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues) or email mattbrace92@gmail.com.
+**Still have questions?** Open an [issue on GitHub](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues) or email <mattbrace92@gmail.com>.

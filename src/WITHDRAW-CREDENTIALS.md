@@ -311,17 +311,17 @@ npm run withdraw-credentials:demo
 
 ## Related Resources
 
-- **Ethereum Staking Guide:** https://ethereum.org/en/staking/
-- **Beacon Chain Explorer:** https://beaconcha.in
-- **ENS Domains:** https://ens.domains
-- **Ethereum Documentation:** https://ethereum.org/en/developers/docs/
+- **Ethereum Staking Guide:** <https://ethereum.org/en/staking/>
+- **Beacon Chain Explorer:** <https://beaconcha.in>
+- **ENS Domains:** <https://ens.domains>
+- **Ethereum Documentation:** <https://ethereum.org/en/developers/docs/>
 
 ## Owner Information
 
 - **Owner:** kushmanmb
 - **ENS:** kushmanmb.base.eth
 - **Organization:** kushmanmb-org
-- **Email:** mattbrace92@gmail.com
+- **Email:** <mattbrace92@gmail.com>
 
 ## License
 
@@ -333,6 +333,6 @@ Contributions welcome! Please see the main repository README for guidelines.
 
 ## Support
 
-- **Issues:** https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues
-- **Email:** mattbrace92@gmail.com
+- **Issues:** <https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues>
+- **Email:** <mattbrace92@gmail.com>
 - **ENS:** kushmanmb.base.eth

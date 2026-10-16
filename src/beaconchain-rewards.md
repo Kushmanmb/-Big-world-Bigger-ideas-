@@ -48,7 +48,7 @@ Most endpoints require an API key from beaconcha.in. You can get a free API key 
 - 1 request per second
 - 1000 requests per month
 
-Get your API key at: https://beaconcha.in/pricing
+Get your API key at: <https://beaconcha.in/pricing>
 
 ## Constructor
 
@@ -402,8 +402,8 @@ npm run beaconchain-rewards:demo
 ## API Documentation
 
 For more details about the beaconcha.in API:
-- Documentation: https://docs.beaconcha.in/
-- API Pricing: https://beaconcha.in/pricing
+- Documentation: <https://docs.beaconcha.in/>
+- API Pricing: <https://beaconcha.in/pricing>
 
 ## License
 
@@ -416,4 +416,4 @@ Matthew Brace <mattbrace92@gmail.com>
 ## Contributing
 
 This module is part of the Big World Bigger Ideas project. For contributions and issues, visit:
-https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-
+<https://github.com/Kushmanmb/-Big-world-Bigger-ideas->

@@ -36,11 +36,11 @@ This checklist ensures a smooth deployment process for the Big World Bigger Idea
 **Deploy via Push to Main:**
 1. [ ] Merge changes to `main` branch
 2. [ ] GitHub Actions workflow triggers automatically
-3. [ ] Monitor workflow in [Actions tab](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions)
+3. [ ] Monitor workflow in [Actions tab](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/actions)
 4. [ ] Verify deployment completes successfully
 
 **Manual Workflow Trigger:**
-1. [ ] Go to [Actions > Deploy to GitHub Pages](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml)
+1. [ ] Go to [Actions > Deploy to GitHub Pages](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml)
 2. [ ] Click "Run workflow"
 3. [ ] Select `main` branch
 4. [ ] Click "Run workflow" button
@@ -61,9 +61,9 @@ The workflow automatically:
 ## Post-Deployment Verification
 
 ### Website Accessibility
-- [ ] Main site loads: https://kushmanmb.org
-- [ ] Editor page works: https://kushmanmb.org/editor.html
-- [ ] BeyondGlobal page: https://kushmanmb.org/BeyondGlobal.html
+- [ ] Main site loads: <https://kushmanmb.org>
+- [ ] Editor page works: <https://kushmanmb.org/editor.html>
+- [ ] BeyondGlobal page: <https://kushmanmb.org/BeyondGlobal.html>
 - [ ] HTTPS is enforced (no mixed content warnings)
 
 ### Content Verification
@@ -165,7 +165,7 @@ If deployment causes issues:
 ## Emergency Contacts
 
 - **Repository Owner:** Matthew Brace (kushmanmb)
-- **Email:** mattbrace92@gmail.com
+- **Email:** <mattbrace92@gmail.com>
 - **GitHub:** [@kushmanmb](https://github.com/kushmanmb)
 - **ENS:** kushmanmb.base.eth
 

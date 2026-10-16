@@ -4,34 +4,34 @@ This repository includes comprehensive wiki documentation for Big World Bigger I
 
 ## 🌐 View the Wiki
 
-Visit the wiki at: **[github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki)**
+Visit the wiki at: **[github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki)**
 
 ## 📖 Wiki Contents
 
 The wiki includes comprehensive documentation covering:
 
 ### 🚀 Getting Started
-- **[Home](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/Home)** - Wiki homepage with navigation
-- **[Getting Started](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/Getting-Started)** - Quick start guide
-- **[Installation Guide](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/Installation-Guide)** - Detailed installation instructions
+- **[Home](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/Home)** - Wiki homepage with navigation
+- **[Getting Started](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/Getting-Started)** - Quick start guide
+- **[Installation Guide](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/Installation-Guide)** - Detailed installation instructions
 
 ### 📚 Core Modules
-- **[ERC-721 Module](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/ERC721-Module)** - NFT token fetcher
-- **[Bitcoin Mining Module](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/Bitcoin-Mining-Module)** - Bitcoin mining statistics
-- **[Token History Module](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/Token-History-Module)** - NFT ownership tracking
-- **[Feature Flags Module](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/Feature-Flags-Module)** - Runtime feature management
+- **[ERC-721 Module](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/ERC721-Module)** - NFT token fetcher
+- **[Bitcoin Mining Module](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/Bitcoin-Mining-Module)** - Bitcoin mining statistics
+- **[Token History Module](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/Token-History-Module)** - NFT ownership tracking
+- **[Feature Flags Module](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/Feature-Flags-Module)** - Runtime feature management
 - And more...
 
 ### 👨‍💻 Developer Resources
-- **[API Reference](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/API-Reference)** - Complete API documentation
-- **[Testing Guide](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/Testing-Guide)** - Testing best practices
-- **[Examples & Use Cases](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/Examples-and-Use-Cases)** - Real-world examples
+- **[API Reference](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/API-Reference)** - Complete API documentation
+- **[Testing Guide](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/Testing-Guide)** - Testing best practices
+- **[Examples & Use Cases](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/Examples-and-Use-Cases)** - Real-world examples
 
 ### 🔧 Operations
-- **[Contributing](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/Contributing)** - How to contribute
+- **[Contributing](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/Contributing)** - How to contribute
 
 ### 💬 Support
-- **[FAQ](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/FAQ)** - Frequently asked questions
+- **[FAQ](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/FAQ)** - Frequently asked questions
 
 ## 📁 Wiki Source Files
 
@@ -67,7 +67,7 @@ When updating the wiki:
 
 ```bash
 # Clone wiki repository
-git clone https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-.wiki.git
+git clone https://github.com/Kushmanmb/-Big-world-Bigger-ideas-.wiki.git
 
 # Copy updated files
 cp wiki/*.md -Big-world-Bigger-ideas-.wiki/
@@ -87,7 +87,7 @@ To contribute to the wiki:
 2. **Submit a pull request** with your changes
 3. **Maintainers will review** and update the live wiki
 
-See [Contributing Guide](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/Contributing) for details.
+See [Contributing Guide](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/Contributing) for details.
 
 ## 📝 Wiki Features
 
@@ -114,18 +114,18 @@ See [Contributing Guide](https://github.com/kushmanmb-org/-Big-world-Bigger-idea
 ## 🎯 Quick Links
 
 | Resource | Description |
-|----------|-------------|
-| [Wiki Home](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki) | Start here |
-| [Getting Started](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/Getting-Started) | Installation & quick start |
-| [API Reference](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/API-Reference) | Complete API docs |
-| [Examples](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/Examples-and-Use-Cases) | Code examples |
-| [FAQ](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/FAQ) | Common questions |
+| ---------- | ------------- |
+| [Wiki Home](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki) | Start here |
+| [Getting Started](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/Getting-Started) | Installation & quick start |
+| [API Reference](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/API-Reference) | Complete API docs |
+| [Examples](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/Examples-and-Use-Cases) | Code examples |
+| [FAQ](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/FAQ) | Common questions |
 
 ## 🆘 Wiki Support
 
 ### Accessing the Wiki
 
-- **URL**: https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki
+- **URL**: <https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki>
 - **Tab**: Click "Wiki" tab in repository navigation
 - **Mobile**: Accessible via mobile browsers
 
@@ -182,12 +182,12 @@ When contributing to wiki documentation:
 
 For wiki-related questions:
 
-- **Issues**: [GitHub Issues](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues)
-- **Email**: mattbrace92@gmail.com
-- **Wiki**: [Browse the wiki](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki)
+- **Issues**: [GitHub Issues](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues)
+- **Email**: <mattbrace92@gmail.com>
+- **Wiki**: [Browse the wiki](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki)
 
 ---
 
 **Created by**: [Matthew Brace (kushmanmb)](https://github.com/kushmanmb)  
-**Repository**: [github.com/kushmanmb-org/-Big-world-Bigger-ideas-](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-)  
+**Repository**: [github.com/Kushmanmb/-Big-world-Bigger-ideas-](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-)  
 **NPM Package**: [big-world-bigger-ideas](https://www.npmjs.com/package/big-world-bigger-ideas)

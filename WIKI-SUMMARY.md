@@ -104,7 +104,7 @@ The wiki pages are ready to be published. There are two methods:
 
 ### Method 2: Git Clone
 ```bash
-git clone https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-.wiki.git
+git clone https://github.com/Kushmanmb/-Big-world-Bigger-ideas-.wiki.git
 cp wiki/*.md -Big-world-Bigger-ideas-.wiki/
 cd -Big-world-Bigger-ideas-.wiki
 git add .

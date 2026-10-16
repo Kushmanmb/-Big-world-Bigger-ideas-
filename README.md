@@ -6,7 +6,7 @@
 ![Creator](https://img.shields.io/badge/Creator-Matthew%20Brace-purple?style=for-the-badge&logo=github)
 ![Maintained](https://img.shields.io/badge/Maintained-Yes-green?style=for-the-badge)
 ![Focus](https://img.shields.io/badge/Focus-Blockchain-orange?style=for-the-badge&logo=ethereum)
-[![Deploy](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml/badge.svg)](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml)
+[![Deploy](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml/badge.svg)](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml)
 
 [![npm version](https://img.shields.io/npm/v/big-world-bigger-ideas?style=flat-square)](https://www.npmjs.com/package/big-world-bigger-ideas)
 [![Profile](https://img.shields.io/badge/Profile-kushmanmb.org-informational?style=flat-square&logo=ethereum)](https://kushmanmb.org)
@@ -14,8 +14,8 @@
 [![Coinbase ID](https://img.shields.io/badge/Coinbase%20ID-kushman.cb.id-0052FF?style=flat-square&logo=coinbase)](https://kushman.cb.id)
 [![Email](https://img.shields.io/badge/Contact-mattbrace92@gmail.com-red?style=flat-square&logo=gmail)](mailto:mattbrace92@gmail.com)
 
-[![Tests](https://img.shields.io/badge/Tests-Passing-success?style=flat-square&logo=github-actions)](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions)
-[![Security](https://img.shields.io/badge/Security-No%20Vulnerabilities-success?style=flat-square&logo=github)](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/security)
+[![Tests](https://img.shields.io/badge/Tests-Passing-success?style=flat-square&logo=github-actions)](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/actions)
+[![Security](https://img.shields.io/badge/Security-No%20Vulnerabilities-success?style=flat-square&logo=github)](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/security)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D14.0.0-brightgreen?style=flat-square&logo=node.js)](https://nodejs.org/)
 
 </div>
@@ -26,7 +26,7 @@
 
 **Created by:** [Matthew Brace (kushmanmb)](https://github.com/kushmanmb)  
 **Organization:** [kushmanmb-org](https://github.com/kushmanmb-org)  
-**Email:** mattbrace92@gmail.com  
+**Email:** <mattbrace92@gmail.com><br>
 **ENS:** kushmanmb.base.eth  
 **Coinbase ID:** kushman.cb.id  
 
@@ -407,7 +407,7 @@ Branch protection rulesets are configured for:
 ### Enhanced .gitignore
 
 The `.gitignore` file includes comprehensive patterns to prevent accidental commits of:
-- 🔑 Private keys and certificates (*.key, *.pem, *.p12, *.pfx)
+- 🔑 Private keys and certificates (`*.key`, `*.pem`, `*.p12`, `*.pfx`)
 - 🔐 SSH keys (id_rsa, id_ed25519, authorized_keys)
 - 🔒 Environment variables and secrets (.env, .env.*, secrets.*)
 - 💰 Blockchain wallet files (keystore, UTC--, *.wallet)
@@ -491,7 +491,7 @@ This repository uses [GitHub Super Linter](https://github.com/super-linter/super
 ### What's Linted
 
 | Language / Format | Tool |
-|-------------------|------|
+| ------------------- | ------ |
 | JavaScript | ESLint (recommended rules) |
 | JSON | jsonlint |
 | YAML | yamllint |
@@ -503,7 +503,7 @@ This repository uses [GitHub Super Linter](https://github.com/super-linter/super
 ### Configuration
 
 | File | Purpose |
-|------|---------|
+| ------ | --------- |
 | `.github/workflows/super-linter.yml` | Super Linter workflow |
 | `.github/super-linter.env` | Environment variable overrides |
 | `.github/linters/.eslintrc.json` | ESLint rules for JavaScript |
@@ -753,7 +753,7 @@ console.log(report);
 Current compliance areas for this repository:
 
 | Area | Status | Description |
-|------|--------|-------------|
+| ------ | -------- | ------------- |
 | ✓ Cryptography | Compliant | Wallet encryption/decryption utilities implemented |
 | ✓ Access Control | Compliant | Branch protection rules and secure authentication |
 | ✓ Operations Security | Compliant | Secure development practices and code review |

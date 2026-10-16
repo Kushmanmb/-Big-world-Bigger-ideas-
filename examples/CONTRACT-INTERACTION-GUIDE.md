@@ -116,7 +116,7 @@ const [name, symbol, decimals, totalSupply] = await Promise.all([
 The eth-call module supports these common functions out of the box:
 
 | Function | Selector | Purpose |
-|----------|----------|---------|
+| ---------- | ---------- | --------- |
 | `balanceOf(address)` | `0x70a08231` | Get token balance |
 | `totalSupply()` | `0x18160ddd` | Get total supply |
 | `name()` | `0x06fdde03` | Get token name |
@@ -272,8 +272,8 @@ Currently, ENS resolution returns placeholder addresses. For production:
 ## Support
 
 For questions or issues:
-- GitHub: [kushmanmb-org/-Big-world-Bigger-ideas-](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-)
-- Email: mattbrace92@gmail.com
+- GitHub: [kushmanmb-org/-Big-world-Bigger-ideas-](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-)
+- Email: <mattbrace92@gmail.com>
 - ENS: kushmanmb.base.eth
 
 ## License

@@ -184,7 +184,7 @@ Test Categories:
 ### Risk Assessment by Module
 
 | Module | Risk | Addresses Found | Recommended Action |
-|--------|------|----------------|-------------------|
+| -------- | ------ | ---------------- | ------------------- |
 | http-client.js | ✅ Low | N/A | Secured |
 | address-consolidator.js | ⚠️ High | Many | Update logging |
 | address-tracker.js | ⚠️ High | Many | Update logging |
@@ -366,8 +366,8 @@ For production deployment:
 
 ## Contact
 
-**Security Issues**: mattbrace92@gmail.com  
-**GitHub**: https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues
+**Security Issues**: <mattbrace92@gmail.com><br>
+**GitHub**: <https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues>
 
 ---
 

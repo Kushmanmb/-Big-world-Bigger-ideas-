@@ -1,6 +1,6 @@
 # GitHub Pages Setup Guide
 
-This document provides instructions for configuring GitHub Pages to deploy the website at **https://kushmanmb.org**.
+This document provides instructions for configuring GitHub Pages to deploy the website at **<https://kushmanmb.org>**.
 
 ## Prerequisites
 
@@ -50,7 +50,7 @@ Configure your DNS provider with these records:
 
 **⚠️ Note:** GitHub Pages IP addresses may change over time. Always verify these values against the [official GitHub Pages documentation](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain) before configuring DNS.
 
-#### For apex domain (kushmanmb.org):
+#### For apex domain (kushmanmb.org)
 
 ```
 Type: A
@@ -76,7 +76,7 @@ Name: @
 Value: 185.199.111.153
 ```
 
-#### For www subdomain (www.kushmanmb.org):
+#### For www subdomain ([www.kushmanmb.org](https://www.kushmanmb.org))
 
 ```
 Type: CNAME
@@ -118,7 +118,7 @@ python3 -m http.server 8000
 1. Go to the "Actions" tab in GitHub
 2. Click on the latest "Deploy to GitHub Pages" workflow run
 3. Monitor the build and deploy steps
-4. Once complete, visit https://kushmanmb.org
+4. Once complete, visit <https://kushmanmb.org>
 
 ## Deployed Files
 
@@ -164,7 +164,7 @@ The following files are automatically deployed:
 The README includes a workflow status badge:
 
 ```markdown
-[![Deploy](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml/badge.svg)](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml)
+[![Deploy](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml/badge.svg)](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml)
 ```
 
 This shows the current deployment status.

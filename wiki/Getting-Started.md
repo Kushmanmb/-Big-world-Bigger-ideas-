@@ -26,7 +26,7 @@ npm install big-world-bigger-ideas
 Clone the repository for development:
 
 ```bash
-git clone https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-.git
+git clone https://github.com/Kushmanmb/-Big-world-Bigger-ideas-.git
 cd -Big-world-Bigger-ideas-
 npm install
 ```
@@ -160,8 +160,8 @@ Now that you have the basics, explore more:
 
 ## 🆘 Getting Help
 
-- **Issues**: [GitHub Issues](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues)
-- **Email**: mattbrace92@gmail.com
+- **Issues**: [GitHub Issues](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues)
+- **Email**: <mattbrace92@gmail.com>
 - **Documentation**: [Wiki Home](Home)
 
 ## 💡 Tips

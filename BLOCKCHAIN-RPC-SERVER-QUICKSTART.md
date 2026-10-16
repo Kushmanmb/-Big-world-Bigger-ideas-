@@ -33,7 +33,7 @@ curl -X POST http://localhost:8545/ \
 ### Starting the Server
 
 | Command | Description |
-|---------|-------------|
+| --------- | ------------- |
 | `python3 blockchain_rpc_server.py` | Start on default port (8545) |
 | `python3 blockchain_rpc_server.py --port 3000` | Start on custom port |
 | `python3 blockchain_rpc_server.py --host 0.0.0.0` | Listen on all interfaces |
@@ -107,7 +107,7 @@ rpcCall('server_info').then(result => {
 ## 📚 Available Methods
 
 | Method | Description | Example Params |
-|--------|-------------|----------------|
+| -------- | ------------- | ---------------- |
 | `server_info` | Get server information | `[]` |
 | `eth_call` | Make Ethereum contract call | `[{to: "0x...", data: "0x..."}, "latest"]` |
 | `erc721_ownerOf` | Get NFT token owner | `["0xContract", "1"]` |
@@ -210,4 +210,4 @@ python3 blockchain_rpc_server.py --debug
 
 - Full documentation: [BLOCKCHAIN-RPC-SERVER.md](./BLOCKCHAIN-RPC-SERVER.md)
 - Main repository: [README.md](./README.md)
-- Report issues: [GitHub Issues](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues)
+- Report issues: [GitHub Issues](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues)

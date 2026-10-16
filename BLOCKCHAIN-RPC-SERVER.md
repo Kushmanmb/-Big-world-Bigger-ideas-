@@ -490,10 +490,10 @@ ISC License - See repository LICENSE file for details.
 
 Matthew Brace (kushmanmb)
 - GitHub: [@kushmanmb](https://github.com/kushmanmb)
-- Email: mattbrace92@gmail.com
+- Email: <mattbrace92@gmail.com>
 - ENS: kushmanmb.base.eth
 
 ## Related Projects
 
-- [Big-world-Bigger-ideas](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-): Main blockchain utilities repository
+- [Big-world-Bigger-ideas](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-): Main blockchain utilities repository
 - NPM Package: [big-world-bigger-ideas](https://www.npmjs.com/package/big-world-bigger-ideas)
