@@ -367,7 +367,7 @@ For production deployment:
 ## Contact
 
 **Security Issues**: mattbrace92@gmail.com  
-**GitHub**: https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues
+**GitHub**: https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues
 
 ---
 

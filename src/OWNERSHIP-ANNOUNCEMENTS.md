@@ -378,5 +378,5 @@ Matthew Brace (kushmanmb)
 ## Support
 
 For issues and questions:
-- GitHub Issues: https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues
+- GitHub Issues: https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues
 - Email: mattbrace92@gmail.com

@@ -272,7 +272,7 @@ Currently, ENS resolution returns placeholder addresses. For production:
 ## Support
 
 For questions or issues:
-- GitHub: [kushmanmb-org/-Big-world-Bigger-ideas-](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-)
+- GitHub: [kushmanmb-org/-Big-world-Bigger-ideas-](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-)
 - Email: mattbrace92@gmail.com
 - ENS: kushmanmb.base.eth
 

@@ -30,13 +30,13 @@ GitHub wikis are separate git repositories. Follow these steps to add the wiki c
 ### Method 1: Via GitHub Web Interface (Recommended for first-time setup)
 
 1. **Enable Wiki** (if not already enabled):
-   - Go to your repository: `https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-`
+   - Go to your repository: `https://github.com/Kushmanmb/-Big-world-Bigger-ideas-`
    - Click on "Settings"
    - Scroll down to "Features" section
    - Check the "Wikis" checkbox
 
 2. **Create Wiki Pages**:
-   - Go to the "Wiki" tab: `https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki`
+   - Go to the "Wiki" tab: `https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki`
    - Click "Create the first page" or "New Page"
    - For each `.md` file in this directory:
      - Create a new page with the filename (without .md extension)
@@ -53,7 +53,7 @@ GitHub wikis are separate git repositories. Follow these steps to add the wiki c
 
 1. **Clone the wiki repository**:
    ```bash
-   git clone https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-.wiki.git
+   git clone https://github.com/Kushmanmb/-Big-world-Bigger-ideas-.wiki.git
    cd -Big-world-Bigger-ideas-.wiki
    ```
 
@@ -74,7 +74,7 @@ GitHub wikis are separate git repositories. Follow these steps to add the wiki c
 
 For each wiki page:
 
-1. Go to `https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/_new`
+1. Go to `https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/_new`
 2. Enter the page title (e.g., "Getting-Started")
 3. Copy the content from the corresponding `.md` file
 4. Click "Save Page"
@@ -194,8 +194,8 @@ After adding pages, verify:
 ## 🌐 Wiki URLs
 
 Once published, your wiki will be available at:
-- Main wiki: `https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki`
-- Individual pages: `https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/wiki/Page-Name`
+- Main wiki: `https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki`
+- Individual pages: `https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/wiki/Page-Name`
 
 ## 📞 Support
 
@@ -235,6 +235,6 @@ All wiki content files in this directory:
 ---
 
 **Wiki created for**: Big World Bigger Ideas  
-**Repository**: [github.com/kushmanmb-org/-Big-world-Bigger-ideas-](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-)  
+**Repository**: [github.com/Kushmanmb/-Big-world-Bigger-ideas-](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-)  
 **Created by**: Matthew Brace (kushmanmb)  
 **Date**: 2026-02-23

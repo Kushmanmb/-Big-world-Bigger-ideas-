@@ -40,7 +40,7 @@ Welcome to the **Big World Bigger Ideas** documentation wiki! This comprehensive
 ## 🚀 Quick Links
 
 - **NPM Package**: [big-world-bigger-ideas](https://www.npmjs.com/package/big-world-bigger-ideas)
-- **GitHub Repository**: [kushmanmb-org/-Big-world-Bigger-ideas-](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-)
+- **GitHub Repository**: [kushmanmb-org/-Big-world-Bigger-ideas-](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-)
 - **Owner Profile**: [kushmanmb](https://github.com/kushmanmb)
 - **ENS**: kushmanmb.base.eth
 
@@ -90,4 +90,4 @@ ISC - See LICENSE file for details.
 
 ---
 
-**Need help?** Check out our [FAQ](FAQ) or [open an issue](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues).
+**Need help?** Check out our [FAQ](FAQ) or [open an issue](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues).

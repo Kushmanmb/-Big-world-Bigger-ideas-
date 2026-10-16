@@ -488,4 +488,4 @@ ISC
 
 ---
 
-*Part of the [Big World Bigger Ideas](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-) project*
+*Part of the [Big World Bigger Ideas](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-) project*

@@ -12,4 +12,4 @@ Failed to fetch token balances: Error fetching token balances: HTTP 430: {"data"
 ---
 
 **Data Source:** [Blockchair API](https://blockchair.com/api/docs)
-**Repository:** [Big World Bigger Ideas](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-)
+**Repository:** [Big World Bigger Ideas](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-)

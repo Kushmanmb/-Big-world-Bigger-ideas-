@@ -495,5 +495,5 @@ Matthew Brace (kushmanmb)
 
 ## Related Projects
 
-- [Big-world-Bigger-ideas](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-): Main blockchain utilities repository
+- [Big-world-Bigger-ideas](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-): Main blockchain utilities repository
 - NPM Package: [big-world-bigger-ideas](https://www.npmjs.com/package/big-world-bigger-ideas)

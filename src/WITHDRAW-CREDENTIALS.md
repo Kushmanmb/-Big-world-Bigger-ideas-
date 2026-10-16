@@ -333,6 +333,6 @@ Contributions welcome! Please see the main repository README for guidelines.
 
 ## Support
 
-- **Issues:** https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues
+- **Issues:** https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues
 - **Email:** mattbrace92@gmail.com
 - **ENS:** kushmanmb.base.eth

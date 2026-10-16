@@ -56,7 +56,7 @@ ls -lh big-world-bigger-ideas-*.tgz
 
 - **Full Guide:** [PUBLISHING.md](./PUBLISHING.md)
 - **NPM Package:** https://www.npmjs.com/package/big-world-bigger-ideas
-- **GitHub Actions:** https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions
+- **GitHub Actions:** https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/actions
 
 ## ⚙️ Automated Workflow
 

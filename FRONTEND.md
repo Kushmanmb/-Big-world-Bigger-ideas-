@@ -184,7 +184,7 @@ npm --version
 
 ```bash
 # Clone the repository
-git clone https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-.git
+git clone https://github.com/Kushmanmb/-Big-world-Bigger-ideas-.git
 cd -Big-world-Bigger-ideas-
 
 # Install dependencies

@@ -36,11 +36,11 @@ This checklist ensures a smooth deployment process for the Big World Bigger Idea
 **Deploy via Push to Main:**
 1. [ ] Merge changes to `main` branch
 2. [ ] GitHub Actions workflow triggers automatically
-3. [ ] Monitor workflow in [Actions tab](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions)
+3. [ ] Monitor workflow in [Actions tab](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/actions)
 4. [ ] Verify deployment completes successfully
 
 **Manual Workflow Trigger:**
-1. [ ] Go to [Actions > Deploy to GitHub Pages](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml)
+1. [ ] Go to [Actions > Deploy to GitHub Pages](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml)
 2. [ ] Click "Run workflow"
 3. [ ] Select `main` branch
 4. [ ] Click "Run workflow" button

@@ -348,7 +348,7 @@ See `gavah-token-example.js` for comprehensive usage examples including:
 ## Support
 
 For issues or questions:
-- Repository: https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-
+- Repository: https://github.com/Kushmanmb/-Big-world-Bigger-ideas-
 - Owner: Matthew Brace (kushmanmb)
 - Email: mattbrace92@gmail.com
 

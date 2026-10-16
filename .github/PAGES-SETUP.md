@@ -164,7 +164,7 @@ The following files are automatically deployed:
 The README includes a workflow status badge:
 
 ```markdown
-[![Deploy](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml/badge.svg)](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml)
+[![Deploy](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml/badge.svg)](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml)
 ```
 
 This shows the current deployment status.

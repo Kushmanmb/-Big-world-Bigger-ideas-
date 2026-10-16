@@ -210,4 +210,4 @@ python3 blockchain_rpc_server.py --debug
 
 - Full documentation: [BLOCKCHAIN-RPC-SERVER.md](./BLOCKCHAIN-RPC-SERVER.md)
 - Main repository: [README.md](./README.md)
-- Report issues: [GitHub Issues](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/issues)
+- Report issues: [GitHub Issues](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/issues)

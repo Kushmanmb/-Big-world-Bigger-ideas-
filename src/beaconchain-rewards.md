@@ -416,4 +416,4 @@ Matthew Brace <mattbrace92@gmail.com>
 ## Contributing
 
 This module is part of the Big World Bigger Ideas project. For contributions and issues, visit:
-https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-
+https://github.com/Kushmanmb/-Big-world-Bigger-ideas-

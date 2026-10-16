@@ -6,7 +6,7 @@
 ![Creator](https://img.shields.io/badge/Creator-Matthew%20Brace-purple?style=for-the-badge&logo=github)
 ![Maintained](https://img.shields.io/badge/Maintained-Yes-green?style=for-the-badge)
 ![Focus](https://img.shields.io/badge/Focus-Blockchain-orange?style=for-the-badge&logo=ethereum)
-[![Deploy](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml/badge.svg)](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml)
+[![Deploy](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml/badge.svg)](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/actions/workflows/deploy.yml)
 
 [![npm version](https://img.shields.io/npm/v/big-world-bigger-ideas?style=flat-square)](https://www.npmjs.com/package/big-world-bigger-ideas)
 [![Profile](https://img.shields.io/badge/Profile-kushmanmb.org-informational?style=flat-square&logo=ethereum)](https://kushmanmb.org)
@@ -14,8 +14,8 @@
 [![Coinbase ID](https://img.shields.io/badge/Coinbase%20ID-kushman.cb.id-0052FF?style=flat-square&logo=coinbase)](https://kushman.cb.id)
 [![Email](https://img.shields.io/badge/Contact-mattbrace92@gmail.com-red?style=flat-square&logo=gmail)](mailto:mattbrace92@gmail.com)
 
-[![Tests](https://img.shields.io/badge/Tests-Passing-success?style=flat-square&logo=github-actions)](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/actions)
-[![Security](https://img.shields.io/badge/Security-No%20Vulnerabilities-success?style=flat-square&logo=github)](https://github.com/kushmanmb-org/-Big-world-Bigger-ideas-/security)
+[![Tests](https://img.shields.io/badge/Tests-Passing-success?style=flat-square&logo=github-actions)](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/actions)
+[![Security](https://img.shields.io/badge/Security-No%20Vulnerabilities-success?style=flat-square&logo=github)](https://github.com/Kushmanmb/-Big-world-Bigger-ideas-/security)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D14.0.0-brightgreen?style=flat-square&logo=node.js)](https://nodejs.org/)
 
 </div>
