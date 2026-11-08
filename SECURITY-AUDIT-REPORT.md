@@ -27,10 +27,10 @@ A comprehensive security audit was conducted on the codebase to identify and rem
 
 #### 1. Hardcoded Etherscan API Key
 - **File**: `src/contract-abi-example.js`
-- **Issue**: Etherscan API key `ZITG8EMXRFSWU2CDTNT4XEI7GDYB2JBMGD` was hardcoded in example file
+- **Issue**: Etherscan API key `[REDACTED]` was hardcoded in example file
 - **Risk**: API key exposure could lead to unauthorized usage, rate limit exhaustion, or account compromise
 - **Status**: ✅ **FIXED**
-- **Resolution**: 
+- **Resolution**:
   - Removed hardcoded API key
   - Replaced with environment variable usage: `process.env.ETHERSCAN_API_KEY || 'YOUR_API_KEY_HERE'`
   - Added security warnings in code comments
@@ -69,13 +69,13 @@ No medium severity issues were identified.
 
 ### 2. npm audit
 ✅ **Passed** - 0 vulnerabilities found
-```
+```text
 found 0 vulnerabilities
 ```
 
 ### 3. CodeQL Security Scanner
 ✅ **Passed** - 0 alerts found
-```
+```text
 Analysis Result for 'javascript'. Found 0 alerts:
 - javascript: No alerts found.
 ```
@@ -202,9 +202,9 @@ The repository demonstrates a strong security posture with excellent preventive 
 To verify the security fixes, run:
 
 ```bash
-# Check for API key exposure
-grep -r "ZITG8EMXRFSWU2CDTNT4XEI7GDYB2JBMGD" . 
-# Expected: No results
+# Check for API key exposure (working tree and history)
+gitleaks git .
+# Expected: no real credentials
 
 # Run dependency audit
 npm audit

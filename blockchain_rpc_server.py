@@ -25,6 +25,8 @@ from urllib.parse import urlparse, parse_qs
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 import hashlib
+import os
+import re
 
 # Configure logging
 logging.basicConfig(
@@ -41,6 +43,38 @@ class BlockchainRPCHandler(BaseHTTPRequestHandler):
     DEFAULT_ETH_RPC = "https://ethereum.publicnode.com"
     DEFAULT_BITCOIN_API = "https://mempool.space/api"
     DEFAULT_BLOCKCHAIR_API = "https://api.blockchair.com"
+    BLOCKCHAIR_CHAINS = frozenset({
+        "bitcoin", "bitcoin-cash", "litecoin", "dogecoin", "dash", "zcash",
+        "ecash", "groestlcoin", "ethereum", "bitcoin/testnet", "ethereum/testnet",
+    })
+    HASHRATE_PERIODS = frozenset({"1m", "3m", "6m", "1y", "2y", "3y", "all", "1w"})
+
+    @classmethod
+    def _allowed_rpc_url(cls, requested):
+        """Return an Ethereum RPC URL the server is allowed to contact.
+
+        Callers may only pick the default endpoint or one listed in the
+        comma-separated RPC_ALLOWED_URLS environment variable. Arbitrary
+        caller-supplied URLs are rejected to prevent server-side request
+        forgery against internal services.
+        """
+        allowed = {cls.DEFAULT_ETH_RPC}
+        allowed.update(u.strip() for u in os.environ.get("RPC_ALLOWED_URLS", "").split(",") if u.strip())
+        if requested in (None, "", cls.DEFAULT_ETH_RPC):
+            return cls.DEFAULT_ETH_RPC
+        if requested not in allowed:
+            raise ValueError("RPC URL is not in RPC_ALLOWED_URLS")
+        return requested
+
+    _IDENTIFIER_RE = re.compile(r"^[A-Za-z0-9]{1,128}$")
+
+    @classmethod
+    def _safe_identifier(cls, value, label):
+        """Accept only alphanumeric block ids, hashes and addresses."""
+        value = str(value)
+        if not cls._IDENTIFIER_RE.fullmatch(value):
+            raise ValueError(f"Invalid {label}")
+        return value
     
     def do_POST(self):
         """Handle POST requests for JSON-RPC calls"""
@@ -140,7 +174,7 @@ class BlockchainRPCHandler(BaseHTTPRequestHandler):
         
         tx_data = params[0]
         block = params[1] if len(params) > 1 else "latest"
-        rpc_url = params[2] if len(params) > 2 else self.DEFAULT_ETH_RPC
+        rpc_url = self._allowed_rpc_url(params[2] if len(params) > 2 else None)
         
         # Make eth_call request to Ethereum node
         rpc_request = {
@@ -254,6 +288,8 @@ class BlockchainRPCHandler(BaseHTTPRequestHandler):
         
         if method_name == 'hashrate':
             period = params[0] if params else '1w'
+            if period not in self.HASHRATE_PERIODS:
+                raise ValueError(f"Unsupported hashrate period: {period!r}")
             url = f"{self.DEFAULT_BITCOIN_API}/v1/mining/hashrate/{period}"
             response = self.make_http_get(url)
             return response
@@ -274,11 +310,15 @@ class BlockchainRPCHandler(BaseHTTPRequestHandler):
             raise ValueError(f"{method} requires blockchain parameter")
         
         blockchain = params[0]  # e.g., 'bitcoin', 'ethereum', 'litecoin'
+        # Only allow known chain slugs and plain identifiers so request
+        # parameters cannot change the outbound host or path (SSRF).
+        if not isinstance(blockchain, str) or blockchain not in self.BLOCKCHAIR_CHAINS:
+            raise ValueError(f"Unsupported blockchain: {blockchain!r}")
         
         if method_name == 'getBlock':
             if len(params) < 2:
                 raise ValueError("getBlock requires block height or hash")
-            block_id = params[1]
+            block_id = self._safe_identifier(params[1], "block height or hash")
             url = f"{self.DEFAULT_BLOCKCHAIR_API}/{blockchain}/dashboards/block/{block_id}"
             response = self.make_http_get(url)
             return response
@@ -286,7 +326,7 @@ class BlockchainRPCHandler(BaseHTTPRequestHandler):
         elif method_name == 'getAddress':
             if len(params) < 2:
                 raise ValueError("getAddress requires address")
-            address = params[1]
+            address = self._safe_identifier(params[1], "address")
             url = f"{self.DEFAULT_BLOCKCHAIR_API}/{blockchain}/dashboards/address/{address}"
             response = self.make_http_get(url)
             return response

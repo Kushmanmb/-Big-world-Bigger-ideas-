@@ -36,6 +36,10 @@ jobs:
           format: sarif
           output: results.sarif
           exit-code: 0
+          # Demo/example scripts and tests intentionally print public sample
+          # data and placeholder keys; they are not shipped on the site or in
+          # the npm package. Production modules in src/ are still scanned.
+          skip-path: "src/*-example.js,src/*.test.js,examples,test_rpc_server.py,blockchain_rpc_server_example.py"
       # Upload SARIF file generated in previous step
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3
