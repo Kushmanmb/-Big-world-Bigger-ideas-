@@ -30,7 +30,7 @@ A comprehensive security audit was conducted on the codebase to identify and rem
 - **Issue**: Etherscan API key `[REDACTED]` was hardcoded in example file
 - **Risk**: API key exposure could lead to unauthorized usage, rate limit exhaustion, or account compromise
 - **Status**: ✅ **FIXED**
-- **Resolution**: 
+- **Resolution**:
   - Removed hardcoded API key
   - Replaced with environment variable usage: `process.env.ETHERSCAN_API_KEY || 'YOUR_API_KEY_HERE'`
   - Added security warnings in code comments
@@ -69,13 +69,13 @@ No medium severity issues were identified.
 
 ### 2. npm audit
 ✅ **Passed** - 0 vulnerabilities found
-```
+```text
 found 0 vulnerabilities
 ```
 
 ### 3. CodeQL Security Scanner
 ✅ **Passed** - 0 alerts found
-```
+```text
 Analysis Result for 'javascript'. Found 0 alerts:
 - javascript: No alerts found.
 ```
