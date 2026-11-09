@@ -10,6 +10,8 @@
 /**
  * Microsoft Announcements class for publishing ownership claims and announcements
  */
+const { secureId } = require('./secure-id');
+
 class MicrosoftAnnouncements {
   /**
    * Create a new MicrosoftAnnouncements instance
@@ -132,7 +134,7 @@ class MicrosoftAnnouncements {
     const result = {
       success: true,
       platform: 'OneDrive',
-      fileId: `onedrive_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      fileId: secureId('onedrive'),
       url: `https://onedrive.live.com/edit/${Date.now()}`,
       announcement,
       publishedAt: new Date().toISOString(),
@@ -156,7 +158,7 @@ class MicrosoftAnnouncements {
     const result = {
       success: true,
       platform: 'SharePoint',
-      listItemId: `sharepoint_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      listItemId: secureId('sharepoint'),
       url: `https://sharepoint.com/sites/announcements/${Date.now()}`,
       announcement,
       publishedAt: new Date().toISOString(),
@@ -180,7 +182,7 @@ class MicrosoftAnnouncements {
     const result = {
       success: true,
       platform: 'Microsoft Teams',
-      messageId: `teams_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      messageId: secureId('teams'),
       url: `https://teams.microsoft.com/l/message/${Date.now()}`,
       announcement,
       publishedAt: new Date().toISOString(),

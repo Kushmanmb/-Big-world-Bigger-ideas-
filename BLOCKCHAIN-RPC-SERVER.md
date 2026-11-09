@@ -14,7 +14,7 @@ The Blockchain RPC Server exposes blockchain functionality via a standard JSON-R
 - **Bitcoin Mining Data**: Get Bitcoin network hashrate and difficulty
 - **Multi-chain Support**: Query blockchain data via Blockchair API for Bitcoin, Ethereum, and Litecoin
 - **Standards Compliant**: Implements JSON-RPC 2.0 specification
-- **CORS Enabled**: Accessible from web browsers
+- **Origin allowlist**: Browser access is opt-in through `RPC_ALLOWED_ORIGINS`; non-browser clients work without configuration
 
 ## Installation
 
@@ -429,7 +429,16 @@ The server is built using:
 
 1. **Localhost Only**: By default, the server binds to `127.0.0.1` (localhost only)
 2. **No Authentication**: The server does not implement authentication by default
-3. **CORS Enabled**: Cross-origin requests are allowed (suitable for development)
+3. **Origin allowlist (CORS)**: Browser requests are rejected with HTTP 403 unless
+   their `Origin` is listed in `RPC_ALLOWED_ORIGINS` (comma-separated, for
+   example `RPC_ALLOWED_ORIGINS="http://localhost:3000,https://0xcon.org"`).
+   Allowed origins are echoed back individually; the server never sends
+   `Access-Control-Allow-Origin: *`. Clients that send no `Origin` header, such
+   as curl and scripts, are unaffected. This stops unrelated websites from
+   using a locally running server, and its RPC/API quota, through your browser.
+   Each entry must be a plain `http(s)://host[:port]` origin; anything else
+   (including `*` or values with control characters) is ignored, and the
+   server echoes the configured entry, never the request header.
 4. **Rate Limiting**: No built-in rate limiting (consider using a reverse proxy)
 
 ### Production Deployment
@@ -438,7 +447,6 @@ For production use, consider:
 - Running behind a reverse proxy (nginx, Apache)
 - Implementing authentication and rate limiting
 - Using HTTPS/TLS encryption
-- Restricting CORS to specific origins
 - Implementing request logging and monitoring
 
 ## Troubleshooting

@@ -7,6 +7,7 @@
  * @module ownership-announcements
  */
 
+const { secureId } = require('./secure-id');
 const GoogleAnnouncements = require('./google-announcements');
 const MicrosoftAnnouncements = require('./microsoft-announcements');
 
@@ -79,7 +80,7 @@ class OwnershipAnnouncements {
       evidence: ownershipData.evidence || 'No evidence provided',
       description: ownershipData.description || 'Blockchain ownership claim',
       timestamp: new Date().toISOString(),
-      announcementId: `announce_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      announcementId: secureId('announce'),
       status: 'created'
     };
 
