@@ -10,6 +10,8 @@
 /**
  * Google Announcements class for publishing ownership claims and announcements
  */
+const { secureId } = require('./secure-id');
+
 class GoogleAnnouncements {
   /**
    * Create a new GoogleAnnouncements instance
@@ -132,7 +134,7 @@ class GoogleAnnouncements {
     const result = {
       success: true,
       platform: 'Google Docs',
-      documentId: `gdoc_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      documentId: secureId('gdoc'),
       url: `https://docs.google.com/document/d/${Date.now()}`,
       announcement,
       publishedAt: new Date().toISOString(),
@@ -156,7 +158,7 @@ class GoogleAnnouncements {
     const result = {
       success: true,
       platform: 'Google Sheets',
-      spreadsheetId: `gsheet_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      spreadsheetId: secureId('gsheet'),
       url: `https://docs.google.com/spreadsheets/d/${Date.now()}`,
       announcement,
       publishedAt: new Date().toISOString(),
@@ -180,7 +182,7 @@ class GoogleAnnouncements {
     const result = {
       success: true,
       platform: 'Google Drive',
-      fileId: `gdrive_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      fileId: secureId('gdrive'),
       url: `https://drive.google.com/file/d/${Date.now()}`,
       announcement,
       publishedAt: new Date().toISOString(),

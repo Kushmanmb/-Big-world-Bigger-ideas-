@@ -34,6 +34,20 @@ jobs:
       - name: Run tests
         run: npm test
 
+  rpc-server:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: RPC server Origin/CORS allowlist tests
+        run: python3 test_rpc_cors.py
+
   audit:
     runs-on: ubuntu-latest
     needs: test

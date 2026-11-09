@@ -10,6 +10,8 @@
 /**
  * Badge tier levels
  */
+const { secureId } = require('./secure-id');
+
 const BADGE_TIERS = {
   GENESIS: 'Genesis Creator',
   CORE: 'Core Contributor',
@@ -247,7 +249,7 @@ class NetworkCreatorBadge {
     }
 
     const announcement = {
-      announcementId: `announce_badge_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      announcementId: secureId('announce_badge'),
       type: 'NetworkCreatorBadgeIssuance',
       network,
       badgeCount: badges.length,

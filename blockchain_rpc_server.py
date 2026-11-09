@@ -76,8 +76,59 @@ class BlockchainRPCHandler(BaseHTTPRequestHandler):
             raise ValueError(f"Invalid {label}")
         return value
     
+    @classmethod
+    def _allowed_origins(cls):
+        """Browser origins allowed to call this server (RPC_ALLOWED_ORIGINS, comma-separated).
+
+        Empty by default: browsers on other sites cannot use this server, while
+        non-browser clients (curl, scripts), which send no Origin header, still can.
+        """
+        return {o.strip().rstrip('/') for o in os.environ.get("RPC_ALLOWED_ORIGINS", "").split(",") if o.strip()}
+
+    def _cors_origin(self):
+        """Return (allowed, origin_to_echo) for the request's Origin header."""
+        origin = self.headers.get('Origin')
+        if origin is None:
+            return True, None
+        origin = origin.rstrip('/')
+        if origin in self._allowed_origins():
+            return True, origin
+        return False, None
+
+    def _send_cors_headers(self, origin):
+        if origin:
+            self.send_header('Access-Control-Allow-Origin', origin)
+            self.send_header('Vary', 'Origin')
+
+    def do_OPTIONS(self):
+        """Answer CORS preflight only for allowlisted origins."""
+        allowed, origin = self._cors_origin()
+        if not allowed or origin is None:
+            self.send_response(403)
+            self.end_headers()
+            return
+        self.send_response(204)
+        self._send_cors_headers(origin)
+        self.send_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.send_header('Access-Control-Max-Age', '600')
+        self.end_headers()
+
     def do_POST(self):
         """Handle POST requests for JSON-RPC calls"""
+        allowed, origin = self._cors_origin()
+        if not allowed:
+            # Reject cross-site browser requests before doing any upstream work,
+            # so other websites cannot spend this server's RPC/API quota.
+            logger.warning("Rejected request from non-allowlisted Origin")
+            body = json.dumps({"jsonrpc": "2.0", "id": None,
+                               "error": {"code": -32600, "message": "Origin not allowed"}}).encode('utf-8')
+            self.send_response(403)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Content-Length', str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
         try:
             content_length = int(self.headers['Content-Length'])
             post_data = self.rfile.read(content_length)
@@ -91,7 +142,7 @@ class BlockchainRPCHandler(BaseHTTPRequestHandler):
             # Send response
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
-            self.send_header('Access-Control-Allow-Origin', '*')
+            self._send_cors_headers(origin)
             self.end_headers()
             self.wfile.write(json.dumps(response).encode('utf-8'))
             

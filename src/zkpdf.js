@@ -10,6 +10,7 @@
  */
 
 const crypto = require('crypto');
+const { timingSafeEqualString } = require('./secure-id');
 
 /**
  * ZKPDFVerifier class for zero-knowledge PDF verification
@@ -140,16 +141,16 @@ class ZKPDFVerifier {
       .update(`${proof.documentHash}:${proof.timestamp}:${proof.nonce}`)
       .digest('hex');
 
-    const commitmentValid = expectedCommitment === proof.commitment;
+    const commitmentValid = timingSafeEqualString(expectedCommitment, proof.commitment);
 
     // Verify document still exists
     const doc = this.documents.get(proof.documentId);
-    const documentValid = doc && doc.hash === proof.documentHash;
+    const documentValid = Boolean(doc) && timingSafeEqualString(doc.hash, proof.documentHash);
 
     // Check if verification data matches (if provided)
     let dataMatches = true;
     if (verificationData.expectedHash) {
-      dataMatches = proof.documentHash === verificationData.expectedHash;
+      dataMatches = timingSafeEqualString(proof.documentHash, verificationData.expectedHash);
     }
 
     const isValid = commitmentValid && documentValid && dataMatches;
