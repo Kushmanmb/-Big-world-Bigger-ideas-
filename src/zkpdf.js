@@ -231,7 +231,8 @@ class ZKPDFVerifier {
     }
 
     // Return proof without the nonce for security
-    const { nonce, ...publicProof } = proof;
+    const publicProof = { ...proof };
+    delete publicProof.nonce;
     return {
       success: true,
       ...publicProof
@@ -244,7 +245,7 @@ class ZKPDFVerifier {
    */
   listDocuments() {
     const docs = [];
-    for (const [id, doc] of this.documents) {
+    for (const doc of this.documents.values()) {
       docs.push({ ...doc });
     }
     return docs;
@@ -256,8 +257,9 @@ class ZKPDFVerifier {
    */
   listProofs() {
     const proofs = [];
-    for (const [id, proof] of this.proofs) {
-      const { nonce, ...publicProof } = proof;
+    for (const proof of this.proofs.values()) {
+      const publicProof = { ...proof };
+      delete publicProof.nonce;
       proofs.push({ ...publicProof });
     }
     return proofs;

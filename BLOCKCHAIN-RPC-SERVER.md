@@ -429,7 +429,13 @@ The server is built using:
 
 1. **Localhost Only**: By default, the server binds to `127.0.0.1` (localhost only)
 2. **No Authentication**: The server does not implement authentication by default
-3. **Origin allowlist (CORS)**: Browser requests are rejected with HTTP 403 unless their `Origin` is listed in `RPC_ALLOWED_ORIGINS` (comma-separated, for example `RPC_ALLOWED_ORIGINS="http://localhost:3000,https://0xcon.org"`). Allowed origins are echoed back individually; the server never sends `Access-Control-Allow-Origin: *`. Clients that send no `Origin` header, such as curl and scripts, are unaffected. This stops unrelated websites from using a locally running server, and its RPC/API quota, through your browser.
+3. **Origin allowlist (CORS)**: Browser requests are rejected with HTTP 403 unless
+   their `Origin` is listed in `RPC_ALLOWED_ORIGINS` (comma-separated, for
+   example `RPC_ALLOWED_ORIGINS="http://localhost:3000,https://0xcon.org"`).
+   Allowed origins are echoed back individually; the server never sends
+   `Access-Control-Allow-Origin: *`. Clients that send no `Origin` header, such
+   as curl and scripts, are unaffected. This stops unrelated websites from
+   using a locally running server, and its RPC/API quota, through your browser.
 4. **Rate Limiting**: No built-in rate limiting (consider using a reverse proxy)
 
 ### Production Deployment
