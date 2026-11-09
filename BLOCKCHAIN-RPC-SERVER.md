@@ -436,6 +436,9 @@ The server is built using:
    `Access-Control-Allow-Origin: *`. Clients that send no `Origin` header, such
    as curl and scripts, are unaffected. This stops unrelated websites from
    using a locally running server, and its RPC/API quota, through your browser.
+   Each entry must be a plain `http(s)://host[:port]` origin; anything else
+   (including `*` or values with control characters) is ignored, and the
+   server echoes the configured entry, never the request header.
 4. **Rate Limiting**: No built-in rate limiting (consider using a reverse proxy)
 
 ### Production Deployment

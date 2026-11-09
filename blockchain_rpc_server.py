@@ -83,7 +83,15 @@ class BlockchainRPCHandler(BaseHTTPRequestHandler):
         Empty by default: browsers on other sites cannot use this server, while
         non-browser clients (curl, scripts), which send no Origin header, still can.
         """
-        return {o.strip().rstrip('/') for o in os.environ.get("RPC_ALLOWED_ORIGINS", "").split(",") if o.strip()}
+        origins = set()
+        for entry in os.environ.get("RPC_ALLOWED_ORIGINS", "").split(","):
+            entry = entry.strip().rstrip('/')
+            # Header-safe values only: never allow CR/LF or other control characters.
+            if entry and re.fullmatch(r"https?://[A-Za-z0-9.\-]+(:[0-9]{1,5})?", entry):
+                origins.add(entry)
+            elif entry:
+                logger.warning("Ignoring invalid RPC_ALLOWED_ORIGINS entry")
+        return origins
 
     def _cors_origin(self):
         """Return (allowed, origin_to_echo) for the request's Origin header."""
@@ -91,8 +99,10 @@ class BlockchainRPCHandler(BaseHTTPRequestHandler):
         if origin is None:
             return True, None
         origin = origin.rstrip('/')
-        if origin in self._allowed_origins():
-            return True, origin
+        # Echo the configured allowlist entry, never the request-supplied value.
+        for allowed_origin in self._allowed_origins():
+            if allowed_origin == origin:
+                return True, allowed_origin
         return False, None
 
     def _send_cors_headers(self, origin):

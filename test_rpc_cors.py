@@ -75,6 +75,28 @@ class CorsAllowlistTests(unittest.TestCase):
         self.assertEqual(status, 204)
         self.assertEqual(headers.get("access-control-allow-origin"), "https://0xcon.org")
 
+    def test_invalid_allowlist_entries_are_ignored(self):
+        os.environ["RPC_ALLOWED_ORIGINS"] = "https://ok.example,https://bad.example\r\nX-Injected: 1,javascript:alert(1),*"
+        self.assertEqual(BlockchainRPCHandler._allowed_origins(), {"https://ok.example"})
+        status, headers, _ = self.request(
+            "POST", {"Content-Type": "application/json", "Origin": "https://bad.example"}, BODY)
+        self.assertEqual(status, 403)
+        self.assertNotIn("x-injected", headers)
+
+    def test_wildcard_entry_does_not_allow_everything(self):
+        os.environ["RPC_ALLOWED_ORIGINS"] = "*"
+        status, headers, _ = self.request(
+            "POST", {"Content-Type": "text/plain", "Origin": "https://evil.example"}, BODY)
+        self.assertEqual(status, 403)
+        self.assertNotIn("access-control-allow-origin", headers)
+
+    def test_echoed_origin_is_the_configured_entry(self):
+        os.environ["RPC_ALLOWED_ORIGINS"] = "https://0xcon.org"
+        status, headers, _ = self.request(
+            "POST", {"Content-Type": "application/json", "Origin": "https://0xcon.org/"}, BODY)
+        self.assertEqual(status, 200)
+        self.assertEqual(headers.get("access-control-allow-origin"), "https://0xcon.org")
+
 
 if __name__ == "__main__":
     sys.exit(0 if unittest.main(exit=False).result.wasSuccessful() else 1)
