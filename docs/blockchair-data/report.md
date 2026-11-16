@@ -1,7 +1,7 @@
 # Blockchair Data Report
 
 **Address:** kushmanmb.eth
-**Generated:** 2026-11-15T00:24:45.533Z
+**Generated:** 2026-11-16T00:27:57.561Z
 
 ---
 
@@ -10,25 +10,25 @@
 Ethereum Blockchain Statistics
 ================================
 
-Latest Block: 26,417,775
-Total Transactions: 3,850,389,692
+Latest Block: 26,424,980
+Total Transactions: 3,852,285,336
 24h Hashrate: 0
-Blockchain Size: 1679.50 GB
-Market Price: $1769.13 USD
-Market Cap: $216.30B USD
+Blockchain Size: 1680.47 GB
+Market Price: $1824.45 USD
+Market Cap: $222.99B USD
 
 
 ## Address Information: kushmanmb.eth
 
-Error fetching address data: HTTP 400: {"data":null,"context":{"code":400,"error":"Invalid request","market_price_usd":1767.7,"cache":{"live":true,"duration":180,"since":"2026-11-15 00:24:46","until":"2026-11-15 00:27:46","time":null},"api":{"version":"2.0.95-ie","last_major_update":"2022-11-07 02:00:00","next_major_update":"2023-11-12 02:00:00","documentation":"https:\/\/blockchair.com\/api\/docs","notice":"Try out our new API v.3: https:\/\/3xpl.com\/data"},"servers":"API4","time":1.811981201171875e-5,"render_time":0.004010915756225586,"full_time":0.004029035568237305,"request_cost":1}}
+Error fetching address data: HTTP 400: {"data":null,"context":{"code":400,"error":"Invalid request","market_price_usd":1827.83,"cache":{"live":true,"duration":180,"since":"2026-11-16 00:27:58","until":"2026-11-16 00:30:58","time":null},"api":{"version":"2.0.95-ie","last_major_update":"2022-11-07 02:00:00","next_major_update":"2023-11-12 02:00:00","documentation":"https:\/\/blockchair.com\/api\/docs","notice":"Try out our new API v.3: https:\/\/3xpl.com\/data"},"servers":"API4","time":4.792213439941406e-5,"render_time":0.003390073776245117,"full_time":0.0034379959106445312,"request_cost":1}}
 
 ## ERC-20 Token Balances
 
-Error fetching token data: HTTP 430: {"data":null,"context":{"code":430,"error":"Your IP address is temporary blacklisted due to exceeding usage of API resources. Please apply for an API key by contacting us at info@blockchair.com","market_price_usd":1767.7,"cache":{"live":true,"duration":180,"since":"2026-11-15 00:24:46","until":"2026-11-15 00:27:46","time":null},"api":{"version":"2.0.95-ie","last_major_update":"2022-11-07 02:00:00","next_major_update":"2023-11-12 02:00:00","documentation":"https:\/\/blockchair.com\/api\/docs","notice":"Try out our new API v.3: https:\/\/3xpl.com\/data"},"servers":"API4","time":null,"render_time":0.0020661354064941406,"full_time":0.0020661354064941406,"request_cost":1}}
+Error fetching token data: HTTP 430: {"data":null,"context":{"code":430,"error":"Your IP address is temporary blacklisted due to exceeding usage of API resources. Please apply for an API key by contacting us at info@blockchair.com","market_price_usd":1827.83,"cache":{"live":true,"duration":180,"since":"2026-11-16 00:27:58","until":"2026-11-16 00:30:58","time":null},"api":{"version":"2.0.95-ie","last_major_update":"2022-11-07 02:00:00","next_major_update":"2023-11-12 02:00:00","documentation":"https:\/\/blockchair.com\/api\/docs","notice":"Try out our new API v.3: https:\/\/3xpl.com\/data"},"servers":"API4","time":null,"render_time":0.0019540786743164062,"full_time":0.0019540786743164062,"request_cost":1}}
 
 ## Recent Blocks
 
-Error fetching recent blocks: HTTP 430: {"data":null,"context":{"code":430,"error":"Your IP address is temporary blacklisted due to exceeding usage of API resources. Please apply for an API key by contacting us at info@blockchair.com","market_price_usd":1767.7,"cache":{"live":true,"duration":120,"since":"2026-11-15 00:24:46","until":"2026-11-15 00:26:46","time":null},"api":{"version":"2.0.95-ie","last_major_update":"2022-11-07 02:00:00","next_major_update":"2023-11-12 02:00:00","documentation":"https:\/\/blockchair.com\/api\/docs","notice":"Try out our new API v.3: https:\/\/3xpl.com\/data"},"servers":"API4","time":null,"render_time":0.0015571117401123047,"full_time":0.0015571117401123047,"request_cost":1}}
+Error fetching recent blocks: HTTP 430: {"data":null,"context":{"code":430,"error":"Your IP address is temporary blacklisted due to exceeding usage of API resources. Please apply for an API key by contacting us at info@blockchair.com","market_price_usd":1827.83,"cache":{"live":true,"duration":120,"since":"2026-11-16 00:27:58","until":"2026-11-16 00:29:58","time":null},"api":{"version":"2.0.95-ie","last_major_update":"2022-11-07 02:00:00","next_major_update":"2023-11-12 02:00:00","documentation":"https:\/\/blockchair.com\/api\/docs","notice":"Try out our new API v.3: https:\/\/3xpl.com\/data"},"servers":"API4","time":null,"render_time":0.001447916030883789,"full_time":0.001447916030883789,"request_cost":1}}
 
 ---
 
