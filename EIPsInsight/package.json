@@ -17,6 +17,6 @@
   "author": "Matthew Brace <mattbrace92@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "vite": "^7.3.7"
+    "vite": "^7.3.8"
   }
 }
